@@ -23,6 +23,9 @@ if (!function_exists('enqueue_oup_styles_and_scripts')) {
     }
 }
 
+/* Widgets Load */
+require_once get_stylesheet_directory() . '/elementor/widgets-load.php';
+
 /**
  * Force currency to AUD
  */
