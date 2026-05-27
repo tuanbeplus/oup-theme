@@ -1,0 +1,36 @@
+
+.woocommerce {
+	.products {
+		.product {
+			.product-tags {
+				display: flex;
+				gap: 8px;
+				justify-content: center;
+    			margin-bottom: 8px;
+				.product-tag {
+					padding: 7px 10px;
+					color: var(--Black, #231F20);
+					font-family: "Plus Jakarta Sans", Sans-serif;
+					font-size: 0.625rem;
+					font-style: normal;
+					line-height: 1.1;
+					font-weight: 500;
+					background-color: var(--e-global-color-f62bd18, #C6EFFE);
+					border-radius: 20px;
+					&.newly-updated {
+						background-color: var(--e-global-color-97eba3e, #FDEEB7);
+					}
+					&.short-version {
+						background-color: var(--e-global-color-2aff9a9, #DCD1F2);
+					}
+					&.long-version {
+						background-color: var(--e-global-color-e0250d0, #D8EAC7);
+					}
+					&.new-arrival {
+						background-color: var(--e-global-color-5e87840, #FCCDE5);
+					}
+				}
+			}
+		}
+	}
+}

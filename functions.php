@@ -26,13 +26,5 @@ if (!function_exists('enqueue_oup_styles_and_scripts')) {
 /* Widgets Load */
 require_once get_stylesheet_directory() . '/elementor/widgets-load.php';
 
-/**
- * Force currency to AUD
- */
-add_filter( 'woocommerce_currency_symbol', function( $currency_symbol, $currency ) {
-    if ( $currency === 'AUD' ) {
-        $currency_symbol = 'AUD';
-    }
-    return $currency_symbol;
-
-}, 10, 2 );
+/* WooCommerce */
+require_once get_stylesheet_directory() . '/inc/woo.php';
