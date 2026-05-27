@@ -1,0 +1,35 @@
+<?php
+/**
+ * Theme functions and definitions
+ *
+ * @package Onwards-Upwards-Psychology-Theme
+ */
+
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly.
+}
+
+define('OUP_THEME_VER', '1.0.0' . time());
+
+/**
+ * Enqueue styles and scripts
+ */
+if (!function_exists('enqueue_oup_styles_and_scripts')) {
+    add_action('wp_enqueue_scripts', 'enqueue_oup_styles_and_scripts');
+    function enqueue_oup_styles_and_scripts() {
+        wp_enqueue_style('oup-main-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array(), OUP_THEME_VER);
+        wp_enqueue_script('oup-main-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery'), OUP_THEME_VER, true);
+        wp_localize_script('oup-main-script', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
+    }
+}
+
+/**
+ * Force currency to AUD
+ */
+add_filter( 'woocommerce_currency_symbol', function( $currency_symbol, $currency ) {
+    if ( $currency === 'AUD' ) {
+        $currency_symbol = 'AUD';
+    }
+    return $currency_symbol;
+
+}, 10, 2 );
