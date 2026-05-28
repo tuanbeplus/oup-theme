@@ -10,7 +10,7 @@
 				.product-tag {
 					padding: 7px 10px;
 					color: var(--Black, #231F20);
-					font-family: "Plus Jakarta Sans", Sans-serif;
+					font-family: var(--e-global-typography-primary-font-family, "Plus Jakarta Sans", Sans-serif);
 					font-size: 0.625rem;
 					font-style: normal;
 					line-height: 1.1;
