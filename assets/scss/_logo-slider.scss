@@ -19,6 +19,10 @@
         
         .swiper-wrapper {
             gap: 45px; 
+            
+            .swiper-initialized & {
+                gap: 0; 
+            }
         }
 
         .swiper-slide {
@@ -36,7 +40,7 @@
                 object-fit: contain;
                 display: block;
                 margin: 0 auto;
-                background: lightgray -13.317px -6.065px / 141.436% 131.579% no-repeat;
+                background-color: lightgray;
             }
         }
     }

@@ -272,7 +272,7 @@ class Widget_LogoSlider extends Widget_Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .oup-logo-img' => 'height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .oup-logo-slider-container .oup-logo-swiper .swiper-slide .oup-logo-img' => 'height: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -283,7 +283,7 @@ class Widget_LogoSlider extends Widget_Base {
                 'name' => 'logo_background',
                 'label' => __( 'Background', 'oup' ),
                 'types' => [ 'classic', 'gradient' ],
-                'selector' => '{{WRAPPER}} .oup-logo-img',
+                'selector' => '{{WRAPPER}} .oup-logo-slider-container .oup-logo-swiper .swiper-slide .oup-logo-img',
             ]
         );
 
@@ -510,29 +510,22 @@ class Widget_LogoSlider extends Widget_Base {
         $swiper_settings = [
             'slidesPerView' => !empty($settings['slides_per_view_mobile']) ? $settings['slides_per_view_mobile'] : 2,
             'slidesPerGroup' => !empty($settings['slides_to_scroll_mobile']) ? $settings['slides_to_scroll_mobile'] : 1,
+            'spaceBetween'  => $settings['space_between_mobile'] !== '' ? $settings['space_between_mobile'] : 20,
             'loop'          => $settings['infinite_loop'] === 'yes',
             'speed'         => $settings['speed'] ?: 500,
             'breakpoints'   => [
                 768 => [
                     'slidesPerView' => !empty($settings['slides_per_view_tablet']) ? $settings['slides_per_view_tablet'] : 4,
                     'slidesPerGroup' => !empty($settings['slides_to_scroll_tablet']) ? $settings['slides_to_scroll_tablet'] : 1,
+                    'spaceBetween'  => $settings['space_between_tablet'] !== '' ? $settings['space_between_tablet'] : 30,
                 ],
                 1024 => [
                     'slidesPerView' => !empty($settings['slides_per_view']) ? $settings['slides_per_view'] : 6,
                     'slidesPerGroup' => !empty($settings['slides_to_scroll']) ? $settings['slides_to_scroll'] : 1,
+                    'spaceBetween'  => $settings['space_between'] !== '' ? $settings['space_between'] : 45,
                 ]
             ]
         ];
-
-        if ( isset($settings['space_between_mobile']) && $settings['space_between_mobile'] !== '' ) {
-            $swiper_settings['spaceBetween'] = $settings['space_between_mobile'];
-        }
-        if ( isset($settings['space_between_tablet']) && $settings['space_between_tablet'] !== '' ) {
-            $swiper_settings['breakpoints'][768]['spaceBetween'] = $settings['space_between_tablet'];
-        }
-        if ( isset($settings['space_between']) && $settings['space_between'] !== '' ) {
-            $swiper_settings['breakpoints'][1024]['spaceBetween'] = $settings['space_between'];
-        }
 
         $show_arrows = in_array( $settings['navigation'], [ 'both', 'arrows' ] );
         $show_dots = in_array( $settings['navigation'], [ 'both', 'dots' ] );
