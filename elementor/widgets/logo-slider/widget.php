@@ -244,7 +244,6 @@ class Widget_LogoSlider extends Widget_Base {
             [
                 'label' => __( 'Space Between (Gap)', 'oup' ),
                 'type' => Controls_Manager::NUMBER,
-                'default' => 45,
             ]
         );
 
@@ -257,21 +256,13 @@ class Widget_LogoSlider extends Widget_Base {
                 'selectors' => [
                     '{{WRAPPER}} .oup-logo-slider-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
-                'default' => [
-                    'top' => 0,
-                    'bottom' => 0,
-                    'left' => 120,
-                    'right' => 120,
-                    'unit' => 'px',
-                    'isLinked' => false,
-                ],
             ]
         );
 
         $this->add_responsive_control(
-            'logo_max_height',
+            'logo_height',
             [
-                'label' => __( 'Max Height', 'oup' ),
+                'label' => __( 'Height', 'oup' ),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => [ 'px' ],
                 'range' => [
@@ -280,13 +271,19 @@ class Widget_LogoSlider extends Widget_Base {
                         'max' => 200,
                     ],
                 ],
-                'default' => [
-                    'unit' => 'px',
-                    'size' => 60,
-                ],
                 'selectors' => [
-                    '{{WRAPPER}} .oup-logo-img' => 'max-height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .oup-logo-img' => 'height: {{SIZE}}{{UNIT}};',
                 ],
+            ]
+        );
+
+        $this->add_group_control(
+            \Elementor\Group_Control_Background::get_type(),
+            [
+                'name' => 'logo_background',
+                'label' => __( 'Background', 'oup' ),
+                'types' => [ 'classic', 'gradient' ],
+                'selector' => '{{WRAPPER}} .oup-logo-img',
             ]
         );
 
@@ -513,22 +510,29 @@ class Widget_LogoSlider extends Widget_Base {
         $swiper_settings = [
             'slidesPerView' => !empty($settings['slides_per_view_mobile']) ? $settings['slides_per_view_mobile'] : 2,
             'slidesPerGroup' => !empty($settings['slides_to_scroll_mobile']) ? $settings['slides_to_scroll_mobile'] : 1,
-            'spaceBetween'  => !empty($settings['space_between_mobile']) ? $settings['space_between_mobile'] : 20,
             'loop'          => $settings['infinite_loop'] === 'yes',
             'speed'         => $settings['speed'] ?: 500,
             'breakpoints'   => [
                 768 => [
                     'slidesPerView' => !empty($settings['slides_per_view_tablet']) ? $settings['slides_per_view_tablet'] : 4,
                     'slidesPerGroup' => !empty($settings['slides_to_scroll_tablet']) ? $settings['slides_to_scroll_tablet'] : 1,
-                    'spaceBetween'  => !empty($settings['space_between_tablet']) ? $settings['space_between_tablet'] : 30,
                 ],
                 1024 => [
                     'slidesPerView' => !empty($settings['slides_per_view']) ? $settings['slides_per_view'] : 6,
                     'slidesPerGroup' => !empty($settings['slides_to_scroll']) ? $settings['slides_to_scroll'] : 1,
-                    'spaceBetween'  => !empty($settings['space_between']) ? $settings['space_between'] : 45,
                 ]
             ]
         ];
+
+        if ( isset($settings['space_between_mobile']) && $settings['space_between_mobile'] !== '' ) {
+            $swiper_settings['spaceBetween'] = $settings['space_between_mobile'];
+        }
+        if ( isset($settings['space_between_tablet']) && $settings['space_between_tablet'] !== '' ) {
+            $swiper_settings['breakpoints'][768]['spaceBetween'] = $settings['space_between_tablet'];
+        }
+        if ( isset($settings['space_between']) && $settings['space_between'] !== '' ) {
+            $swiper_settings['breakpoints'][1024]['spaceBetween'] = $settings['space_between'];
+        }
 
         $show_arrows = in_array( $settings['navigation'], [ 'both', 'arrows' ] );
         $show_dots = in_array( $settings['navigation'], [ 'both', 'dots' ] );
