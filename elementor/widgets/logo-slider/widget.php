@@ -385,7 +385,8 @@ class Widget_LogoSlider extends Widget_Base {
                     'px' => [ 'min' => 10, 'max' => 60 ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .elementor-swiper-button i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .oup-logo-slider-container .elementor-swiper-button i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .oup-logo-slider-container .elementor-swiper-button svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
                     'navigation' => [ 'both', 'arrows' ],
@@ -399,7 +400,9 @@ class Widget_LogoSlider extends Widget_Base {
                 'label' => __( 'Color', 'oup' ),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .elementor-swiper-button' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .oup-logo-slider-container .elementor-swiper-button' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .oup-logo-slider-container .elementor-swiper-button i' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .oup-logo-slider-container .elementor-swiper-button svg' => 'fill: {{VALUE}};',
                 ],
                 'condition' => [
                     'navigation' => [ 'both', 'arrows' ],
@@ -413,7 +416,7 @@ class Widget_LogoSlider extends Widget_Base {
                 'label' => __( 'Background Color', 'oup' ),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .elementor-swiper-button' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .oup-logo-slider-container .elementor-swiper-button' => 'background-color: {{VALUE}};',
                 ],
                 'condition' => [
                     'navigation' => [ 'both', 'arrows' ],
@@ -442,7 +445,7 @@ class Widget_LogoSlider extends Widget_Base {
                     'px' => [ 'min' => 5, 'max' => 20 ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .swiper-pagination-bullet' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .oup-logo-slider-container .swiper-pagination-bullet' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
                 ],
                 'condition' => [
                     'navigation' => [ 'both', 'dots' ],
@@ -456,7 +459,7 @@ class Widget_LogoSlider extends Widget_Base {
                 'label' => __( 'Color', 'oup' ),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .swiper-pagination-bullet' => 'background: {{VALUE}};',
+                    '{{WRAPPER}} .oup-logo-slider-container .swiper-pagination-bullet' => 'background: {{VALUE}};',
                 ],
                 'condition' => [
                     'navigation' => [ 'both', 'dots' ],
@@ -470,7 +473,7 @@ class Widget_LogoSlider extends Widget_Base {
                 'label' => __( 'Active Color', 'oup' ),
                 'type' => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .swiper-pagination-bullet-active' => 'background: {{VALUE}}; opacity: 1;',
+                    '{{WRAPPER}} .oup-logo-slider-container .swiper-pagination-bullet-active' => 'background: {{VALUE}}; opacity: 1;',
                 ],
                 'condition' => [
                     'navigation' => [ 'both', 'dots' ],
