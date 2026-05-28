@@ -43,7 +43,7 @@ class ElementorWidgets {
 
 		$this->widgets = array(
 			'sample-widget',
-		
+			'logo-slider',
 		);
 
 		return $this->widgets;
@@ -126,7 +126,7 @@ class ElementorWidgets {
 
 		// Register Widgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SampleWidget\Widget_SampleWidget());
-	
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\LogoSlider\Widget_LogoSlider());
 	}
 
 	/**
