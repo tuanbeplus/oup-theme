@@ -39,48 +39,37 @@ class Widget_LogoSlider extends Widget_Base {
             ]
         );
 
-        $repeater = new Repeater();
-
-        $repeater->add_control(
-            'logo_image',
+        $this->add_control(
+            'logo_gallery',
             [
-                'label' => __( 'Choose Logo Image', 'oup' ),
-                'type' => Controls_Manager::MEDIA,
-                'dynamic' => [
-                    'active' => true,
-                ],
-                'default' => [
-                    'url' => \Elementor\Utils::get_placeholder_image_src(),
-                ],
-            ]
-        );
-
-        $repeater->add_control(
-            'logo_link',
-            [
-                'label' => __( 'Logo Link', 'oup' ),
-                'type' => Controls_Manager::URL,
-                'dynamic' => [
-                    'active' => true,
-                ],
-                'placeholder' => __( 'https://your-link.com', 'oup' ),
+                'label' => __( 'Add Logos', 'oup' ),
+                'type' => \Elementor\Controls_Manager::GALLERY,
+                'default' => [],
             ]
         );
 
         $this->add_control(
-            'logos',
+            'logo_link_to',
             [
-                'label' => __( 'Logo List', 'oup' ),
-                'type' => Controls_Manager::REPEATER,
-                'fields' => $repeater->get_controls(),
-                'default' => [
-                    [ 'logo_image' => [ 'url' => \Elementor\Utils::get_placeholder_image_src() ] ],
-                    [ 'logo_image' => [ 'url' => \Elementor\Utils::get_placeholder_image_src() ] ],
-                    [ 'logo_image' => [ 'url' => \Elementor\Utils::get_placeholder_image_src() ] ],
-                    [ 'logo_image' => [ 'url' => \Elementor\Utils::get_placeholder_image_src() ] ],
-                    [ 'logo_image' => [ 'url' => \Elementor\Utils::get_placeholder_image_src() ] ],
+                'label' => __( 'Link', 'oup' ),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => 'none',
+                'options' => [
+                    'none' => __( 'None', 'oup' ),
+                    'custom' => __( 'Custom URL', 'oup' ),
                 ],
-                'title_field' => __( 'Logo Item', 'oup' ),
+            ]
+        );
+
+        $this->add_control(
+            'logo_link',
+            [
+                'label' => __( 'Custom URL', 'oup' ),
+                'type' => \Elementor\Controls_Manager::URL,
+                'placeholder' => __( 'https://your-link.com', 'oup' ),
+                'condition' => [
+                    'logo_link_to' => 'custom',
+                ],
             ]
         );
 
@@ -503,7 +492,7 @@ class Widget_LogoSlider extends Widget_Base {
     protected function render() {
         $settings = $this->get_settings_for_display();
 
-        if ( empty( $settings['logos'] ) ) {
+        if ( empty( $settings['logo_gallery'] ) ) {
             return;
         }
 
@@ -561,12 +550,12 @@ class Widget_LogoSlider extends Widget_Base {
         <div class="oup-logo-slider-container" <?php echo $dir_attr; ?>>
             <div class="swiper oup-logo-swiper" data-swiper-settings='<?php echo esc_attr( wp_json_encode( $swiper_settings ) ); ?>'>
                 <div class="swiper-wrapper">
-                    <?php foreach ( $settings['logos'] as $index => $logo ) : ?>
-                        <?php if ( ! empty( $logo['logo_image']['url'] ) ) : ?>
+                    <?php foreach ( $settings['logo_gallery'] as $index => $image ) : ?>
+                        <?php if ( ! empty( $image['url'] ) ) : ?>
                             <div class="swiper-slide oup-logo-slide">
                                 <?php
                                 $fake_settings = [
-                                    'image' => $logo['logo_image'],
+                                    'image' => $image,
                                     'image_size' => $settings['logo_image_size'],
                                     'image_custom_dimension' => $settings['logo_image_custom_dimension'] ?? '',
                                 ];
@@ -579,9 +568,9 @@ class Widget_LogoSlider extends Widget_Base {
                                     $img_html = str_replace( '<img ', '<img class="' . $img_class . '" ', $img_html );
                                 }
                                 
-                                if ( ! empty( $logo['logo_link']['url'] ) ) {
+                                if ( $settings['logo_link_to'] === 'custom' && ! empty( $settings['logo_link']['url'] ) ) {
                                     $link_key = 'logo_link_' . $index;
-                                    $this->add_link_attributes( $link_key, $logo['logo_link'] );
+                                    $this->add_link_attributes( $link_key, $settings['logo_link'] );
                                     echo '<a ' . $this->get_render_attribute_string( $link_key ) . '>' . $img_html . '</a>';
                                 } else {
                                     echo $img_html;

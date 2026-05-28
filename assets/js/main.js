@@ -34,7 +34,11 @@
             var settings = $slider.data('swiper-settings');
 
             if (typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.swiper) {
-                new elementorFrontend.utils.swiper(this, settings).then(function () {});
+                new elementorFrontend.utils.swiper(this, settings).then(function (swiperInstance) {
+                    if (settings.autoplay && swiperInstance.autoplay) {
+                        swiperInstance.autoplay.start();
+                    }
+                });
             } else if (typeof Swiper !== 'undefined') {
                 new Swiper(this, settings);
             }
