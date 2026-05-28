@@ -266,15 +266,7 @@ class Widget_LogoSlider extends Widget_Base {
             ]
         );
 
-        $this->add_group_control(
-            \Elementor\Group_Control_Background::get_type(),
-            [
-                'name' => 'logo_background',
-                'label' => __( 'Background', 'oup' ),
-                'types' => [ 'classic', 'gradient' ],
-                'selector' => '{{WRAPPER}} .oup-logo-slider-container .oup-logo-swiper .swiper-slide .oup-logo-img',
-            ]
-        );
+
 
         $this->start_controls_tabs( 'tabs_logo_style' );
 
@@ -542,9 +534,12 @@ class Widget_LogoSlider extends Widget_Base {
             if ( $settings['pause_on_hover'] === 'yes' ) {
                 $swiper_settings['autoplay']['pauseOnMouseEnter'] = true;
             }
+            if ( $settings['direction'] === 'rtl' ) {
+                $swiper_settings['autoplay']['reverseDirection'] = true;
+            }
         }
         
-        $dir_attr = $settings['direction'] === 'rtl' ? 'dir="rtl"' : '';
+        $dir_attr = '';
 
         ?>
         <div class="oup-logo-slider-container" <?php echo $dir_attr; ?>>

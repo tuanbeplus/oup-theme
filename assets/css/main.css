@@ -2,12 +2,12 @@ body .gform_wrapper{font-family:var(--e-global-typography-text-font-family, "Plu
 .oup-logo-slider-container { width: 100%; position: relative; overflow: hidden;  }
 
 
-.oup-logo-slider-container .oup-logo-swiper { width: 100%; height: 100%; padding-bottom: 40px; }
+.oup-logo-slider-container .oup-logo-swiper { width: 100%; height: 100%;  }
 
 .oup-logo-slider-container .oup-logo-swiper:not(.swiper-initialized) .swiper-slide { margin-right: 45px; }
 .oup-logo-slider-container .oup-logo-swiper .swiper-slide { display: flex; align-items: center; justify-content: center; }
 .oup-logo-slider-container .oup-logo-swiper .swiper-slide a { display: block; }
-.oup-logo-slider-container .oup-logo-swiper .swiper-slide .oup-logo-img { width: auto; height: 50px; object-fit: contain; display: block; margin: 0 auto; background-color: lightgray; mix-blend-mode: multiply; }
+.oup-logo-slider-container .oup-logo-swiper .swiper-slide .oup-logo-img { width: auto; height: 50px; object-fit: contain; display: block;  background-color: lightgray; mix-blend-mode: multiply; }
 .oup-logo-slider-container .elementor-swiper-button { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background-color: rgba(0, 0, 0, 0.1); border-radius: 50%; color: #333; transition: all 0.3s ease; }
 .oup-logo-slider-container .elementor-swiper-button:hover { background-color: rgba(0, 0, 0, 0.3); color: #fff; }
 .oup-logo-slider-container .elementor-swiper-button.elementor-swiper-button-prev { left: 10px; }
@@ -16,6 +16,8 @@ body .gform_wrapper{font-family:var(--e-global-typography-text-font-family, "Plu
 .oup-logo-slider-container .swiper-pagination { position: absolute; bottom: 0; left: 0; width: 100%; text-align: center; z-index: 10; }
 .oup-logo-slider-container .swiper-pagination .swiper-pagination-bullet { width: 8px; height: 8px; display: inline-block; border-radius: 50%; background: #000; opacity: 0.2; margin: 0 4px; cursor: pointer; transition: all 0.3s ease; }
 .oup-logo-slider-container .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active { opacity: 1; background: var(--e-global-color-primary, #333); }
+
+
 
 
 
