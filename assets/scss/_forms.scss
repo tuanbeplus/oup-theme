@@ -113,27 +113,63 @@ body {
 						}
 						
 					}
+					.gfield_checkbox {
+						.gchoice {
+							position: relative;
+							margin-left: 26px;
+							input {
+								width: 15px;
+								height: 15px;
+								margin: 0;
+								cursor: pointer;
+								position: absolute;
+								left: -26px;
+								top: 9px;
+							}
+							input:checked+label::before {
+								display: block;
+							}
+							label {
+								&::before{
+									content: "";
+									position: absolute;
+									left: -26px;
+									top: 9px;
+									display: none;
+									width: 15px;
+									height: 15px;
+									background-color: var(--e-global-color-secondary);
+									border-radius: 3px;
+									background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBMaWNlbnNlOiBNSVQuIE1hZGUgYnkgS2VuYW4gR3VuZG9nYW46IGh0dHBzOi8vZ2l0aHViLmNvbS9rZW5hbmd1bmRvZ2FuL2ZvbnRpc3RvIC0tPgo8c3ZnIGZpbGw9IiNmZmYiIHZpZXdCb3g9IjAgLTQuNSAzMyAzMyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJtMCAxMC45MDkgNC4zNjQtNC4zNjQgOC43MjcgOC43MjcgMTUuMjczLTE1LjI3MyA0LjM2NCA0LjM2NC0xOS42MzYgMTkuNjM2eiIvPjwvc3ZnPg==
+	);
+									background-repeat: no-repeat;
+									background-position: center;
+									background-size: 11px;
+								}
+							}
+						}
+					}
                     .ginput_container_select {
                         position: relative;
                         select {
                             width: 100%;
                             cursor: pointer;
+							font-size: 1rem;
                         }
                         &::after {
                             content: "";
                             display: block;
-                            width: 24px;
-                            height: 20px;
+                            width: 12px;
+                            height: 12px;
                             position: absolute;
-                            right: 2px;
+                            right: 15px;
                             top: 50%;
                             transform: translateY(-50%);
                             z-index: 10;
-                            background-image: url("/wp-content/themes/stakspace/assets/imgs/chevron-down-icon.svg");
+                            background-image: url("/wp-content/uploads/2026/05/gray-chevron-down.svg");
                             background-repeat: no-repeat;
-                            background-size: 12px;
-                            background-color: #fff;
-                            background-position: left;
+                            background-size: contain;
+                            background-position: center;
                         }
                     }
                     .gfield_description.validation_message {
@@ -150,7 +186,7 @@ body {
         .gform_footer {
             width: 100%;
             padding: 0 !important;
-            margin: 32px 0 0 !important;
+            margin: 40px 0 0 !important;
             position: relative;
             @media (max-width: 767px) {
                 margin: 24px 0 0 !important;
