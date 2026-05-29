@@ -4,9 +4,6 @@
  * @package Onwards-Upwards-Psychology-Theme
  */
 
-// Widget imports
-require('./widgets/sample-widget');
-
 (function ($) {
     'use strict';
 

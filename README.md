@@ -7,7 +7,7 @@ This is a custom WordPress child theme created for **Onwards & Upwards Psycholog
 ## Features
 
 - **Elementor Integrated**: Designed to work seamlessly with the Elementor page builder. Custom Elementor widgets are supported and automatically registered.
-- **Modern Asset Compilation**: Uses Laravel Mix (Webpack) to compile, bundle, and minify Sass (SCSS) and JavaScript (JS).
+- **Modern Asset Compilation**: Uses Laravel Mix (Webpack) to compile, bundle, and minify Sass (SCSS). JavaScript is loaded directly without minification to maintain the IIFE structure.
 - **WooCommerce Ready**: Contains custom templates and overrides (e.g., product tag display and custom loops) located in `inc/woo.php`.
 - **AJAX Support**: Pre-localizes `ajaxurl` for AJAX handlers in JavaScript.
 
@@ -22,9 +22,7 @@ oup-theme/
 │   │   ├── main.css            # Compiled CSS (Enqueued in WP)
 │   │   └── main.css.map        # Source map for CSS debugging
 │   ├── js/
-│   │   ├── main.js             # Main JavaScript entry point
-│   │   ├── main.min.js         # Compiled & minified bundle (Enqueued in WP)
-│   │   ├── main.min.js.map     # Source map for JS debugging
+│   │   ├── main.js             # Main JavaScript entry point (Enqueued in WP)
 │   │   └── widgets/            # Custom widget JS files
 │   ├── scss/
 │   │   ├── main.scss           # Main SCSS entry point
@@ -79,7 +77,7 @@ When starting on a new task or widget, always work in a dedicated feature branch
 
 ## Asset Compilation Setup (NPM)
 
-The theme uses Laravel Mix to compile Sass files and bundle modular JS widgets.
+The theme uses Laravel Mix to compile Sass files. JS widgets are loaded as required.
 
 ### 1. Initial Setup
 Make sure you have Node.js installed locally. In your theme's root directory, run:
@@ -88,7 +86,7 @@ npm install
 ```
 *(Webpack and Sass-Loader versions are automatically overridden inside `package.json` to guarantee compatibility with `laravel-mix` v6).*
 
-### 2. Compile CSS (SCSS) and JavaScript (JS)
+### 2. Compile CSS (SCSS)
 
 - **Development / Watch Mode (Recommended during styling):**
   Compiles assets with sourcemaps enabled and watches for any file modifications in real-time to re-compile automatically.
@@ -197,11 +195,7 @@ Follow these steps to build and register a new custom Elementor widget (e.g., a 
        });
    })(jQuery);
    ```
-3. Load the script into the main JavaScript bundle in [assets/js/main.js](file:///Users/macbookpro/Documents/Work_Project/Onwards_Upwards_Psychology_dev/oup-theme/assets/js/main.js):
-   ```javascript
-   // Widget imports
-   require('./widgets/testimonial-carousel');
-   ```
+2. Ensure your interactive script is loaded or enqueued in `elementor/widgets-load.php`. Notice how `wp_register_script` handles the widget-specific JS.
 
 ---
 

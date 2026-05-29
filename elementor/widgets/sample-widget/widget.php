@@ -25,6 +25,14 @@ class Widget_SampleWidget extends Widget_Base {
         return [ 'oup' ];
     }
 
+    public function get_script_depends() {
+        return [ 'oup-sample-widget-script' ];
+    }
+
+    public function get_style_depends() {
+        return [ 'oup-sample-widget-style' ];
+    }
+
 
     protected function register_content_section_controls() {
 
