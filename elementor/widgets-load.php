@@ -58,7 +58,13 @@ class ElementorWidgets {
 	 * @access public
 	 */
 	public function widget_styles() {
-		
+		wp_register_style( 
+			'oup-sample-widget-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
 	}
 
 	/**
@@ -70,7 +76,13 @@ class ElementorWidgets {
 	 * @access public
 	 */
 	public function widget_scripts() {
-		
+		wp_register_script( 
+			'oup-sample-widget-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/script.js',
+			array(),
+			OUP_THEME_VER,
+			true
+		);
 	}
 
 	/**
