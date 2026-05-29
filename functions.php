@@ -28,3 +28,6 @@ require_once get_stylesheet_directory() . '/elementor/widgets-load.php';
 
 /* WooCommerce */
 require_once get_stylesheet_directory() . '/inc/woo.php';
+
+/* AJAX Handlers */
+require_once get_stylesheet_directory() . '/elementor/widgets/worksheet-filter/ajax.php';

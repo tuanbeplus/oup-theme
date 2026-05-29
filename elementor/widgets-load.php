@@ -43,7 +43,7 @@ class ElementorWidgets {
 
 		$this->widgets = array(
 			'sample-widget',
-		
+			'worksheet-filter',
 		);
 
 		return $this->widgets;
@@ -65,6 +65,13 @@ class ElementorWidgets {
 			OUP_THEME_VER,
 			'all'
 		);
+		wp_register_style( 
+			'oup-worksheet-filter-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
 	}
 
 	/**
@@ -80,6 +87,13 @@ class ElementorWidgets {
 			'oup-sample-widget-script',
 			get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/script.js',
 			array(),
+			OUP_THEME_VER,
+			true
+		);
+		wp_register_script( 
+			'oup-worksheet-filter-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/script.js',
+			array('jquery'),
 			OUP_THEME_VER,
 			true
 		);
@@ -138,6 +152,7 @@ class ElementorWidgets {
 
 		// Register Widgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SampleWidget\Widget_SampleWidget());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\WorksheetFilter\Widget_WorksheetFilter());
 		
 	}
 
