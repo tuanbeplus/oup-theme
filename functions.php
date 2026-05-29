@@ -167,3 +167,5 @@ function oup_render_archive_post_card(int $post_id, string $taxonomy = 'category
     </article>
 <?php
 }
+/* AJAX Handlers */
+require_once get_stylesheet_directory() . '/elementor/widgets/worksheet-filter/ajax.php';
