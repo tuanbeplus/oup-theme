@@ -43,6 +43,7 @@ class ElementorWidgets {
 
 		$this->widgets = array(
 			'sample-widget',
+		
 		);
 
 		return $this->widgets;
@@ -125,6 +126,7 @@ class ElementorWidgets {
 
 		// Register Widgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SampleWidget\Widget_SampleWidget());
+		
 	}
 
 	/**
