@@ -1,0 +1,32 @@
+{
+  "name": "oup-theme",
+  "version": "1.0.0",
+  "description": "This is a custom WordPress child theme created for **Onwards & Upwards Psychology**, built on top of the [Hello Elementor] theme.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx mix watch",
+    "build": "npx mix --production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuanbeplus/oup-theme.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tuanbeplus/oup-theme/issues"
+  },
+  "homepage": "https://github.com/tuanbeplus/oup-theme#readme",
+  "devDependencies": {
+    "laravel-mix": "^6.0.49",
+    "sass": "^1.100.0",
+    "sass-loader": "^12.0.0",
+    "webpack": "5.83.1"
+  },
+  "overrides": {
+    "webpack": "5.83.1"
+  }
+}
