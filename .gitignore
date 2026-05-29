@@ -30,4 +30,8 @@ Desktop.ini
 .idea/
 *.sublime-workspace
 *.sublime-project
+.kit.md
+kit.md
+mix-manifest.json
+*.map
 # End of Selection
