@@ -43,7 +43,7 @@ class ElementorWidgets {
 
 		$this->widgets = array(
 			'sample-widget',
-		
+			'archive-posts-filter'
 		);
 
 		return $this->widgets;
@@ -65,6 +65,14 @@ class ElementorWidgets {
 			OUP_THEME_VER,
 			'all'
 		);
+
+		wp_register_style(
+            'oup-archive-posts-filter-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/style.css',
+            [],
+            OUP_THEME_VER,
+            'all'
+        );
 	}
 
 	/**
@@ -83,6 +91,14 @@ class ElementorWidgets {
 			OUP_THEME_VER,
 			true
 		);
+		
+		wp_register_script(
+            'oup-archive-posts-filter-script',
+            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/script.js',
+            [ 'jquery' ],
+            OUP_THEME_VER,
+            true
+        );
 	}
 
 	/**
@@ -138,7 +154,7 @@ class ElementorWidgets {
 
 		// Register Widgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SampleWidget\Widget_SampleWidget());
-		
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ArchivePostsFilter\Widget_ArchivePostsFilter());
 	}
 
 	/**

@@ -1,0 +1,309 @@
+// Breakpoints
+$bp-tablet: 1024px;
+$bp-tablet-sm: 900px;
+$bp-mobile: 600px;
+
+// Shared tokens
+$font-body: "Plus Jakarta Sans", sans-serif;
+$font-heading: "League Spartan", sans-serif;
+$color-text: #231F20;
+$color-accent: #0091B3;
+$color-dark: #000;
+$radius-card: 40px;
+
+.archive-posts-filter-widget {
+
+    // Tabs
+    .apf-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 70px;
+
+        @media (max-width: $bp-tablet-sm) {
+            gap: 14px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: $bp-mobile) {
+            gap: 10px;
+            margin-bottom: 36px;
+        }
+    }
+
+    .apf-tab {
+        display: inline-flex;
+        align-items: center;
+        background: #fff;
+        border: 1.125px solid $color-accent;
+        border-radius: 24px;
+        padding: 5px 20px;
+        font-size: 0.938rem;
+        line-height: 1.6;
+        font-family: $font-body;
+        color: $color-accent;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+        @media (max-width: $bp-mobile) {
+            padding: 4px 14px;
+            font-size: 0.875rem;
+        }
+
+        &:hover,
+        &.active {
+            background: $color-dark;
+            border-color: $color-dark;
+            color: #fff;
+        }
+    }
+
+    // Grid
+    .apf-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+
+        @media (max-width: $bp-tablet) {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: $bp-tablet-sm) {
+            gap: 20px;
+        }
+
+        @media (max-width: $bp-mobile) {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+    }
+
+    // Card
+    .apf-card {
+        background: #fff;
+        border-radius: $radius-card;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 2px 7px 7px 0 rgba(0, 0, 0, 0.10);
+        transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.3s ease;
+        opacity: 0;
+        transform: translateY(12px);
+
+        @media (max-width: $bp-mobile) {
+            border-radius: 28px;
+        }
+
+        &.apf-animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+            // Scoped inside .apf-card so only the hovered card's image scales
+            .apf-card__img {
+                transform: scale(1.04);
+            }
+        }
+    }
+
+    .apf-card__inner {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        text-decoration: none;
+        color: inherit;
+        outline-offset: 3px;
+    }
+
+    // Thumb — aspect-ratio keeps image proportional to card width
+    .apf-card__thumb {
+        aspect-ratio: 4 / 3;
+        overflow: hidden;
+        flex-shrink: 0;
+        z-index: 1;
+        position: relative;
+
+        @media (max-width: $bp-mobile) {
+            aspect-ratio: 16 / 9;
+        }
+
+        .apf-card__img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.45s ease;
+        }
+    }
+
+    // Body overlaps thumb
+    .apf-card__body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        background: #fff;
+        border-radius: $radius-card;
+        padding: 40px;
+        margin-top: -40px;
+        position: relative;
+        z-index: 2;
+
+        @media (max-width: $bp-tablet) {
+            padding: 28px;
+            margin-top: -28px;
+            border-radius: 32px;
+        }
+
+        @media (max-width: $bp-tablet-sm) {
+            padding: 24px;
+        }
+
+        @media (max-width: $bp-mobile) {
+            padding: 20px;
+            margin-top: -20px;
+            border-radius: 28px;
+        }
+    }
+
+    // Meta: date left, tag right
+    .apf-card__meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .apf-card__date {
+        font-size: 0.938rem;
+        font-family: $font-body;
+        line-height: 1.6;
+        color: $color-text;
+        white-space: nowrap;
+    }
+
+    .apf-card__tag {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 30px;
+        font-size: 0.938rem;
+        font-family: $font-body;
+        white-space: nowrap;
+        color: $color-text;
+        background: #C6EFFE;
+
+        // Slug-based colors — add new tags here as needed
+        &.product-feature {
+            background: #FDEEB7;
+        }
+
+        &.real-talk {
+            background: #D8EAC7;
+        }
+
+        &.milestone {
+            background: #FCCDE5;
+        }
+    }
+
+    .apf-card__title {
+        margin: 20px 0 0;
+        font-size: 1.875rem;
+        font-family: $font-heading;
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.3px;
+        color: $color-text;
+
+        @media (max-width: $bp-tablet) {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: $bp-tablet-sm) {
+            font-size: 1.375rem;
+        }
+
+        @media (max-width: $bp-mobile) {
+            font-size: 1.25rem;
+        }
+    }
+
+    .apf-card__excerpt {
+        margin: 10px 0 0;
+        font-size: 0.938rem;
+        font-family: $font-body;
+        line-height: 1.6;
+        color: $color-text;
+        flex: 1;
+
+        @media (max-width: $bp-mobile) {
+            font-size: 0.875rem;
+        }
+    }
+
+    // Author
+    .apf-card__author {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 20px;
+    }
+
+    .apf-card__author-name {
+        font-size: 0.938rem;
+        font-family: $font-body;
+        font-weight: 600;
+        line-height: 1.7;
+        color: $color-text;
+    }
+
+    .apf-card__author-role {
+        font-size: 0.938rem;
+        font-family: $font-body;
+        line-height: 1.6;
+        color: $color-text;
+    }
+
+    // Empty state
+    .apf-empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        color: $color-text;
+        padding: 60px 0;
+        font-size: 1rem;
+        font-family: $font-body;
+    }
+}
+
+.apf-spinner-wrap {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0;
+
+    @media (max-width: $bp-mobile) {
+        padding: 40px 0;
+    }
+}
+
+.apf-spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top-color: $color-dark;
+    animation: apf-spin 0.7s linear infinite;
+}
+
+@keyframes apf-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
