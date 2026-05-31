@@ -166,68 +166,6 @@ class Widget_ArchivePostsFilter extends Widget_Base
         return $args;
     }
 
-    private function render_card(int $post_id): string
-    {
-        $post      = get_post($post_id);
-        $date      = get_the_date('j M Y', $post);
-        $title     = get_the_title($post);
-        $permalink = get_permalink($post);
-        $excerpt   = wp_trim_words(get_the_excerpt($post), 28, '…');
-
-        $thumb_html = '';
-        if (has_post_thumbnail($post_id)) {
-            $thumb_html = get_the_post_thumbnail($post_id, 'large', ['class' => 'apf-card__img']);
-        }
-
-        $tags     = wp_get_post_terms($post_id, 'post_tag', ['fields' => 'all', 'orderby' => 'term_id', 'order' => 'ASC']);
-        $tag_html = '';
-        if (! is_wp_error($tags) && ! empty($tags)) {
-            $tag_html = sprintf(
-                '<span class="apf-card__tag %s">%s</span>',
-                esc_attr($tags[0]->slug),
-                esc_html($tags[0]->name)
-            );
-        }
-
-        $author_id   = (int) $post->post_author;
-        $author_name = get_the_author_meta('display_name', $author_id);
-        $user        = get_userdata($author_id);
-        $author_role = '';
-        if ($user && ! empty($user->roles)) {
-            $wp_roles    = wp_roles();
-            $role_slug   = $user->roles[0];
-            $author_role = $wp_roles->roles[$role_slug]['name'] ?? ucfirst($role_slug);
-        }
-
-        ob_start(); ?>
-        <article class="apf-card" data-post-id="<?= esc_attr($post_id) ?>">
-            <a href="<?= esc_url($permalink) ?>" class="apf-card__inner" tabindex="0">
-                <?php if ($thumb_html) : ?>
-                    <div class="apf-card__thumb"><?= $thumb_html ?></div>
-                <?php endif; ?>
-                <div class="apf-card__body">
-                    <div class="apf-card__meta">
-                        <time class="apf-card__date" datetime="<?= esc_attr(get_the_date('Y-m-d', $post)) ?>">
-                            <?= esc_html($date) ?>
-                        </time>
-                        <?= $tag_html ?>
-                    </div>
-                    <h3 class="apf-card__title"><?= esc_html($title) ?></h3>
-                    <?php if ($excerpt) : ?>
-                        <p class="apf-card__excerpt"><?= esc_html($excerpt) ?></p>
-                    <?php endif; ?>
-                    <div class="apf-card__author">
-                        <span class="apf-card__author-name"><?= esc_html($author_name) ?></span>
-                        <?php if ($author_role) : ?>
-                            <span class="apf-card__author-role"><?= esc_html($author_role) ?></span>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </a>
-        </article>
-    <?php return ob_get_clean();
-    }
-
     protected function render()
     {
         $settings  = $this->get_settings_for_display();
@@ -253,7 +191,7 @@ class Widget_ArchivePostsFilter extends Widget_Base
         if ($all_query->have_posts()) {
             while ($all_query->have_posts()) {
                 $all_query->the_post();
-                echo $this->render_card(get_the_ID());
+                oup_render_archive_post_card(get_the_ID(), $taxonomy);
             }
             wp_reset_postdata();
         }
@@ -274,7 +212,7 @@ class Widget_ArchivePostsFilter extends Widget_Base
             if ($query->have_posts()) {
                 while ($query->have_posts()) {
                     $query->the_post();
-                    echo $this->render_card(get_the_ID());
+                    oup_render_archive_post_card(get_the_ID(), $taxonomy);
                 }
                 wp_reset_postdata();
             }
@@ -285,7 +223,7 @@ class Widget_ArchivePostsFilter extends Widget_Base
                 : '<div class="apf-empty">' . esc_html__('No posts found.', 'oup') . '</div>';
             $max_pages[$tid] = max(1, (int) $query->max_num_pages);
         }
-    ?>
+?>
         <div
             class="archive-posts-filter-widget"
             data-post-type="<?= esc_attr($post_type) ?>"
