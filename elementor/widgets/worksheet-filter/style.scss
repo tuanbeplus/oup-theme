@@ -29,20 +29,21 @@
             background-color: transparent;
             padding: 10px 20px;
             border-radius: 24px;
-            border: 1.125px solid var( --e-global-color-secondary);
-            color: var( --e-global-color-secondary);
+            border: 1.125px solid var(--e-global-color-secondary);
+            color: var(--e-global-color-secondary);
             text-align: center;
             font-family: var(--e-global-typography-primary-font-family);
-            font-size: 0.9375rem; 
+            font-size: 0.9375rem;
             font-weight: 400;
             line-height: 1.6;
             cursor: pointer;
             transition: all 0.3s ease;
             outline: none;
 
-            &:hover, &.active {
-                background-color: var( --e-global-color-secondary);
-                color: var( --e-global-color-ed9b819);
+            &:hover,
+            &.active {
+                background-color: var(--e-global-color-secondary);
+                color: var(--e-global-color-ed9b819);
             }
         }
     }
@@ -52,12 +53,9 @@
         max-width: 375px;
         flex: 0 0 375px;
 
-        @media (max-width: 991px) {
-            flex: 1 1 auto;
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             max-width: 100%;
+            flex: 1 1 auto;
         }
 
         .search-input-wrapper {
@@ -66,7 +64,7 @@
             align-items: center;
             gap: 10px;
             border-radius: 50px;
-            border: 1.13px solid var( --e-global-color-secondary);
+            border: 1.13px solid var(--e-global-color-secondary);
             background: var(--e-global-color-ed9b819);
 
             .search-icon {
@@ -74,7 +72,7 @@
             }
 
             input {
-                padding:0;
+                padding: 0;
                 width: 100%;
                 border: none;
                 background: transparent;
@@ -130,6 +128,7 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        height: 386px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
 
         &:hover {
@@ -147,34 +146,36 @@
 
         .worksheet-card-image {
             width: 100%;
-            height: 390px;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            height: 226px;
+            flex-shrink: 0;
             position: relative;
-            background-color: #E2F0D9; 
-            border-radius: 40px 40px 0 0; 
+            background-color: #E2F0D9;
+            border-radius: 40px 40px 0 0;
+            overflow: hidden;
+
+            @media (max-width: 767px) {
+                aspect-ratio: 16 / 9;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                display: block;
+            }
         }
 
         .worksheet-card-content {
             padding: 40px;
             display: flex;
             flex-direction: column;
-            height: 200px; 
+            height: 200px;
+            flex-shrink: 0;
             position: relative;
             background: #fff;
-            margin-top: -200px;
-            border-radius: 40px; 
-            @media(max-width: 1140px) and (min-width:1024px){
-                  gap:15px;
-                  height: 215px; 
-                  margin-top: -215px;
-                  @media (max-width: 1024px) {
-                      gap:20px;
-                      height: 180px; 
-                      margin-top: -180px;
-                  }
-            }
+            border-radius: 40px;
+            margin-top: -40px;
         }
 
         .worksheet-card-title {
@@ -195,19 +196,86 @@
         .worksheet-card-footer {
             margin-top: auto;
             flex-shrink: 0;
-            
+
             .worksheet-card-badge {
-                
+
                 display: inline-block;
                 padding: 5px 15px;
                 border-radius: 30px;
-                background-color: var(--e-global-color-f62bd18); 
+                background-color: var(--e-global-color-f62bd18);
                 color: #231F20;
-                font-family: var(  --e-global-typography-primary-font-family);
+                font-family: var(--e-global-typography-primary-font-family);
                 font-size: 0.938rem;
                 font-weight: 400;
                 line-height: 1.6;
             }
+        }
+    }
+
+ 
+    @keyframes shimmer {
+        0% {
+            background-position: -468px 0;
+        }
+        100% {
+            background-position: 468px 0;
+        }
+    }
+
+    .worksheet-card-skeleton {
+        height: 386px;
+        background: #fff;
+        border-radius: 40px;
+        overflow: hidden;
+        box-shadow: 2px 7px 7px 0 rgba(0, 0, 0, 0.10);
+        display: flex;
+        flex-direction: column;
+
+        .skeleton-image, 
+        .skeleton-title, 
+        .skeleton-badge {
+            background: #f6f7f8;
+            background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-repeat: no-repeat;
+            background-size: 800px 104px;
+            animation: shimmer 1.4s linear infinite;
+        }
+
+        .skeleton-image {
+            height: 226px;
+            width: 100%;
+        }
+
+        .skeleton-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 200px;
+            margin-top: -40px;
+            background: #fff;
+            border-radius: 40px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            width: 80%;
+            border-radius: 4px;
+            flex-shrink: 0;
+            
+            &.short {
+                width: 50%;
+            }
+        }
+
+        .skeleton-badge {
+            height: 30px;
+            width: 100px;
+            border-radius: 30px;
+            margin-top: auto;
+            flex-shrink: 0;
         }
     }
 }
