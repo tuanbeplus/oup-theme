@@ -1,1 +1,1 @@
-{"version":3,"file":"elementor/widgets/sample-widget/style.css","mappings":"AAAA;EACI;AACJ,C","sources":["webpack://oup-theme/./elementor/widgets/sample-widget/style.scss"],"sourcesContent":["em {\n    color: inherit;\n}"],"names":[],"sourceRoot":""}
+{"version":3,"file":"elementor/widgets/sample-widget/style.css","mappings":"AAAA;EACI;AACJ,C","sources":["webpack://oup-theme/./elementor/widgets/sample-widget/style.scss"],"sourcesContent":["em {\r\n    color: inherit;\r\n}"],"names":[],"sourceRoot":""}
