@@ -22,6 +22,23 @@
         var ajaxTimeout = null;
 
         function fetchWorksheets() {
+            var skeletonCard = 
+                '<div class="worksheet-card-skeleton">' +
+                    '<div class="skeleton-image"></div>' +
+                    '<div class="skeleton-content">' +
+                        '<div class="skeleton-title"></div>' +
+                        '<div class="skeleton-title short"></div>' +
+                        '<div class="skeleton-badge"></div>' +
+                    '</div>' +
+                '</div>';
+            
+            var allSkeletons = '';
+            var count = postsPerPage > 0 ? postsPerPage : 9;
+            for (var i = 0; i < count; i++) {
+                allSkeletons += skeletonCard;
+            }
+            
+            $resultsContainer.html(allSkeletons);
             $resultsContainer.addClass('loading');
 
             $.ajax({

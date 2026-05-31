@@ -173,34 +173,12 @@ class Widget_WorksheetFilter extends Widget_Base {
         $this->add_control(
             'card_border_radius',
             [
-                'label' => __( 'Container Border Radius', 'oup' ),
+                'label' => __( 'Card Border Radius', 'oup' ),
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%', 'em' ],
                 'selectors' => [
                     '{{WRAPPER}} .worksheet-card-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'image_border_radius',
-            [
-                'label' => __( 'Image Border Radius', 'oup' ),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
-                    '{{WRAPPER}} .worksheet-card-image' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'content_border_radius',
-            [
-                'label' => __( 'Content Box Border Radius', 'oup' ),
-                'type' => Controls_Manager::DIMENSIONS,
-                'size_units' => [ 'px', '%', 'em' ],
-                'selectors' => [
+                    '{{WRAPPER}} .worksheet-card-image' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} 0 0;',
                     '{{WRAPPER}} .worksheet-card-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
@@ -540,11 +518,17 @@ class Widget_WorksheetFilter extends Widget_Base {
         if(!$thumbnail) {
             $thumbnail = 'https://via.placeholder.com/600x400';
         }
+        $thumbnail_id = get_post_thumbnail_id($post_id);
+        $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+        if (empty($alt)) {
+            $alt = $title;
+        }
         $categories = wp_get_post_terms($post_id, 'worksheet-category');
         ?>
         <article class="worksheet-card-item">
             <a href="<?php echo esc_url($permalink); ?>" class="worksheet-card-link">
-                <div class="worksheet-card-image" style="background-image: url('<?php echo esc_url($thumbnail); ?>');">
+                <div class="worksheet-card-image">
+                    <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy">
                 </div>
                 
                 <div class="worksheet-card-content">
@@ -555,7 +539,6 @@ class Widget_WorksheetFilter extends Widget_Base {
                         if(!empty($categories) && !is_wp_error($categories)) : ?>
                             <span class="worksheet-card-badge filter-btn"><?php echo esc_html($categories[0]->name); ?></span>
                         <?php else: ?>
-                        <?php echo $post_id; ?>
                             <span class="worksheet-card-badge filter-btn" style="background: red; color: white;">No Category</span>
                         <?php endif; ?>
                     </div>
@@ -567,7 +550,7 @@ class Widget_WorksheetFilter extends Widget_Base {
 
     protected function render() {
         $settings = $this->get_settings_for_display();
-        $posts_per_page = !empty($settings['posts_per_page']) ? absint($settings['posts_per_page']) : 9;
+        $posts_per_page = ( isset($settings['posts_per_page']) && $settings['posts_per_page'] !== '' ) ? intval($settings['posts_per_page']) : 9;
         $categories_limit = !empty($settings['categories_limit']) ? absint($settings['categories_limit']) : 0;
         $orderby = !empty($settings['orderby']) ? esc_attr($settings['orderby']) : 'date';
         $order = !empty($settings['order']) ? esc_attr($settings['order']) : 'DESC';
