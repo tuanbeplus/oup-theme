@@ -29,7 +29,7 @@ Desktop.ini
 # IDE files
 .idea/
 *.sublime-workspace
-*.sublime-project
+*.sublime-projecti
 .kit.md
 kit.md
 mix-manifest.json
