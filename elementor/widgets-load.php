@@ -100,10 +100,15 @@ class ElementorWidgets {
 			'all'
 		);
 		wp_register_style( 
-			'oup-blog-detail-toc-style',
-			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/style.css',
 			'oup-worksheet-accordion-style',
 			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+		wp_register_style( 
+			'oup-blog-detail-toc-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/style.css',
 			array(),
 			OUP_THEME_VER,
 			'all'
