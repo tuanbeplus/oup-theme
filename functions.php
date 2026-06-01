@@ -25,6 +25,33 @@ if (!function_exists('enqueue_oup_styles_and_scripts')) {
     }
 }
 
+/**
+ * Shortcode: [oup_author_role]
+ * @return string
+ */
+if (!function_exists('oup_author_role_shortcode')) {
+    function oup_author_role_shortcode($atts)
+    {
+        $atts      = shortcode_atts(['post_id' => 0], $atts, 'oup_author_role');
+        $post_id   = $atts['post_id'] ? (int) $atts['post_id'] : get_the_ID();
+        $author_id = (int) get_post_field('post_author', $post_id);
+
+        if (!$author_id) {
+            return '';
+        }
+
+        $user  = get_userdata($author_id);
+        $roles = $user->roles ?? [];
+
+        if (empty($roles)) {
+            return '';
+        }
+
+        return esc_html(ucfirst(reset($roles)));
+    }
+    add_shortcode('oup_author_role', 'oup_author_role_shortcode');
+}
+
 /* Widgets Load */
 require_once get_stylesheet_directory() . '/elementor/widgets-load.php';
 

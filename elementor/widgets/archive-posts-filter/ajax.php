@@ -1,6 +1,8 @@
 <?php
 
-if (! defined('ABSPATH')) { exit; }
+if (! defined('ABSPATH')) {
+    exit;
+}
 
 add_action('wp_ajax_oup_load_archive_posts',        'oup_ajax_load_archive_posts');
 add_action('wp_ajax_nopriv_oup_load_archive_posts', 'oup_ajax_load_archive_posts');
@@ -30,7 +32,6 @@ function oup_ajax_load_archive_posts()
         $args['s'] = $search;
     }
 
-    // Taxonomy filter — bỏ qua khi đang search
     if ($search === '' && $terms_raw !== 'all') {
         $term_ids = array_values(array_filter(
             array_map('intval', explode(',', $terms_raw)),
@@ -40,8 +41,10 @@ function oup_ajax_load_archive_posts()
         if (! empty($term_ids)) {
             if (count($term_ids) === 1) {
                 $args['tax_query'] = [[
-                    'taxonomy' => $taxonomy, 'field' => 'term_id',
-                    'terms' => [$term_ids[0]], 'operator' => 'IN',
+                    'taxonomy' => $taxonomy,
+                    'field' => 'term_id',
+                    'terms' => [$term_ids[0]],
+                    'operator' => 'IN',
                 ]];
             } else {
                 $clauses = ['relation' => 'AND'];
@@ -88,10 +91,6 @@ function oup_search_include_excerpt($search, $wp_query)
     $q    = $wp_query->query_vars;
     $n    = ! empty($q['exact']) ? '' : '%';
     $term = $wpdb->esc_like($q['s']);
-
-    // Wrap toàn bộ điều kiện title+excerpt trong ngoặc để không phá
-    // các điều kiện khác (post_type, post_status...) trong WHERE clause.
-    // Trước đây chỉ OR thêm excerpt vào cuối → query bị "OR post_type = page" luôn.
     $search = " AND (
         ({$wpdb->posts}.post_title LIKE '{$n}{$term}{$n}')
         OR ({$wpdb->posts}.post_excerpt LIKE '{$n}{$term}{$n}')
