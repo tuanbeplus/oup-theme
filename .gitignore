@@ -34,4 +34,5 @@ Desktop.ini
 kit.md
 mix-manifest.json
 *.map
+.agents/
 # End of Selection
