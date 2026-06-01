@@ -1,0 +1,95 @@
+.worksheet-accordion-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+
+    .worksheet-accordion-item {
+        border-bottom: 1px dashed #AAB2BD; 
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    .worksheet-accordion-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 24px 0;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.3s ease;
+        outline: none;
+
+        .worksheet-accordion-title {
+            font-family: var(--e-global-typography-primary-font-family, 'Outfit', sans-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--e-global-color-text, #1E1E1E);
+            margin: 0;
+            line-height: 1.3;
+            padding-right: 20px;
+        }
+
+        .worksheet-accordion-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1E1E1E;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            
+            svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        &.active {
+            .worksheet-accordion-icon {
+                transform: rotate(180deg);
+            }
+        }
+        
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .worksheet-accordion-content {
+        .worksheet-accordion-content-inner {
+            padding: 0 0 24px 0;
+            color: var(--e-global-color-text, #4A4A4A);
+            font-size: 1.0625rem;
+            line-height: 1.6;
+            font-family: var(--e-global-typography-secondary-font-family, 'Outfit', sans-serif);
+
+            p {
+                margin-bottom: 15px;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+            
+            ul, ol {
+                padding-left: 20px;
+                margin-bottom: 15px;
+                li {
+                    margin-bottom: 8px;
+                }
+            }
+            
+            a {
+                color: var(--e-global-color-accent, #007bff);
+                text-decoration: underline;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
