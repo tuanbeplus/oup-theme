@@ -142,10 +142,15 @@ class ElementorWidgets {
 			true
 		);
 		wp_register_script( 
-			'oup-blog-detail-toc-script',
-			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/script.js',
 			'oup-worksheet-accordion-script',
 			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/script.js',
+			array('jquery'),
+			OUP_THEME_VER,
+			true
+		);
+		wp_register_script( 
+			'oup-blog-detail-toc-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/script.js',
 			array('jquery'),
 			OUP_THEME_VER,
 			true

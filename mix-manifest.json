@@ -5,5 +5,6 @@
     "/elementor/widgets/blog-detail-breadcrumb/style.css": "/elementor/widgets/blog-detail-breadcrumb/style.css",
     "/elementor/widgets/archive-posts-filter/style.css": "/elementor/widgets/archive-posts-filter/style.css",
     "/assets/css/main.css": "/assets/css/main.css",
-    "/elementor/widgets/worksheet-filter/style.css": "/elementor/widgets/worksheet-filter/style.css"
+    "/elementor/widgets/worksheet-filter/style.css": "/elementor/widgets/worksheet-filter/style.css",
+    "/elementor/widgets/worksheet-accordion/style.css": "/elementor/widgets/worksheet-accordion/style.css"
 }
