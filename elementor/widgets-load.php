@@ -43,7 +43,9 @@ class ElementorWidgets {
 
 		$this->widgets = array(
 			'sample-widget',
+			'archive-posts-filter',
 			'worksheet-filter',
+			'blog-search',
 		);
 
 		return $this->widgets;
@@ -65,9 +67,24 @@ class ElementorWidgets {
 			OUP_THEME_VER,
 			'all'
 		);
+
+		wp_register_style(
+            'oup-archive-posts-filter-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/style.css',
+            [],
+            OUP_THEME_VER,
+            'all'
+        );
 		wp_register_style( 
 			'oup-worksheet-filter-style',
 			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+		wp_register_style( 
+			'oup-blog-search-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-search/style.css',
 			array(),
 			OUP_THEME_VER,
 			'all'
@@ -90,6 +107,14 @@ class ElementorWidgets {
 			OUP_THEME_VER,
 			true
 		);
+		
+		wp_register_script(
+            'oup-archive-posts-filter-script',
+            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/script.js',
+            [ 'jquery' ],
+            OUP_THEME_VER,
+            true
+        );
 		wp_register_script( 
 			'oup-worksheet-filter-script',
 			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/script.js',
@@ -152,8 +177,9 @@ class ElementorWidgets {
 
 		// Register Widgets
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SampleWidget\Widget_SampleWidget());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ArchivePostsFilter\Widget_ArchivePostsFilter());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\WorksheetFilter\Widget_WorksheetFilter());
-		
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogSearch\Widget_BlogSearch());
 	}
 
 	/**

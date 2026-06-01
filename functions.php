@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Theme functions and definitions
  *
@@ -16,7 +17,8 @@ define('OUP_THEME_VER', '1.0.0' . time());
  */
 if (!function_exists('enqueue_oup_styles_and_scripts')) {
     add_action('wp_enqueue_scripts', 'enqueue_oup_styles_and_scripts');
-    function enqueue_oup_styles_and_scripts() {
+    function enqueue_oup_styles_and_scripts()
+    {
         wp_enqueue_style('oup-main-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array(), OUP_THEME_VER);
         wp_enqueue_script('oup-main-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery'), OUP_THEME_VER, true);
         wp_localize_script('oup-main-script', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
@@ -30,4 +32,5 @@ require_once get_stylesheet_directory() . '/elementor/widgets-load.php';
 require_once get_stylesheet_directory() . '/inc/woo.php';
 
 /* AJAX Handlers */
+require_once get_stylesheet_directory() . '/elementor/widgets/archive-posts-filter/ajax.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/worksheet-filter/ajax.php';
