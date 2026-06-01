@@ -172,7 +172,7 @@
   border-radius: 40px;
   margin-top: -40px;
 }
-@media (max-width: 767px) and (min-width: 460px) {
+@media (max-width: 767px) and (min-width: 520px) {
   .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-content {
     height: 150px;
   }
@@ -199,7 +199,7 @@
 }
 @media (max-width: 767px) {
   .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-title {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
 }
 .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-footer {
