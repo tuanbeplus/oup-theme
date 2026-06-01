@@ -177,7 +177,7 @@
             border-radius: 40px;
             margin-top: -40px;
 
-            @media(max-width: 767px) and (min-width: 460px) {
+            @media(max-width: 767px) and (min-width: 520px) {
                 height: 150px;
             }
 
@@ -201,7 +201,7 @@
             text-overflow: ellipsis;
             flex-shrink: 0;
             @media (max-width: 767px) {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
             }
         }
 
