@@ -5,6 +5,10 @@
 }
 .worksheet-accordion-wrapper .worksheet-accordion-item {
   border: none;
+  border-top: 2px dashed #577282;
+}
+.worksheet-accordion-wrapper .worksheet-accordion-item:last-child {
+  border-bottom: 2px dashed #577282;
 }
 .worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header {
   display: flex;
@@ -14,12 +18,16 @@
   padding: 30px 0;
   background: transparent;
   border: none;
-  border-top: 2px dashed #577282;
   cursor: pointer;
   transition: all 0.3s ease;
   outline: none;
   text-align: left;
   border-radius: 0;
+}
+@media (max-width: 1024px) {
+  .worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header {
+    padding: 20px 0;
+  }
 }
 .worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header .worksheet-accordion-title {
   margin: 0;
@@ -30,6 +38,13 @@
   font-weight: 600;
   color: var(--e-global-color-text);
   line-height: 1.1;
+  white-space: normal;
+  word-break: break-word;
+}
+@media (max-width: 1024px) {
+  .worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header .worksheet-accordion-title {
+    font-size: 1.5rem;
+  }
 }
 .worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header .worksheet-accordion-icon {
   display: flex;
@@ -56,17 +71,20 @@
 .worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header.active .worksheet-accordion-icon .elementor-accordion-icon-opened {
   display: block;
 }
-.worksheet-accordion-wrapper .worksheet-accordion-item:last-child .worksheet-accordion-header {
-  border-bottom: 2px dashed #577282;
-}
 .worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-content {
   display: none;
+  padding-bottom: 30px;
 }
 .worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-content .worksheet-accordion-content-inner {
   color: var(--e-global-color-text);
   font-size: 1.125rem;
   line-height: 1.6;
   font-family: var(--e-global-typography-primary-font-family);
+}
+@media (max-width: 1024px) {
+  .worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-content .worksheet-accordion-content-inner {
+    font-size: 1rem;
+  }
 }
 
 /*# sourceMappingURL=style.css.map*/
