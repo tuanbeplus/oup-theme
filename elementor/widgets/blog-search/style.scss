@@ -7,28 +7,23 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
   width: 100%;
-  max-width: 400px;
-  padding: 10px 18px;
-  border: 1.125px solid #0091B3;
-  border-radius: 50px;
+  max-width: 400px;                     
+  padding: 10px 15px;                   
+  border: 2px solid #C6EFFE; 
+  border-radius: 50px;               
   background: #fff;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.bs-wrap:focus-within {
-  border-color: #0091B3;
-  box-shadow: 0 0 0 3px rgba(0, 145, 179, 0.12);
-}
 
+/* Icon */
 .bs-icon {
   flex-shrink: 0;
   display: block;
-  width: 18px;
-  height: 18px;
   pointer-events: none;
 }
 
+/* Input: compact and readable */
 .bs-input {
   flex: 1;
   min-width: 0;
@@ -39,19 +34,25 @@
   -webkit-appearance: none;
   appearance: none;
   font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 0.9375rem;
+  font-size: 0.95rem;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.2;
   color: #231F20;
+  padding: 0 !important; 
+  margin: 0 10px;
 }
+
+/* Placeholder */
 .bs-input::-moz-placeholder {
-  color: #9E9E9E;
+  color: #AAB9BB;
   opacity: 1;
 }
 .bs-input::placeholder {
-  color: #9E9E9E;
+  color: #AAB9BB;
   opacity: 1;
 }
+
+/* Hide native search decorations */
 .bs-input::-webkit-search-cancel-button,
 .bs-input::-webkit-search-decoration,
 .bs-input::-webkit-search-results-button,
@@ -60,7 +61,7 @@
   display: none !important;
 }
 
-/* Nút clear — dùng selector đủ mạnh để override Elementor button styles */
+/* Clear button (hidden until has-value) */
 .blog-search-widget .bs-wrap button.bs-clear {
   all: unset !important;
   flex-shrink: 0 !important;
@@ -85,22 +86,28 @@
   min-width: 0 !important;
   box-sizing: content-box !important;
 }
+
 .blog-search-widget .bs-wrap button.bs-clear svg {
   display: block;
   width: 14px;
   height: 14px;
   flex-shrink: 0;
 }
+
 .blog-search-widget .bs-wrap button.bs-clear circle {
   fill: #BDBDBD;
   transition: fill 0.15s ease;
 }
+
 .blog-search-widget .bs-wrap button.bs-clear path {
   stroke: #fff;
 }
+
 .blog-search-widget .bs-wrap button.bs-clear:hover circle {
   fill: #9E9E9E;
 }
+
+/* Show clear when input has value */
 .blog-search-widget .bs-wrap.has-value button.bs-clear {
   opacity: 1 !important;
   pointer-events: auto !important;

@@ -39,8 +39,8 @@
   }
 }
 .archive-posts-filter-widget .apf-tab:hover, .archive-posts-filter-widget .apf-tab.active {
-  background: #000;
-  border-color: #000;
+  background: #0091B3;
+  border-color: #0091B3;
   color: #fff;
 }
 .archive-posts-filter-widget .apf-grid {
@@ -51,18 +51,13 @@
 @media (max-width: 1024px) {
   .archive-posts-filter-widget .apf-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-}
-@media (max-width: 900px) {
-  .archive-posts-filter-widget .apf-grid {
-    gap: 20px;
+    gap: 35px;
   }
 }
 @media (max-width: 600px) {
   .archive-posts-filter-widget .apf-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 30px;
   }
 }
 .archive-posts-filter-widget .apf-card {
@@ -133,19 +128,19 @@
 }
 @media (max-width: 1024px) {
   .archive-posts-filter-widget .apf-card__body {
-    padding: 28px;
+    padding: 35px;
     margin-top: -28px;
     border-radius: 32px;
   }
 }
 @media (max-width: 900px) {
   .archive-posts-filter-widget .apf-card__body {
-    padding: 24px;
+    padding: 30px;
   }
 }
 @media (max-width: 600px) {
   .archive-posts-filter-widget .apf-card__body {
-    padding: 20px;
+    padding: 25px;
     margin-top: -20px;
     border-radius: 28px;
   }
@@ -245,21 +240,6 @@
   padding: 60px 0;
   font-size: 1rem;
   font-family: "Plus Jakarta Sans", sans-serif;
-}
-
-@keyframes apf-shimmer {
-  0% {
-    background-position: -600px 0;
-  }
-  100% {
-    background-position: 600px 0;
-  }
-}
-.apf-skeleton-card .apf-skeleton__author-role, .apf-skeleton-card .apf-skeleton__author-name, .apf-skeleton-card .apf-skeleton__excerpt, .apf-skeleton-card .apf-skeleton__title, .apf-skeleton-card .apf-skeleton__tag, .apf-skeleton-card .apf-skeleton__date, .apf-skeleton-card .apf-skeleton__thumb {
-  background: linear-gradient(90deg, #ececec 25%, #f8f8f8 50%, #ececec 75%);
-  background-size: 600px 100%;
-  animation: apf-shimmer 1.4s ease-in-out infinite;
-  border-radius: 6px;
 }
 
 .apf-skeleton-card {
@@ -363,6 +343,21 @@
 .apf-skeleton-card .apf-skeleton__author-role {
   height: 12px;
   width: 80px;
+  border-radius: 6px;
+}
+
+@keyframes apf-shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+.apf-skeleton-card .apf-skeleton__thumb, .apf-skeleton-card .apf-skeleton__date, .apf-skeleton-card .apf-skeleton__tag, .apf-skeleton-card .apf-skeleton__title, .apf-skeleton-card .apf-skeleton__excerpt, .apf-skeleton-card .apf-skeleton__author-name, .apf-skeleton-card .apf-skeleton__author-role {
+  background: linear-gradient(90deg, #ececec 25%, #f8f8f8 50%, #ececec 75%);
+  background-size: 600px 100%;
+  animation: apf-shimmer 1.4s ease-in-out infinite;
   border-radius: 6px;
 }
 

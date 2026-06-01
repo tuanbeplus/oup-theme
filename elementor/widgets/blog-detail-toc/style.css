@@ -1,0 +1,105 @@
+.table-of-content-all {
+  --toc-font-family: 'Plus Jakarta Sans', sans-serif;
+  --toc-color: #231F20;
+  --toc-color-hover: #0091B3;
+  --toc-bg-hover: transparent;
+  --toc-bg-active: transparent;
+  --toc-transition: 0.2s;
+  --toc-item-gap: 10px;
+  --toc-icon-gap: 8px;
+}
+.table-of-content-all__title {
+  font-family: var(--toc-font-family);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.6666666667;
+  letter-spacing: 0;
+  color: var(--toc-color);
+  margin: 0 0 10px 0;
+}
+.table-of-content-all__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.table-of-content-all__wrap .table-of-content-all__heading {
+  white-space: normal;
+  word-break: break-word;
+}
+.table-of-content-all__item {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--toc-item-gap);
+  transition: background-color var(--toc-transition) ease;
+  cursor: pointer;
+}
+.table-of-content-all__item:last-child {
+  margin-bottom: 0;
+}
+.table-of-content-all__item:hover {
+  background-color: var(--toc-bg-hover);
+}
+.table-of-content-all__item.active {
+  background-color: var(--toc-bg-active);
+}
+.table-of-content-all__item.active .table-of-content-all__heading {
+  color: var(--toc-color-hover);
+}
+.table-of-content-all__item.active .table-of-content-all__icon i,
+.table-of-content-all__item.active .table-of-content-all__marker {
+  color: var(--toc-color-hover);
+}
+.table-of-content-all__heading {
+  font-family: var(--toc-font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5625;
+  letter-spacing: 0;
+  color: var(--toc-color);
+  text-decoration: none;
+  transition: color var(--toc-transition) ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.table-of-content-all__heading:hover {
+  text-decoration: none;
+}
+.table-of-content-all__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: var(--toc-icon-gap);
+  transition: color var(--toc-transition) ease;
+}
+.table-of-content-all__icon i {
+  color: var(--toc-color);
+  font-size: 0.5em;
+  line-height: 1;
+}
+.table-of-content-all__marker {
+  flex-shrink: 0;
+  margin-right: var(--toc-icon-gap);
+  font-family: var(--toc-font-family);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--toc-color);
+  transition: color var(--toc-transition) ease;
+}
+.table-of-content-all__no-headings {
+  font-family: var(--toc-font-family);
+  font-size: 1rem;
+  color: var(--toc-color);
+  list-style: none;
+}
+
+.table-of-content-all__item:hover .table-of-content-all__heading {
+  color: var(--toc-color-hover);
+}
+
+.table-of-content-all__item:hover .table-of-content-all__icon i,
+.table-of-content-all__item:hover .table-of-content-all__marker {
+  color: var(--toc-color-hover);
+}
+
+/*# sourceMappingURL=style.css.map*/

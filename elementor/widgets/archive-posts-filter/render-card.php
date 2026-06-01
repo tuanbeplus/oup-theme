@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Archive Post Card Template
  *
@@ -12,13 +13,10 @@ if (! defined('ABSPATH')) {
 /** @var int    $post_id  Passed from oup_render_archive_post_card() in ajax.php */
 /** @var string $taxonomy Passed from oup_render_archive_post_card() in ajax.php — used for filter only, NOT for the tag badge */
 
-// ── Data ──────────────────────────────────────────────────────────────────────
-
+// Data
 $post_url  = get_permalink($post_id);
 $post_title = get_the_title($post_id);
 $post_date  = get_the_date('j M Y', $post_id);
-
-// Lấy excerpt trực tiếp từ post object để tránh bị filter của Elementor/WP override
 $post_obj     = get_post($post_id);
 $post_excerpt = $post_obj->post_excerpt
     ? wp_strip_all_tags($post_obj->post_excerpt)
@@ -61,8 +59,7 @@ $author_role  = !empty($author_roles) ? ucfirst(reset($author_roles)) : '';
                     src="<?= esc_url($thumb_url) ?>"
                     alt="<?= esc_attr($thumb_alt) ?>"
                     loading="lazy"
-                    decoding="async"
-                >
+                    decoding="async">
             </div>
         <?php endif; ?>
 
@@ -95,8 +92,6 @@ $author_role  = !empty($author_roles) ? ucfirst(reset($author_roles)) : '';
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
-
-        </div><!-- .apf-card__body -->
-
-    </a><!-- .apf-card__inner -->
-</article><!-- .apf-card -->
+        </div>
+    </a>
+</article>
