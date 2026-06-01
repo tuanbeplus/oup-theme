@@ -19,7 +19,7 @@
     flex-direction: column;
     align-items: stretch;
   }
-} 
+}
 .worksheet-filter-wrapper .worksheet-filters {
   display: flex;
   flex-wrap: wrap;
@@ -172,6 +172,12 @@
   border-radius: 40px;
   margin-top: -40px;
 }
+@media (max-width: 767px) {
+  .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-content {
+    padding: 30px;
+    margin-top: -30px;
+  }
+}
 .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-title {
   margin: 0;
   font-family: var(--e-global-typography-secondary-font-family);
@@ -185,6 +191,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-title {
+    font-size: 1.75rem;
+  }
 }
 .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-footer {
   margin-top: auto;

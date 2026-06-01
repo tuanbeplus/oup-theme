@@ -176,6 +176,11 @@
             background: #fff;
             border-radius: 40px;
             margin-top: -40px;
+
+            @media (max-width: 767px) {
+                padding: 30px;
+                margin-top: -30px;
+            }
         }
 
         .worksheet-card-title {
@@ -191,6 +196,9 @@
             overflow: hidden;
             text-overflow: ellipsis;
             flex-shrink: 0;
+            @media (max-width: 767px) {
+                font-size: 1.75rem;
+            }
         }
 
         .worksheet-card-footer {
