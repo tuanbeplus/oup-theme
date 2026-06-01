@@ -46,6 +46,7 @@ class ElementorWidgets {
 			'archive-posts-filter',
 			'worksheet-filter',
 			'blog-search',
+			'worksheet-accordion',
 		);
 
 		return $this->widgets;
@@ -89,6 +90,13 @@ class ElementorWidgets {
 			OUP_THEME_VER,
 			'all'
 		);
+		wp_register_style( 
+			'oup-worksheet-accordion-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
 	}
 
 	/**
@@ -118,6 +126,13 @@ class ElementorWidgets {
 		wp_register_script( 
 			'oup-worksheet-filter-script',
 			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/script.js',
+			array('jquery'),
+			OUP_THEME_VER,
+			true
+		);
+		wp_register_script( 
+			'oup-worksheet-accordion-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/script.js',
 			array('jquery'),
 			OUP_THEME_VER,
 			true
@@ -180,6 +195,7 @@ class ElementorWidgets {
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ArchivePostsFilter\Widget_ArchivePostsFilter());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\WorksheetFilter\Widget_WorksheetFilter());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogSearch\Widget_BlogSearch());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\WorksheetAccordion\Widget_WorksheetAccordion());
 	}
 
 	/**

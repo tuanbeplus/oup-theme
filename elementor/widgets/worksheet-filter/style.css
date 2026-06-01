@@ -19,7 +19,7 @@
     flex-direction: column;
     align-items: stretch;
   }
-} 
+}
 .worksheet-filter-wrapper .worksheet-filters {
   display: flex;
   flex-wrap: wrap;
