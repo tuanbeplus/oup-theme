@@ -11,7 +11,7 @@
 
     // Set header height for --header-height CSS variable
     function setHeaderHeight() {
-        if (siteHeader.length) {
+        if (siteHeader.length) {    
             var h = siteHeader.outerHeight();
             document.documentElement.style.setProperty('--header-height', h + 'px');
         }
@@ -104,6 +104,48 @@
         // If the user clicks on the chevron (sub-arrow), prevent the default link navigation
         if ($(e.target).closest('.sub-arrow').length) {
             e.preventDefault();
+        }
+    });
+
+    // Copy Link button
+    $(document).on('click', '.oup-copy-link', function (e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var url = window.location.origin + window.location.pathname;
+
+        if ($btn.data('copying')) return;
+        $btn.data('copying', true);
+
+        var $label = $btn.find('.elementor-button-text');
+        var originalText = $label.length ? $label.text() : $btn.text();
+
+        function doSuccess() {
+            $btn.addClass('oup-copy-link--copied');
+            if ($label.length) $label.text('Copied!');
+
+            setTimeout(function () {
+                $btn.removeClass('oup-copy-link--copied');
+                if ($label.length) $label.text(originalText);
+                $btn.data('copying', false);
+            }, 2500);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(doSuccess).catch(function () {
+                var $temp = $('<input>');
+                $('body').append($temp);
+                $temp.val(url).select();
+                document.execCommand('copy');
+                $temp.remove();
+                doSuccess();
+            });
+        } else {
+            var $temp = $('<input>');
+            $('body').append($temp);
+            $temp.val(url).select();
+            document.execCommand('copy');
+            $temp.remove();
+            doSuccess();
         }
     });
 

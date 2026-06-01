@@ -46,6 +46,8 @@ class ElementorWidgets {
 			'archive-posts-filter',
 			'worksheet-filter',
 			'blog-search',
+			'blog-detail-breadcrumb',
+			'blog-detail-toc',
 			'worksheet-accordion',
 		);
 
@@ -91,6 +93,15 @@ class ElementorWidgets {
 			'all'
 		);
 		wp_register_style( 
+			'oup-blog-detail-breadcrumb-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-breadcrumb/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+		wp_register_style( 
+			'oup-blog-detail-toc-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/style.css',
 			'oup-worksheet-accordion-style',
 			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/style.css',
 			array(),
@@ -131,6 +142,8 @@ class ElementorWidgets {
 			true
 		);
 		wp_register_script( 
+			'oup-blog-detail-toc-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/script.js',
 			'oup-worksheet-accordion-script',
 			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/script.js',
 			array('jquery'),
@@ -195,6 +208,8 @@ class ElementorWidgets {
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ArchivePostsFilter\Widget_ArchivePostsFilter());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\WorksheetFilter\Widget_WorksheetFilter());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogSearch\Widget_BlogSearch());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogDetailBreadcrumb\Widget_BlogDetailBreadcrumb());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogDetailToc\Widget_BlogDetailToc());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\WorksheetAccordion\Widget_WorksheetAccordion());
 	}
 

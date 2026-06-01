@@ -1,7 +1,7 @@
 (function ($) {
     'use strict';
 
-    // ── Blog Search Widget ────────────────────────────────────────────────────
+    // Blog Search Widget
     function initBlogSearch() {
         const $widget = $('.blog-search-widget');
         if (!$widget.length) return;
@@ -13,7 +13,6 @@
         const debounce = parseInt($widget.data('debounce')) || 400;
         let   timer    = null;
 
-        // Inject nút clear vào wrap
         const $clear = $(`
             <button class="bs-clear" type="button" aria-label="Clear search" tabindex="-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none">
@@ -45,7 +44,7 @@
         updateClear();
     }
 
-    // ── Archive Posts Filter Widget ───────────────────────────────────────────
+    // Archive Posts Filter Widget
     function initArchivePostsFilter() {
         const $widget = $('.archive-posts-filter-widget');
         if (!$widget.length) return;
