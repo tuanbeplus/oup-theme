@@ -220,6 +220,29 @@ body .gform_confirmation_wrapper .gform_confirmation_message {
   text-align: center;
 }
 
+body .gform_wrapper.worksheet-form_wrapper {
+  background-color: #C6EFFE;
+  padding: 40px;
+  border-radius: 40px;
+}
+@media (max-width: 768px) {
+  body .gform_wrapper.worksheet-form_wrapper {
+    padding: 30px 20px;
+  }
+}
+body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer {
+  margin-top: 24px;
+}
+body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer input[type=submit] {
+  background-color: #005375;
+}
+body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer input[type=submit]:hover {
+  background-color: #0091B3;
+}
+body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer input[type=submit]:active {
+  transform: scale(0.98);
+}
+
 .woocommerce .products .product .product-tags {
   display: flex;
   gap: 8px;
@@ -286,51 +309,83 @@ body .gform_confirmation_wrapper .gform_confirmation_message {
 .entry-content h4,
 .entry-content h5,
 .entry-content h6 {
-  line-height: 1.2;
-  margin: 0;
+  font-family: "League Spartan", sans-serif;
+  line-height: 1.25;
+  color: #231F20;
+  margin-top: 2.25rem;
+  margin-bottom: 0.85rem;
+  font-weight: 700;
+}
+.elementor-widget-text-editor h1:first-child,
+.elementor-widget-text-editor h2:first-child,
+.elementor-widget-text-editor h3:first-child,
+.elementor-widget-text-editor h4:first-child,
+.elementor-widget-text-editor h5:first-child,
+.elementor-widget-text-editor h6:first-child,
+.elementor-widget-theme-post-content h1:first-child,
+.elementor-widget-theme-post-content h2:first-child,
+.elementor-widget-theme-post-content h3:first-child,
+.elementor-widget-theme-post-content h4:first-child,
+.elementor-widget-theme-post-content h5:first-child,
+.elementor-widget-theme-post-content h6:first-child,
+.elementor-text-editor h1:first-child,
+.elementor-text-editor h2:first-child,
+.elementor-text-editor h3:first-child,
+.elementor-text-editor h4:first-child,
+.elementor-text-editor h5:first-child,
+.elementor-text-editor h6:first-child,
+.entry-content h1:first-child,
+.entry-content h2:first-child,
+.entry-content h3:first-child,
+.entry-content h4:first-child,
+.entry-content h5:first-child,
+.entry-content h6:first-child {
+  margin-top: 0;
 }
 .elementor-widget-text-editor h2,
 .elementor-widget-theme-post-content h2,
 .elementor-text-editor h2,
 .entry-content h2 {
-  color: #231F20;
   font-size: 1.875rem;
+  letter-spacing: -0.02em;
 }
 @media (max-width: 768px) {
   .elementor-widget-text-editor h2,
   .elementor-widget-theme-post-content h2,
   .elementor-text-editor h2,
   .entry-content h2 {
-    font-size: 1.5rem;
+    font-size: 1.625rem;
+    margin-top: 1.75rem;
   }
 }
 .elementor-widget-text-editor h3,
 .elementor-widget-theme-post-content h3,
 .elementor-text-editor h3,
 .entry-content h3 {
-  color: #231F20;
-  font-size: 1.375rem;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
 }
 @media (max-width: 768px) {
   .elementor-widget-text-editor h3,
   .elementor-widget-theme-post-content h3,
   .elementor-text-editor h3,
   .entry-content h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
   }
 }
 .elementor-widget-text-editor h4,
 .elementor-widget-theme-post-content h4,
 .elementor-text-editor h4,
 .entry-content h4 {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
 }
 @media (max-width: 768px) {
   .elementor-widget-text-editor h4,
   .elementor-widget-theme-post-content h4,
   .elementor-text-editor h4,
   .entry-content h4 {
-    font-size: 1.05rem;
+    font-size: 1.125rem;
   }
 }
 .elementor-widget-text-editor h5,
@@ -365,10 +420,11 @@ body .gform_confirmation_wrapper .gform_confirmation_message {
 .elementor-widget-theme-post-content p,
 .elementor-text-editor p,
 .entry-content p {
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 1.125rem;
-  line-height: 1.6;
-  color: #231f20;
-  margin: 10px 0 40px;
+  line-height: 1.65;
+  color: #231F20;
+  margin: 0 0 1.5rem 0;
 }
 @media (max-width: 768px) {
   .elementor-widget-text-editor p,
@@ -376,81 +432,121 @@ body .gform_confirmation_wrapper .gform_confirmation_message {
   .elementor-text-editor p,
   .entry-content p {
     font-size: 1rem;
-    margin: 18px 0;
+    margin-bottom: 1.125rem;
   }
 }
 .elementor-widget-text-editor a,
 .elementor-widget-theme-post-content a,
 .elementor-text-editor a,
 .entry-content a {
-  color: #0B6B4B;
+  color: #005375;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: color 0.25s ease, text-decoration-color 0.25s ease;
+}
+.elementor-widget-text-editor a:hover,
+.elementor-widget-theme-post-content a:hover,
+.elementor-text-editor a:hover,
+.entry-content a:hover {
+  color: #0091B3;
+  text-decoration-color: #0091B3;
 }
 .elementor-widget-text-editor ul,
-.elementor-widget-text-editor ol,
 .elementor-widget-theme-post-content ul,
-.elementor-widget-theme-post-content ol,
 .elementor-text-editor ul,
-.elementor-text-editor ol,
-.entry-content ul,
-.entry-content ol {
-  padding-left: 1.125rem;
-  margin: 0;
+.entry-content ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 1.75rem 1.5rem;
 }
 @media (max-width: 768px) {
   .elementor-widget-text-editor ul,
-  .elementor-widget-text-editor ol,
   .elementor-widget-theme-post-content ul,
-  .elementor-widget-theme-post-content ol,
   .elementor-text-editor ul,
-  .elementor-text-editor ol,
-  .entry-content ul,
-  .entry-content ol {
-    padding-left: 1rem;
+  .entry-content ul {
+    margin-left: 1.125rem;
   }
 }
 .elementor-widget-text-editor ul ul,
 .elementor-widget-text-editor ul ol,
-.elementor-widget-text-editor ol ul,
-.elementor-widget-text-editor ol ol,
 .elementor-widget-theme-post-content ul ul,
 .elementor-widget-theme-post-content ul ol,
-.elementor-widget-theme-post-content ol ul,
-.elementor-widget-theme-post-content ol ol,
 .elementor-text-editor ul ul,
 .elementor-text-editor ul ol,
+.entry-content ul ul,
+.entry-content ul ol {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.elementor-widget-text-editor ul li,
+.elementor-widget-theme-post-content ul li,
+.elementor-text-editor ul li,
+.entry-content ul li {
+  position: relative;
+  margin-bottom: 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #231F20;
+  padding-left: 1.5rem;
+}
+@media (max-width: 768px) {
+  .elementor-widget-text-editor ul li,
+  .elementor-widget-theme-post-content ul li,
+  .elementor-text-editor ul li,
+  .entry-content ul li {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    padding-left: 1.25rem;
+  }
+}
+.elementor-widget-text-editor ul li::before,
+.elementor-widget-theme-post-content ul li::before,
+.elementor-text-editor ul li::before,
+.entry-content ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  background-color: #0091B3;
+  border-radius: 50%;
+}
+.elementor-widget-text-editor ol,
+.elementor-widget-theme-post-content ol,
+.elementor-text-editor ol,
+.entry-content ol {
+  padding-left: 1.25rem;
+  margin: 0 0 1.75rem 0;
+}
+.elementor-widget-text-editor ol ul,
+.elementor-widget-text-editor ol ol,
+.elementor-widget-theme-post-content ol ul,
+.elementor-widget-theme-post-content ol ol,
 .elementor-text-editor ol ul,
 .elementor-text-editor ol ol,
-.entry-content ul ul,
-.entry-content ul ol,
 .entry-content ol ul,
 .entry-content ol ol {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
-.elementor-widget-text-editor ul li,
 .elementor-widget-text-editor ol li,
-.elementor-widget-theme-post-content ul li,
 .elementor-widget-theme-post-content ol li,
-.elementor-text-editor ul li,
 .elementor-text-editor ol li,
-.entry-content ul li,
 .entry-content ol li {
-  margin-bottom: 10px;
+  margin-bottom: 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 1.125rem;
-  line-height: 1.5;
-  color: #231f20;
-  padding-left: 10px;
+  line-height: 1.6;
+  color: #231F20;
+  padding-left: 0.5rem;
 }
 @media (max-width: 768px) {
-  .elementor-widget-text-editor ul li,
   .elementor-widget-text-editor ol li,
-  .elementor-widget-theme-post-content ul li,
   .elementor-widget-theme-post-content ol li,
-  .elementor-text-editor ul li,
   .elementor-text-editor ol li,
-  .entry-content ul li,
   .entry-content ol li {
     font-size: 1rem;
     margin-bottom: 8px;
@@ -461,24 +557,34 @@ body .gform_confirmation_wrapper .gform_confirmation_message {
 .elementor-widget-theme-post-content blockquote,
 .elementor-text-editor blockquote,
 .entry-content blockquote {
-  margin: 3rem 0;
-  padding: 1.5rem 2rem;
-  border-left: 0.25rem solid #0B6B4B;
-  background: #F5F7F6;
-  font-size: 1.375rem;
+  margin: 2.5rem 0;
+  padding: 1.75rem 2.25rem;
+  border-left: 4px solid #005375;
+  background: rgba(0, 83, 117, 0.04);
+  font-size: 1.25rem;
   line-height: 1.7;
   font-style: italic;
-  border-radius: 0 1rem 1rem 0;
+  color: #005375;
+  border-radius: 0 12px 12px 0;
 }
 @media (max-width: 768px) {
   .elementor-widget-text-editor blockquote,
   .elementor-widget-theme-post-content blockquote,
   .elementor-text-editor blockquote,
   .entry-content blockquote {
-    margin: 2rem 0;
-    padding: 1rem 1.25rem;
-    font-size: 1.125rem;
+    margin: 1.75rem 0;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.1rem;
   }
+}
+.elementor-widget-text-editor blockquote p,
+.elementor-widget-theme-post-content blockquote p,
+.elementor-text-editor blockquote p,
+.entry-content blockquote p {
+  margin-bottom: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 .elementor-widget-text-editor img,
 .elementor-widget-theme-post-content img,
@@ -518,55 +624,72 @@ body .gform_confirmation_wrapper .gform_confirmation_message {
 .elementor-text-editor table,
 .entry-content table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin: 2.5rem 0;
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
 }
 @media (max-width: 768px) {
   .elementor-widget-text-editor table,
   .elementor-widget-theme-post-content table,
   .elementor-text-editor table,
   .entry-content table {
-    margin: 1.5rem 0;
+    margin: 1.75rem 0;
     display: block;
     overflow-x: auto;
-    border-radius: 0.75rem;
   }
 }
 .elementor-widget-text-editor table th,
 .elementor-widget-theme-post-content table th,
 .elementor-text-editor table th,
 .entry-content table th {
-  background: #F5F5F5;
-  font-weight: 700;
+  background: #F8FAFC;
+  color: #231F20;
+  font-weight: 600;
   text-align: left;
+  border-bottom: 2px solid #E2E8F0;
 }
-.elementor-widget-text-editor table th,
-.elementor-widget-text-editor table td,
+.elementor-widget-text-editor table th, .elementor-widget-text-editor table td,
 .elementor-widget-theme-post-content table th,
 .elementor-widget-theme-post-content table td,
 .elementor-text-editor table th,
 .elementor-text-editor table td,
 .entry-content table th,
 .entry-content table td {
-  border: 1px solid #E5E5E5;
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.6;
+  border-right: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
+}
+.elementor-widget-text-editor table th:last-child, .elementor-widget-text-editor table td:last-child,
+.elementor-widget-theme-post-content table th:last-child,
+.elementor-widget-theme-post-content table td:last-child,
+.elementor-text-editor table th:last-child,
+.elementor-text-editor table td:last-child,
+.entry-content table th:last-child,
+.entry-content table td:last-child {
+  border-right: none;
 }
 @media (max-width: 768px) {
-  .elementor-widget-text-editor table th,
-  .elementor-widget-text-editor table td,
+  .elementor-widget-text-editor table th, .elementor-widget-text-editor table td,
   .elementor-widget-theme-post-content table th,
   .elementor-widget-theme-post-content table td,
   .elementor-text-editor table th,
   .elementor-text-editor table td,
   .entry-content table th,
   .entry-content table td {
-    padding: 0.75rem;
-    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
   }
+}
+.elementor-widget-text-editor table tr:last-child td,
+.elementor-widget-theme-post-content table tr:last-child td,
+.elementor-text-editor table tr:last-child td,
+.entry-content table tr:last-child td {
+  border-bottom: none;
 }
 .elementor-widget-text-editor hr,
 .elementor-widget-theme-post-content hr,
@@ -574,7 +697,7 @@ body .gform_confirmation_wrapper .gform_confirmation_message {
 .entry-content hr {
   border: none;
   height: 1px;
-  background: #e4eee9;
+  background: #E2E8F0;
   margin: 3.125rem 0;
 }
 @media (max-width: 768px) {

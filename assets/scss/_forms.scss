@@ -223,3 +223,32 @@ body {
 	}
 }
 }
+
+
+body .gform_wrapper.worksheet-form_wrapper {
+    background-color: #C6EFFE;
+    padding: 40px;
+    border-radius: 40px;
+
+    @media (max-width: 768px) {
+        padding: 30px 20px;
+    }
+
+    form.worksheet-form {
+        .gform_footer {
+            margin-top: 24px;
+            input[type=submit] {
+                background-color: #005375;
+            
+
+                &:hover {
+                    background-color: #0091B3;
+                }
+
+                &:active {
+                    transform: scale(0.98);
+                }
+            }
+        }
+    }
+}
