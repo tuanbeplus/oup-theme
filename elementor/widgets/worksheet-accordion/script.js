@@ -5,20 +5,31 @@ jQuery(document).ready(function($) {
             return;
         }
 
+        var maxItems = $wrapper.data('max-items') || 'one';
+        var animDuration = parseInt($wrapper.data('anim-duration'), 10);
+        if (isNaN(animDuration)) {
+            animDuration = 400;
+        }
+
         $wrapper.find('.worksheet-accordion-header').on('click', function(e) {
             e.preventDefault();
             var $this = $(this);
             var $content = $this.next('.worksheet-accordion-content');
             var isActive = $this.hasClass('active');
 
+            if (maxItems === 'one') {
+                $wrapper.find('.worksheet-accordion-header').not($this).removeClass('active').attr('aria-expanded', 'false');
+                $wrapper.find('.worksheet-accordion-content').not($content).slideUp(animDuration);
+            }
+            
             if (isActive) {
                 $this.removeClass('active');
                 $this.attr('aria-expanded', 'false');
-                $content.slideUp(300);
+                $content.slideUp(animDuration);
             } else {
                 $this.addClass('active');
                 $this.attr('aria-expanded', 'true');
-                $content.slideDown(300);
+                $content.slideDown(animDuration);
             }
         });
     }

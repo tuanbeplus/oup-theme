@@ -1,81 +1,72 @@
 .worksheet-accordion-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 0;
   width: 100%;
 }
 .worksheet-accordion-wrapper .worksheet-accordion-item {
-  border-bottom: 1px dashed #AAB2BD;
+  border: none;
 }
-.worksheet-accordion-wrapper .worksheet-accordion-item:last-child {
-  border-bottom: none;
-}
-.worksheet-accordion-wrapper .worksheet-accordion-header {
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 24px 0;
+  padding: 30px 0;
   background: transparent;
   border: none;
+  border-top: 2px dashed #577282;
   cursor: pointer;
-  text-align: left;
   transition: all 0.3s ease;
   outline: none;
+  text-align: left;
+  border-radius: 0;
 }
-.worksheet-accordion-wrapper .worksheet-accordion-header .worksheet-accordion-title {
-  font-family: var(--e-global-typography-primary-font-family, "Outfit", sans-serif);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--e-global-color-text, #1E1E1E);
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header .worksheet-accordion-title {
   margin: 0;
-  line-height: 1.3;
+  flex: 1;
   padding-right: 20px;
+  font-family: var(--e-global-typography-secondary-font-family);
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: var(--e-global-color-text);
+  line-height: 1.1;
 }
-.worksheet-accordion-wrapper .worksheet-accordion-header .worksheet-accordion-icon {
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header .worksheet-accordion-icon {
   display: flex;
   align-items: center;
   justify-content: center;
   color: #1E1E1E;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
 }
-.worksheet-accordion-wrapper .worksheet-accordion-header .worksheet-accordion-icon svg {
-  width: 24px;
-  height: 24px;
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header .worksheet-accordion-icon svg {
+  width: 19px;
+  height: auto;
+  transition: transform 0.3s ease;
+  display: block;
 }
-.worksheet-accordion-wrapper .worksheet-accordion-header.active .worksheet-accordion-icon {
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header.active .worksheet-accordion-icon svg {
   transform: rotate(180deg);
 }
-.worksheet-accordion-wrapper .worksheet-accordion-header:hover {
-  opacity: 0.8;
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-icon .elementor-accordion-icon-opened {
+  display: none;
 }
-.worksheet-accordion-wrapper .worksheet-accordion-content .worksheet-accordion-content-inner {
-  padding: 0 0 24px 0;
-  color: var(--e-global-color-text, #4A4A4A);
-  font-size: 1.0625rem;
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header.active .worksheet-accordion-icon .elementor-accordion-icon-closed:has(+ .elementor-accordion-icon-opened) {
+  display: none;
+}
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-header.active .worksheet-accordion-icon .elementor-accordion-icon-opened {
+  display: block;
+}
+.worksheet-accordion-wrapper .worksheet-accordion-item:last-child .worksheet-accordion-header {
+  border-bottom: 2px dashed #577282;
+}
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-content {
+  display: none;
+}
+.worksheet-accordion-wrapper .worksheet-accordion-item .worksheet-accordion-content .worksheet-accordion-content-inner {
+  color: var(--e-global-color-text);
+  font-size: 1.125rem;
   line-height: 1.6;
-  font-family: var(--e-global-typography-secondary-font-family, "Outfit", sans-serif);
-}
-.worksheet-accordion-wrapper .worksheet-accordion-content .worksheet-accordion-content-inner p {
-  margin-bottom: 15px;
-}
-.worksheet-accordion-wrapper .worksheet-accordion-content .worksheet-accordion-content-inner p:last-child {
-  margin-bottom: 0;
-}
-.worksheet-accordion-wrapper .worksheet-accordion-content .worksheet-accordion-content-inner ul, .worksheet-accordion-wrapper .worksheet-accordion-content .worksheet-accordion-content-inner ol {
-  padding-left: 20px;
-  margin-bottom: 15px;
-}
-.worksheet-accordion-wrapper .worksheet-accordion-content .worksheet-accordion-content-inner ul li, .worksheet-accordion-wrapper .worksheet-accordion-content .worksheet-accordion-content-inner ol li {
-  margin-bottom: 8px;
-}
-.worksheet-accordion-wrapper .worksheet-accordion-content .worksheet-accordion-content-inner a {
-  color: var(--e-global-color-accent, #007bff);
-  text-decoration: underline;
-}
-.worksheet-accordion-wrapper .worksheet-accordion-content .worksheet-accordion-content-inner a:hover {
-  text-decoration: none;
+  font-family: var(--e-global-typography-primary-font-family);
 }
 
 /*# sourceMappingURL=style.css.map*/
