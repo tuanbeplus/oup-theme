@@ -124,7 +124,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 386px;
+  height: auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .worksheet-filter-wrapper .worksheet-card-item:hover {
@@ -171,6 +171,11 @@
   background: #fff;
   border-radius: 40px;
   margin-top: -40px;
+}
+@media (max-width: 767px) and (min-width: 460px) {
+  .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-content {
+    height: 150px;
+  }
 }
 @media (max-width: 767px) {
   .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-content {

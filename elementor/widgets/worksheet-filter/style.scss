@@ -128,7 +128,7 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        height: 386px;
+        height: auto;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
 
         &:hover {
@@ -176,6 +176,10 @@
             background: #fff;
             border-radius: 40px;
             margin-top: -40px;
+
+            @media(max-width: 767px) and (min-width: 460px) {
+                height: 150px;
+            }
 
             @media (max-width: 767px) {
                 padding: 30px;
