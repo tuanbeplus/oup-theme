@@ -247,7 +247,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name' => 'accordion_border_normal',
-                'selector' => '{{WRAPPER}} .worksheet-accordion-item',
+                'selector' => '{{WRAPPER}} .worksheet-accordion-header',
             ]
         );
 
@@ -273,7 +273,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name' => 'accordion_border_hover',
-                'selector' => '{{WRAPPER}} .worksheet-accordion-item:hover',
+                'selector' => '{{WRAPPER}} .worksheet-accordion-header:hover',
             ]
         );
 
@@ -299,7 +299,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name' => 'accordion_border_active',
-                'selector' => '{{WRAPPER}} .worksheet-accordion-item.active',
+                'selector' => '{{WRAPPER}} .worksheet-accordion-header.active',
             ]
         );
 
@@ -313,7 +313,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%', 'em', 'rem' ],
                 'selectors' => [
-                    '{{WRAPPER}} .worksheet-accordion-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .worksheet-accordion-header' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'separator' => 'before',
             ]
@@ -653,7 +653,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
                 
                 if ( empty( $title ) || empty( $content ) ) continue;
 
-                $title_tag = !empty($settings['title_html_tag']) ? $settings['title_html_tag'] : 'h3';
+                $title_tag = !empty($settings['title_html_tag']) ? $settings['title_html_tag'] : 'h2';
                 $is_active = false;
                 if ($default_state === 'all_expanded') {
                     $is_active = true;
@@ -665,7 +665,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
                 $aria_expanded = $is_active ? 'true' : 'false';
                 $display = $is_active ? 'block' : 'none';
             ?>
-                <div class="worksheet-accordion-item <?php echo esc_attr($active_class); ?>">
+                <div class="worksheet-accordion-item">
                     <button class="worksheet-accordion-header <?php echo esc_attr($active_class); ?>" aria-expanded="<?php echo esc_attr($aria_expanded); ?>">
                         <<?php echo esc_html($title_tag); ?> class="worksheet-accordion-title"><?php echo esc_html( $title ); ?></<?php echo esc_html($title_tag); ?>>
                         <span class="worksheet-accordion-icon">
@@ -689,7 +689,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
                         </span>
                     </button>
                     <div class="worksheet-accordion-content" style="display: <?php echo esc_attr($display); ?>;">
-                        <div class="worksheet-accordion-content-inner">
+                        <div class="worksheet-accordion-content-inner elementor-text-editor">
                             <?php echo wp_kses_post( $content ); ?>
                         </div>
                     </div>
