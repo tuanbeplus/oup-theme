@@ -247,7 +247,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name' => 'accordion_border_normal',
-                'selector' => '{{WRAPPER}} .worksheet-accordion-header',
+                'selector' => '{{WRAPPER}} .worksheet-accordion-item',
             ]
         );
 
@@ -273,7 +273,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name' => 'accordion_border_hover',
-                'selector' => '{{WRAPPER}} .worksheet-accordion-header:hover',
+                'selector' => '{{WRAPPER}} .worksheet-accordion-item:hover',
             ]
         );
 
@@ -299,7 +299,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
             Group_Control_Border::get_type(),
             [
                 'name' => 'accordion_border_active',
-                'selector' => '{{WRAPPER}} .worksheet-accordion-header.active',
+                'selector' => '{{WRAPPER}} .worksheet-accordion-item.active',
             ]
         );
 
@@ -313,7 +313,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
                 'type' => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', '%', 'em', 'rem' ],
                 'selectors' => [
-                    '{{WRAPPER}} .worksheet-accordion-header' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .worksheet-accordion-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
                 'separator' => 'before',
             ]
@@ -665,7 +665,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
                 $aria_expanded = $is_active ? 'true' : 'false';
                 $display = $is_active ? 'block' : 'none';
             ?>
-                <div class="worksheet-accordion-item">
+                <div class="worksheet-accordion-item <?php echo esc_attr($active_class); ?>">
                     <button class="worksheet-accordion-header <?php echo esc_attr($active_class); ?>" aria-expanded="<?php echo esc_attr($aria_expanded); ?>">
                         <<?php echo esc_html($title_tag); ?> class="worksheet-accordion-title"><?php echo esc_html( $title ); ?></<?php echo esc_html($title_tag); ?>>
                         <span class="worksheet-accordion-icon">
