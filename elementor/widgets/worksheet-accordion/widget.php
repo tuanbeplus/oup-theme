@@ -651,7 +651,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
                 $title = isset($item['title']) ? $item['title'] : '';
                 $content = isset($item['content']) ? $item['content'] : '';
                 
-                if ( empty( $title ) && empty( $content ) ) continue;
+                if ( empty( $title ) || empty( $content ) ) continue;
 
                 $title_tag = !empty($settings['title_html_tag']) ? $settings['title_html_tag'] : 'h3';
                 $is_active = false;
