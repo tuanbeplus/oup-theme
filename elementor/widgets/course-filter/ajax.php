@@ -18,8 +18,12 @@ function oup_ajax_filter_courses_handler() {
         echo '<p class="no-results-msg">Invalid security token. Please refresh the page.</p>';
         wp_die();
     }
+
+    if ( ! class_exists( '\OupElementorWidgets\Widgets\CourseFilter\Widget_CourseFilter' ) ) {
+        require_once get_stylesheet_directory() . '/elementor/widgets/course-filter/widget.php';
+    }
     
-    $posts_per_page = isset($_POST['posts_per_page']) ? intval($_POST['posts_per_page']) : 9;
+    $posts_per_page = isset($_POST['posts_per_page']) ? intval($_POST['posts_per_page']) : -1;
     
     $allowed_orderby = ['date', 'title', 'rand', 'menu_order'];
     $orderby = isset($_POST['orderby']) && in_array($_POST['orderby'], $allowed_orderby) ? $_POST['orderby'] : 'date';
@@ -27,9 +31,24 @@ function oup_ajax_filter_courses_handler() {
     $allowed_order = ['ASC', 'DESC'];
     $order = isset($_POST['order']) && in_array(strtoupper($_POST['order']), $allowed_order) ? strtoupper($_POST['order']) : 'DESC';
 
+    $audiences = \OupElementorWidgets\Widgets\CourseFilter\Widget_CourseFilter::get_acf_field_choices('course_audience');
+    $subjects  = \OupElementorWidgets\Widgets\CourseFilter\Widget_CourseFilter::get_acf_field_choices('course_subject');
+    $levels    = \OupElementorWidgets\Widgets\CourseFilter\Widget_CourseFilter::get_acf_field_choices('course_learning_level');
+
     $audience = isset($_POST['course_audience']) ? sanitize_text_field($_POST['course_audience']) : '*';
+    if ( $audience !== '*' && ! empty( $audience ) && ! isset( $audiences[ $audience ] ) ) {
+        $audience = '*';
+    }
+
     $subject  = isset($_POST['course_subject']) ? sanitize_text_field($_POST['course_subject']) : '*';
+    if ( $subject !== '*' && ! empty( $subject ) && ! isset( $subjects[ $subject ] ) ) {
+        $subject = '*';
+    }
+
     $level    = isset($_POST['course_learning_level']) ? sanitize_text_field($_POST['course_learning_level']) : '*';
+    if ( $level !== '*' && ! empty( $level ) && ! isset( $levels[ $level ] ) ) {
+        $level = '*';
+    }
 
     $args = array(
         'post_type'      => 'sfwd-courses',
@@ -41,27 +60,52 @@ function oup_ajax_filter_courses_handler() {
 
     $meta_query = array();
 
+
     if ( $audience !== '*' && !empty($audience) ) {
         $meta_query[] = array(
-            'key'     => 'course_audience',
-            'value'   => $audience,
-            'compare' => 'LIKE'
+            'relation' => 'OR',
+            array(
+                'key'     => 'course_audience',
+                'value'   => $audience,
+                'compare' => '='
+            ),
+            array(
+                'key'     => 'course_audience',
+                'value'   => '"' . $audience . '"',
+                'compare' => 'LIKE'
+            )
         );
     }
 
     if ( $subject !== '*' && !empty($subject) ) {
         $meta_query[] = array(
-            'key'     => 'course_subject',
-            'value'   => $subject,
-            'compare' => 'LIKE'
+            'relation' => 'OR',
+            array(
+                'key'     => 'course_subject',
+                'value'   => $subject,
+                'compare' => '='
+            ),
+            array(
+                'key'     => 'course_subject',
+                'value'   => '"' . $subject . '"',
+                'compare' => 'LIKE'
+            )
         );
     }
 
     if ( $level !== '*' && !empty($level) ) {
         $meta_query[] = array(
-            'key'     => 'course_learning_level',
-            'value'   => $level,
-            'compare' => 'LIKE'
+            'relation' => 'OR',
+            array(
+                'key'     => 'course_learning_level',
+                'value'   => $level,
+                'compare' => '='
+            ),
+            array(
+                'key'     => 'course_learning_level',
+                'value'   => '"' . $level . '"',
+                'compare' => 'LIKE'
+            )
         );
     }
 
@@ -73,16 +117,9 @@ function oup_ajax_filter_courses_handler() {
     $query = new \WP_Query($args);
 
     if ( $query->have_posts() ) {
-        if ( ! class_exists( '\OupElementorWidgets\Widgets\CourseFilter\Widget_CourseFilter' ) ) {
-            require_once get_stylesheet_directory() . '/elementor/widgets/course-filter/widget.php';
-        }
-
         while ( $query->have_posts() ) {
             $query->the_post();
-
-            if ( class_exists( '\OupElementorWidgets\Widgets\CourseFilter\Widget_CourseFilter' ) ) {
-                \OupElementorWidgets\Widgets\CourseFilter\Widget_CourseFilter::render_card(get_the_ID());
-            }
+            \OupElementorWidgets\Widgets\CourseFilter\Widget_CourseFilter::render_card(get_the_ID());
         }
         wp_reset_postdata();
     } else {

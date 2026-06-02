@@ -621,14 +621,29 @@ class Widget_CourseFilter extends Widget_Base
         }
         $price_text = !empty($course_price) ? " for $" . esc_html($course_price) : "";
 
+        $permalink = get_permalink($post_id);
+
+        
+        $button_link = $permalink;
+        $course_meta = get_post_meta($post_id, '_sfwd-courses', true);
+        if (is_array($course_meta) && !empty($course_meta['sfwd-courses_custom_button_url'])) {
+            $button_link = $course_meta['sfwd-courses_custom_button_url'];
+        }
+
         ?>
         <article class="course-card-item">
             <div class="course-card-image">
-                <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy">
+                <a href="<?php echo esc_url($permalink); ?>" style="display: block; width: 100%; height: 100%;">
+                    <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy">
+                </a>
             </div>
 
             <div class="course-card-content">
-                <h3 class="course-card-title"><?php echo esc_html($title); ?></h3>
+                <h3 class="course-card-title">
+                    <a href="<?php echo esc_url($permalink); ?>" style="color: inherit; text-decoration: none;">
+                        <?php echo esc_html($title); ?>
+                    </a>
+                </h3>
                 <p class="course-card-desc"><?php echo esc_html($description); ?></p>
 
                 <div class="course-card-meta">
@@ -659,7 +674,7 @@ class Widget_CourseFilter extends Widget_Base
                 </div>
 
                 <div class="course-card-action">
-                    <a href="<?php echo esc_url($permalink); ?>" class="course-btn">Enrol Now<?php echo $price_text; ?></a>
+                    <a href="<?php echo esc_url($button_link); ?>" class="course-btn">Enrol Now<?php echo $price_text; ?></a>
                 </div>
             </div>
         </article>
@@ -669,12 +684,15 @@ class Widget_CourseFilter extends Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
-        $posts_per_page = (isset($settings['posts_per_page']) && $settings['posts_per_page'] !== '') ? intval($settings['posts_per_page']) : 9;
+        $posts_per_page = (isset($settings['posts_per_page']) && $settings['posts_per_page'] !== '') ? intval($settings['posts_per_page']) : -1;
         $posts_per_page_tablet = (isset($settings['posts_per_page_tablet']) && $settings['posts_per_page_tablet'] !== '') ? intval($settings['posts_per_page_tablet']) : $posts_per_page;
         $posts_per_page_mobile = (isset($settings['posts_per_page_mobile']) && $settings['posts_per_page_mobile'] !== '') ? intval($settings['posts_per_page_mobile']) : $posts_per_page_tablet;
 
-        $orderby = !empty($settings['orderby']) ? esc_attr($settings['orderby']) : 'date';
-        $order = !empty($settings['order']) ? esc_attr($settings['order']) : 'DESC';
+        $allowed_orderby = ['date', 'title', 'rand', 'menu_order'];
+        $orderby = (!empty($settings['orderby']) && in_array($settings['orderby'], $allowed_orderby)) ? $settings['orderby'] : 'date';
+
+        $allowed_order = ['ASC', 'DESC'];
+        $order = (!empty($settings['order']) && in_array(strtoupper($settings['order']), $allowed_order)) ? strtoupper($settings['order']) : 'DESC';
 
         $nonce = wp_create_nonce('course_filter_nonce');
 
