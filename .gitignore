@@ -29,10 +29,9 @@ Desktop.ini
 # IDE files
 .idea/
 *.sublime-workspace
-*.sublime-projecti
+*.sublime-project
 .kit.md
 kit.md
 mix-manifest.json
-*.map
 .agents/
 # End of Selection
