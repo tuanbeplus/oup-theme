@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
         $wrapper.find('.worksheet-accordion-header').on('click', function(e) {
             e.preventDefault();
             var $this = $(this);
-            var $content = $this.next('.worksheet-accordion-content');
+            var $content = $this.closest('.worksheet-accordion-item').find('.worksheet-accordion-content');
             var isActive = $this.hasClass('active');
 
             if (maxItems === 'one') {

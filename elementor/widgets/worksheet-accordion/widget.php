@@ -666,8 +666,9 @@ class Widget_WorksheetAccordion extends Widget_Base {
                 $display = $is_active ? 'block' : 'none';
             ?>
                 <div class="worksheet-accordion-item">
-                    <button class="worksheet-accordion-header <?php echo esc_attr($active_class); ?>" aria-expanded="<?php echo esc_attr($aria_expanded); ?>">
-                        <<?php echo esc_html($title_tag); ?> class="worksheet-accordion-title"><?php echo esc_html( $title ); ?></<?php echo esc_html($title_tag); ?>>
+                    <<?php echo esc_html($title_tag); ?> class="worksheet-accordion-heading" style="margin: 0; padding: 0; width: 100%;">
+                        <button class="worksheet-accordion-header <?php echo esc_attr($active_class); ?>" aria-expanded="<?php echo esc_attr($aria_expanded); ?>">
+                            <span class="worksheet-accordion-title"><?php echo esc_html( $title ); ?></span>
                         <span class="worksheet-accordion-icon">
                             <?php if ( ! empty( $settings['icon_expand']['value'] ) || ! empty( $settings['icon_collapse']['value'] ) ) : ?>
                                 <?php if ( ! empty( $settings['icon_expand']['value'] ) ) : ?>
@@ -688,6 +689,7 @@ class Widget_WorksheetAccordion extends Widget_Base {
                             <?php endif; ?>
                         </span>
                     </button>
+                    </<?php echo esc_html($title_tag); ?>>
                     <div class="worksheet-accordion-content" style="display: <?php echo esc_attr($display); ?>;">
                         <div class="worksheet-accordion-content-inner elementor-text-editor">
                             <?php echo wp_kses_post( $content ); ?>
