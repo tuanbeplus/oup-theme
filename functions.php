@@ -61,3 +61,4 @@ require_once get_stylesheet_directory() . '/inc/woo.php';
 /* AJAX Handlers */
 require_once get_stylesheet_directory() . '/elementor/widgets/archive-posts-filter/ajax.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/worksheet-filter/ajax.php';
+require_once get_stylesheet_directory() . '/elementor/widgets/course-filter/ajax.php';
