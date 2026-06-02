@@ -1,0 +1,278 @@
+// Breakpoints
+$bp-mobile: 768px;
+
+// Colors
+$color-text: #231F20;
+$color-white: #ffffff;
+$color-primary: #E8527A;
+$color-primary-hover: #d03f67;
+
+$color-muted: #555;
+$color-light: #888;
+$color-border: #D8D8D8;
+
+$color-editor-text: #aaa;
+$color-editor-bg: #f9f9f9;
+$color-editor-border: #ddd;
+
+$color-past-text: #a0522d;
+$color-past-bg: #fff8f0;
+$color-past-border: #f5c89a;
+
+$color-placeholder-text: #999;
+$color-placeholder-bg: #fff8fa;
+$color-placeholder-border: #e0b0bb;
+
+// Typography
+$font-body: "Plus Jakarta Sans", sans-serif;
+$font-heading: "League Spartan", sans-serif;
+
+// Radius
+$radius-card: 20px;
+$radius-image: 12px;
+$radius-pill: 50px;
+$radius-sm: 6px;
+
+// Shadow
+$shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
+
+// Event List
+.sce-event-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    align-items: start;
+
+    @media (max-width: $bp-mobile) {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+.sce-card {
+    background-color: $color-white;
+    border-radius: $radius-card;
+    padding: 60px;
+    font-family: $font-body;
+    color: $color-text;
+    display: flex;
+    flex-direction: column;
+    box-shadow: $shadow-card;
+
+    // Editor
+    .sce-placeholder-meta {
+        font-size: 0.8rem;
+        color: $color-editor-text;
+        font-style: italic;
+        margin-bottom: 12px;
+        padding: 10px 14px;
+        background: $color-editor-bg;
+        border-radius: $radius-sm;
+        border: 1px dashed $color-editor-border;
+    }
+
+    .sce-past-badge {
+        font-size: 0.8rem;
+        color: $color-past-text;
+        background: $color-past-bg;
+        border: 1px solid $color-past-border;
+        border-radius: $radius-sm;
+        padding: 8px 12px;
+        margin-bottom: 12px;
+    }
+
+    // Image
+    .sce-image {
+        margin-bottom: 20px;
+        line-height: 0;
+
+        img.sce-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            border-radius: $radius-image;
+        }
+    }
+
+    // Title
+    .sce-title {
+        font-family: $font-heading;
+        font-size: 1.625rem;
+        font-weight: 700;
+        line-height: 1.2;
+        color: $color-text;
+        margin: 0 0 10px;
+        padding: 0;
+
+        @media (max-width: $bp-mobile) {
+            font-size: 1.375rem;
+        }
+    }
+
+    // Excerpt
+    .sce-excerpt {
+        font-size: 0.9375rem;
+        line-height: 1.65;
+        color: $color-text;
+        margin-bottom: 20px;
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    // Meta
+    .sce-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .sce-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: $color-text;
+    }
+
+    .sce-meta-icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        margin-top: 2px;
+        color: inherit;
+
+        svg {
+            display: block;
+        }
+    }
+
+    .sce-meta-lines {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    .sce-meta-line {
+        display: block;
+    }
+
+    // Footnote
+    .sce-footnote {
+        font-size: 0.8125rem;
+        line-height: 1.55;
+        color: $color-muted;
+        font-style: italic;
+        margin: 0 0 20px;
+    }
+
+    // Pricing
+    .sce-pricing {
+        display: flex;
+        align-items: stretch;
+        margin: 8px 0 24px;
+    }
+
+    .sce-price-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 0 20px;
+
+        &:first-child {
+            padding-left: 0;
+        }
+
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+
+    .sce-price-amount-wrap {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .sce-price-amount {
+        font-family: $font-heading;
+        font-size: 1.875rem;
+        font-weight: 700;
+        line-height: 1;
+        color: $color-text;
+        letter-spacing: -0.01em;
+    }
+
+    .sce-price-suffix {
+        font-size: 0.8125rem;
+        color: $color-light;
+        font-weight: 400;
+        line-height: 1;
+    }
+
+    .sce-price-label {
+        font-size: 0.9rem;
+        color: $color-text;
+        font-weight: 500;
+        line-height: 1.3;
+    }
+
+    .sce-price-divider {
+        width: 1px;
+        background-color: $color-border;
+        flex-shrink: 0;
+        align-self: stretch;
+        margin: 2px 0;
+    }
+
+    // Button
+    .sce-button-wrap {
+        margin-top: auto;
+        padding-top: 8px;
+    }
+
+    .sce-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background-color: $color-primary;
+        color: $color-white;
+        font-family: $font-body;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.2;
+        padding: 16px 32px;
+        border-radius: $radius-pill;
+        text-decoration: none;
+        transition: background-color 0.2s ease, transform 0.15s ease;
+
+        &:hover,
+        &:focus {
+            background-color: $color-primary-hover;
+            color: $color-white;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}
+
+// Placeholder
+.sce-placeholder {
+    padding: 24px;
+    border: 2px dashed $color-placeholder-border;
+    border-radius: $radius-image;
+    text-align: center;
+    color: $color-placeholder-text;
+    font-size: 0.875rem;
+    background: $color-placeholder-bg;
+}

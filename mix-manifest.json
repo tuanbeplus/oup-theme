@@ -1,8 +1,11 @@
 {
-    "/elementor/widgets/worksheet-filter/style.css": "/elementor/widgets/worksheet-filter/style.css",
-    "/elementor/widgets/worksheet-accordion/style.css": "/elementor/widgets/worksheet-accordion/style.css",
     "/elementor/widgets/sample-widget/style.css": "/elementor/widgets/sample-widget/style.css",
     "/elementor/widgets/blog-search/style.css": "/elementor/widgets/blog-search/style.css",
+    "/elementor/widgets/blog-detail-toc/style.css": "/elementor/widgets/blog-detail-toc/style.css",
+    "/elementor/widgets/blog-detail-breadcrumb/style.css": "/elementor/widgets/blog-detail-breadcrumb/style.css",
     "/elementor/widgets/archive-posts-filter/style.css": "/elementor/widgets/archive-posts-filter/style.css",
-    "/assets/css/main.css": "/assets/css/main.css"
+    "/assets/css/main.css": "/assets/css/main.css",
+    "/elementor/widgets/worksheet-filter/style.css": "/elementor/widgets/worksheet-filter/style.css",
+    "/elementor/widgets/worksheet-accordion/style.css": "/elementor/widgets/worksheet-accordion/style.css",
+    "/elementor/widgets/sugar-calendar-event/style.css": "/elementor/widgets/sugar-calendar-event/style.css"
 }

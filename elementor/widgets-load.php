@@ -49,6 +49,7 @@ class ElementorWidgets {
 			'blog-detail-breadcrumb',
 			'blog-detail-toc',
 			'worksheet-accordion',
+			'sugar-calendar-event'
 		);
 
 		return $this->widgets;
@@ -109,6 +110,13 @@ class ElementorWidgets {
 		wp_register_style( 
 			'oup-blog-detail-toc-style',
 			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+		wp_register_style(
+			'oup-sugar-calendar-event-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/style.css',
 			array(),
 			OUP_THEME_VER,
 			'all'
@@ -221,6 +229,7 @@ class ElementorWidgets {
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogDetailBreadcrumb\Widget_BlogDetailBreadcrumb());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogDetailToc\Widget_BlogDetailToc());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\WorksheetAccordion\Widget_WorksheetAccordion());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SugarCalendarEvent\Widget_SugarCalendarEvent());
 	}
 
 	/**
