@@ -633,7 +633,7 @@ class Widget_CourseFilter extends Widget_Base
         ?>
         <article class="course-card-item">
             <div class="course-card-image">
-                <a href="<?php echo esc_url($permalink); ?>" style="display: block; width: 100%; height: 100%;">
+                <a href="<?php echo esc_url($permalink); ?>">
                     <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy">
                 </a>
             </div>
