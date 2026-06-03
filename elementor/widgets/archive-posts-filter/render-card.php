@@ -25,7 +25,7 @@ $post_excerpt = $post_obj->post_excerpt
 // Featured image
 $thumb_id  = get_post_thumbnail_id($post_id);
 $thumb_url = $thumb_id
-    ? wp_get_attachment_image_url($thumb_id, 'large')
+    ? wp_get_attachment_image_url($thumb_id, 'medium_large')
     : null;
 $thumb_alt = $thumb_id
     ? trim(wp_strip_all_tags(get_post_meta($thumb_id, '_wp_attachment_image_alt', true)))

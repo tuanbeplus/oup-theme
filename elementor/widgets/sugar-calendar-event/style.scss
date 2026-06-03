@@ -1,10 +1,12 @@
 // Breakpoints
-$bp-mobile: 768px;
+$bp-xl: 1200px;
+$bp-lg: 1024px;
+$bp-mobile: 767px;
 
 // Colors
 $color-text: #231F20;
 $color-white: #ffffff;
-$color-primary: #E8527A;
+$color-primary: #E46DAB;
 $color-primary-hover: #d03f67;
 
 $color-muted: #555;
@@ -28,13 +30,15 @@ $font-body: "Plus Jakarta Sans", sans-serif;
 $font-heading: "League Spartan", sans-serif;
 
 // Radius
-$radius-card: 20px;
-$radius-image: 12px;
-$radius-pill: 50px;
+$radius-card: 40px;
+$radius-image: 20px;
+$radius-pill: 32px;
 $radius-sm: 6px;
 
 // Shadow
-$shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
+$shadow-card: 2px 7px 7px 0px #0000001A;
+$shadow-card-hover: 4px 16px 24px 0px #0000002A;
+
 
 // Event List
 .sce-event-list {
@@ -42,6 +46,14 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
     grid-template-columns: repeat(2, 1fr);
     gap: 50px;
     align-items: start;
+
+    @media (max-width: $bp-xl) {
+        gap: 36px;
+    }
+
+    @media (max-width: $bp-lg) {
+        gap: 28px;
+    }
 
     @media (max-width: $bp-mobile) {
         grid-template-columns: 1fr;
@@ -58,6 +70,30 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
     display: flex;
     flex-direction: column;
     box-shadow: $shadow-card;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: $shadow-card-hover;
+    }
+
+    @media (max-width: $bp-xl) {
+        padding: 48px;
+        border-radius: 32px;
+    }
+
+    @media (max-width: $bp-lg) {
+        padding: 36px;
+        border-radius: 28px;
+    }
+
+    @media (max-width: $bp-mobile) {
+        padding: 28px 24px;
+        border-radius: 24px;
+    }
 
     // Editor
     .sce-placeholder-meta {
@@ -83,8 +119,14 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
 
     // Image
     .sce-image {
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         line-height: 0;
+        overflow: hidden;
+        border-radius: $radius-image;
+
+        @media (max-width: $bp-mobile) {
+            margin-bottom: 22px;
+        }
 
         img.sce-img {
             width: 100%;
@@ -92,18 +134,32 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
             display: block;
             object-fit: cover;
             border-radius: $radius-image;
+
+            transition: transform 0.4s ease;
         }
+    }
+
+    &:hover .sce-image img.sce-img {
+        transform: scale(1.03);
     }
 
     // Title
     .sce-title {
         font-family: $font-heading;
-        font-size: 1.625rem;
-        font-weight: 700;
-        line-height: 1.2;
+        font-size: 1.875rem;
+        font-weight: 600;
+        line-height: 1.1;
         color: $color-text;
         margin: 0 0 10px;
         padding: 0;
+
+        @media (max-width: $bp-xl) {
+            font-size: 1.75rem;
+        }
+
+        @media (max-width: $bp-lg) {
+            font-size: 1.5rem;
+        }
 
         @media (max-width: $bp-mobile) {
             font-size: 1.375rem;
@@ -113,9 +169,13 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
     // Excerpt
     .sce-excerpt {
         font-size: 0.9375rem;
-        line-height: 1.65;
+        line-height: 1.6;
         color: $color-text;
         margin-bottom: 20px;
+
+        @media (max-width: $bp-mobile) {
+            font-size: 0.875rem;
+        }
 
         p:last-child {
             margin-bottom: 0;
@@ -126,24 +186,30 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
     .sce-meta {
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        margin-bottom: 20px;
+        gap: 10px;
+        margin: 0 0 20px;
+        padding: 0;
+        list-style: none;
     }
 
     .sce-meta-item {
         display: flex;
-        align-items: center;
+        align-items: start;
         gap: 10px;
-        font-size: 0.9rem;
-        line-height: 1.5;
+        font-size: 0.938rem;
+        line-height: 1.6;
         color: $color-text;
+
+        @media (max-width: $bp-mobile) {
+            font-size: 0.875rem;
+        }
     }
 
     .sce-meta-icon {
         flex-shrink: 0;
         display: flex;
-        align-items: center;
-        margin-top: 2px;
+        align-items: start;
+        margin-top: 0;
         color: inherit;
 
         svg {
@@ -163,26 +229,47 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
 
     // Footnote
     .sce-footnote {
-        font-size: 0.8125rem;
-        line-height: 1.55;
-        color: $color-muted;
-        font-style: italic;
-        margin: 0 0 20px;
+        font-size: 0.938rem;
+        line-height: 1.6;
+        color: $color-text;
+        margin: 0 0 40px;
+
+        @media (max-width: $bp-mobile) {
+            margin-bottom: 28px;
+            font-size: 0.875rem;
+        }
     }
 
     // Pricing
     .sce-pricing {
         display: flex;
-        align-items: stretch;
-        margin: 8px 0 24px;
+        align-items: flex-start;
+        margin: 0 0 30px;
+
+        @media (max-width: $bp-mobile) {
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
     }
 
     .sce-price-item {
-        flex: 1;
         display: flex;
         flex-direction: column;
         gap: 4px;
-        padding: 0 20px;
+        padding: 0 50px;
+
+        @media (max-width: $bp-xl) {
+            padding: 0 36px;
+        }
+
+        @media (max-width: $bp-lg) {
+            padding: 0 28px;
+        }
+
+        @media (max-width: $bp-mobile) {
+            padding: 0;
+        }
 
         &:first-child {
             padding-left: 0;
@@ -203,40 +290,52 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
     .sce-price-amount {
         font-family: $font-heading;
         font-size: 1.875rem;
-        font-weight: 700;
-        line-height: 1;
+        font-weight: 600;
+        line-height: 1.1;
         color: $color-text;
         letter-spacing: -0.01em;
+
+        @media (max-width: $bp-lg) {
+            font-size: 1.625rem;
+        }
+
+        @media (max-width: $bp-mobile) {
+            font-size: 1.5rem;
+        }
     }
 
     .sce-price-suffix {
-        font-size: 0.8125rem;
-        color: $color-light;
+        font-size: 0.938rem;
+        color: $color-text;
         font-weight: 400;
         line-height: 1;
     }
 
     .sce-price-label {
-        font-size: 0.9rem;
+        font-size: 0.938rem;
         color: $color-text;
-        font-weight: 500;
-        line-height: 1.3;
+        font-weight: 600;
+        line-height: 1.6;
+
+        @media (max-width: $bp-mobile) {
+            font-size: 0.875rem;
+        }
     }
 
     .sce-price-divider {
         width: 1px;
-        background-color: $color-border;
+        background-color: $color-text;
         flex-shrink: 0;
         align-self: stretch;
+        min-height: 40px;
         margin: 2px 0;
+
+        @media (max-width: $bp-mobile) {
+            display: none;
+        }
     }
 
     // Button
-    .sce-button-wrap {
-        margin-top: auto;
-        padding-top: 8px;
-    }
-
     .sce-button {
         display: block;
         width: 100%;
@@ -244,24 +343,34 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
         background-color: $color-primary;
         color: $color-white;
         font-family: $font-body;
-        font-size: 1rem;
+        font-size: 1.125rem;
         font-weight: 600;
-        line-height: 1.2;
-        padding: 16px 32px;
+        line-height: 1.6;
+        padding: 12px 30px;
         border-radius: $radius-pill;
         text-decoration: none;
-        transition: background-color 0.2s ease, transform 0.15s ease;
+        transition:
+            background-color 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+
+        @media (max-width: $bp-mobile) {
+            font-size: 1rem;
+            padding: 11px 24px;
+        }
 
         &:hover,
         &:focus {
             background-color: $color-primary-hover;
             color: $color-white;
             text-decoration: none;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba($color-primary, 0.35);
         }
 
         &:active {
             transform: translateY(0);
+            box-shadow: none;
         }
     }
 }
@@ -275,4 +384,55 @@ $shadow-card: 0 4px 24px rgba(0, 0, 0, 0.07);
     color: $color-placeholder-text;
     font-size: 0.875rem;
     background: $color-placeholder-bg;
+}
+
+// Swiper wrapper
+.sce-swiper-outer {
+    position: relative;
+    overflow: hidden;
+    padding: 12px 6px 50px;
+    margin: -12px -6px -50px;
+}
+
+.sce-swiper {
+    overflow: visible;
+
+    .swiper-wrapper {
+        align-items: stretch;
+    }
+
+    .swiper-slide {
+        height: auto;
+
+        .sce-card {
+            height: 100%;
+        }
+    }
+
+    // Navigation
+    .swiper-button-prev,
+    .swiper-button-next {
+        color: $color-primary;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &::after {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+    }
+
+    // Pagination
+    .swiper-pagination {
+        bottom: -36px;
+
+        .swiper-pagination-bullet {
+            background: $color-border;
+            opacity: 1;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: $color-primary;
+        }
+    }
 }

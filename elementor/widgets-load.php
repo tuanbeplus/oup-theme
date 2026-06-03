@@ -64,64 +64,78 @@ class ElementorWidgets {
 	 * @access public
 	 */
 	public function widget_styles() {
-		wp_register_style( 
-			'oup-sample-widget-style',
-			get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/style.css',
-			array(),
-			OUP_THEME_VER,
-			'all'
-		);
-
-		wp_register_style(
-            'oup-archive-posts-filter-style',
-            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/style.css',
-            [],
+        wp_register_style(
+            'oup-sample-widget-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/style.css',
+            array(),
             OUP_THEME_VER,
             'all'
         );
-		wp_register_style( 
-			'oup-worksheet-filter-style',
-			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/style.css',
-			array(),
-			OUP_THEME_VER,
-			'all'
-		);
-		wp_register_style( 
-			'oup-blog-search-style',
-			get_stylesheet_directory_uri() . '/elementor/widgets/blog-search/style.css',
-			array(),
-			OUP_THEME_VER,
-			'all'
-		);
-		wp_register_style( 
-			'oup-blog-detail-breadcrumb-style',
-			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-breadcrumb/style.css',
-			array(),
-			OUP_THEME_VER,
-			'all'
-		);
-		wp_register_style( 
-			'oup-worksheet-accordion-style',
-			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/style.css',
-			array(),
-			OUP_THEME_VER,
-			'all'
-		);
-		wp_register_style( 
-			'oup-blog-detail-toc-style',
-			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/style.css',
-			array(),
-			OUP_THEME_VER,
-			'all'
-		);
+
+        wp_register_style(
+            'oup-archive-posts-filter-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/style.css',
+            array(),
+            OUP_THEME_VER,
+            'all'
+        );
+
+        wp_register_style(
+            'oup-worksheet-filter-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/style.css',
+            array(),
+            OUP_THEME_VER,
+            'all'
+        );
+
+        wp_register_style(
+            'oup-blog-search-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/blog-search/style.css',
+            array(),
+            OUP_THEME_VER,
+            'all'
+        );
+
+        wp_register_style(
+            'oup-blog-detail-breadcrumb-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-breadcrumb/style.css',
+            array(),
+            OUP_THEME_VER,
+            'all'
+        );
+
+        wp_register_style(
+            'oup-worksheet-accordion-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/style.css',
+            array(),
+            OUP_THEME_VER,
+            'all'
+        );
+
+        wp_register_style(
+            'oup-blog-detail-toc-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/style.css',
+            array(),
+            OUP_THEME_VER,
+            'all'
+        );
+
+        wp_register_style(
+            'oup-sugar-calendar-event-style',
+            get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/style.css',
+            array( 'swiper-bundle' ),
+            OUP_THEME_VER,
+            'all'
+        );
+
 		wp_register_style(
-			'oup-sugar-calendar-event-style',
-			get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/style.css',
-			array(),
-			OUP_THEME_VER,
-			'all'
-		);
-	}
+            'swiper-bundle',
+            'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
+            array(),
+            '11',
+            'all'
+        );
+    }
 
 	/**
 	 * widget_scripts
@@ -131,44 +145,63 @@ class ElementorWidgets {
 	 * @since 1.0.0
 	 * @access public
 	 */
-	public function widget_scripts() {
-		wp_register_script( 
-			'oup-sample-widget-script',
-			get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/script.js',
-			array(),
-			OUP_THEME_VER,
-			true
-		);
-		
-		wp_register_script(
-            'oup-archive-posts-filter-script',
-            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/script.js',
-            [ 'jquery' ],
+	 public function widget_scripts() {
+        wp_register_script(
+            'oup-sample-widget-script',
+            get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/script.js',
+            array(),
             OUP_THEME_VER,
             true
         );
-		wp_register_script( 
-			'oup-worksheet-filter-script',
-			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/script.js',
-			array('jquery'),
-			OUP_THEME_VER,
-			true
-		);
-		wp_register_script( 
-			'oup-worksheet-accordion-script',
-			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/script.js',
-			array('jquery'),
-			OUP_THEME_VER,
-			true
-		);
-		wp_register_script( 
-			'oup-blog-detail-toc-script',
-			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/script.js',
-			array('jquery'),
-			OUP_THEME_VER,
-			true
-		);
-	}
+
+        wp_register_script(
+            'oup-archive-posts-filter-script',
+            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/script.js',
+            array( 'jquery' ),
+            OUP_THEME_VER,
+            true
+        );
+
+        wp_register_script(
+            'oup-worksheet-filter-script',
+            get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/script.js',
+            array( 'jquery' ),
+            OUP_THEME_VER,
+            true
+        );
+
+        wp_register_script(
+            'oup-worksheet-accordion-script',
+            get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/script.js',
+            array( 'jquery' ),
+            OUP_THEME_VER,
+            true
+        );
+
+        wp_register_script(
+            'oup-blog-detail-toc-script',
+            get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/script.js',
+            array( 'jquery' ),
+            OUP_THEME_VER,
+            true
+        );
+
+        wp_register_script(
+            'oup-sugar-calendar-event-script',
+            get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/script.js',
+            array( 'jquery', 'swiper-bundle' ),
+            OUP_THEME_VER,
+            true
+        );
+
+		wp_register_script(
+            'swiper-bundle',
+            'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+            array(),
+            '11',
+            true
+        );
+    }
 
 	/**
 	 * Include Widgets files

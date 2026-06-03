@@ -38,6 +38,11 @@ class Widget_SugarCalendarEvent extends Widget_Base
         return ['oup-sugar-calendar-event-style'];
     }
 
+    public function get_script_depends()
+    {
+        return ['oup-sugar-calendar-event-script'];
+    }
+
     public function is_dynamic_content(): bool
     {
         return true;
@@ -72,6 +77,134 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'name'    => 'featured_image',
             'default' => 'large',
             'exclude' => ['custom'],
+        ]);
+
+        $this->end_controls_section();
+
+        // Button
+        $this->start_controls_section('section_button', [
+            'label' => __('Button', 'oup'),
+            'tab'   => Controls_Manager::TAB_CONTENT,
+        ]);
+
+        $this->add_control('button_text', [
+            'label'   => __('Button Text', 'oup'),
+            'type'    => Controls_Manager::TEXT,
+            'default' => __('Sign Up', 'oup'),
+        ]);
+
+        $this->add_control('button_url', [
+            'label'         => __('Button URL', 'oup'),
+            'type'          => Controls_Manager::URL,
+            'placeholder'   => __('https://...', 'oup'),
+            'default'       => [
+                'url'         => '#',
+                'is_external' => false,
+                'nofollow'    => false,
+            ],
+            'show_external' => true,
+        ]);
+
+        $this->end_controls_section();
+
+        // Slider
+        $this->start_controls_section('section_slider', [
+            'label' => __('Slider', 'oup'),
+            'tab'   => Controls_Manager::TAB_CONTENT,
+        ]);
+
+        $this->add_control('enable_slider', [
+            'label'        => __('Enable Slider', 'oup'),
+            'type'         => Controls_Manager::SWITCHER,
+            'label_on'     => __('Yes', 'oup'),
+            'label_off'    => __('No', 'oup'),
+            'return_value' => 'yes',
+            'default'      => '',
+        ]);
+
+        $this->add_control('enable_navigation', [
+            'label'        => __('Navigation Arrows', 'oup'),
+            'type'         => Controls_Manager::SWITCHER,
+            'label_on'     => __('Yes', 'oup'),
+            'label_off'    => __('No', 'oup'),
+            'return_value' => 'yes',
+            'default'      => 'yes',
+            'condition'    => ['enable_slider' => 'yes'],
+        ]);
+
+        $this->add_responsive_control('nav_visibility', [
+            'label'          => __('Navigation Visibility', 'oup'),
+            'type'           => Controls_Manager::SELECT,
+            'options'        => [
+                'flex' => __('Show', 'oup'),
+                'none' => __('Hide', 'oup'),
+            ],
+            'default'        => 'flex',
+            'tablet_default' => 'flex',
+            'mobile_default' => 'none',
+            'selectors'      => [
+                '{{WRAPPER}} .swiper-button-prev, {{WRAPPER}} .swiper-button-next' => 'display: {{VALUE}} !important;',
+            ],
+            'condition'      => ['enable_slider' => 'yes', 'enable_navigation' => 'yes'],
+        ]);
+
+        $this->add_control('enable_pagination', [
+            'label'        => __('Pagination Dots', 'oup'),
+            'type'         => Controls_Manager::SWITCHER,
+            'label_on'     => __('Yes', 'oup'),
+            'label_off'    => __('No', 'oup'),
+            'return_value' => 'yes',
+            'default'      => 'yes',
+            'condition'    => ['enable_slider' => 'yes'],
+        ]);
+
+        $this->add_responsive_control('pag_visibility', [
+            'label'          => __('Pagination Visibility', 'oup'),
+            'type'           => Controls_Manager::SELECT,
+            'options'        => [
+                'block' => __('Show', 'oup'),
+                'none'  => __('Hide', 'oup'),
+            ],
+            'default'        => 'block',
+            'tablet_default' => 'block',
+            'mobile_default' => 'block',
+            'selectors'      => [
+                '{{WRAPPER}} .swiper-pagination' => 'display: {{VALUE}} !important;',
+            ],
+            'condition'      => ['enable_slider' => 'yes', 'enable_pagination' => 'yes'],
+        ]);
+
+        $this->add_control('enable_autoplay', [
+            'label'        => __('Autoplay', 'oup'),
+            'type'         => Controls_Manager::SWITCHER,
+            'label_on'     => __('Yes', 'oup'),
+            'label_off'    => __('No', 'oup'),
+            'return_value' => 'yes',
+            'default'      => '',
+            'condition'    => ['enable_slider' => 'yes'],
+        ]);
+
+        $this->add_control('autoplay_delay', [
+            'label'     => __('Autoplay Delay (ms)', 'oup'),
+            'type'      => Controls_Manager::NUMBER,
+            'min'       => 500,
+            'max'       => 10000,
+            'step'      => 100,
+            'default'   => 3000,
+            'condition' => [
+                'enable_slider'   => 'yes',
+                'enable_autoplay' => 'yes',
+            ],
+        ]);
+
+        $this->add_control('enable_loop', [
+            'label'        => __('Loop', 'oup'),
+            'type'         => Controls_Manager::SWITCHER,
+            'label_on'     => __('Yes', 'oup'),
+            'label_off'    => __('No', 'oup'),
+            'return_value' => 'yes',
+            'default'      => '',
+            'condition'    => ['enable_slider' => 'yes'],
         ]);
 
         $this->end_controls_section();
@@ -221,38 +354,39 @@ class Widget_SugarCalendarEvent extends Widget_Base
         ]);
 
         $this->end_controls_section();
+
+        // STYLE: Slider
+        $this->start_controls_section('style_slider', [
+            'label'     => __('Slider', 'oup'),
+            'tab'       => Controls_Manager::TAB_STYLE,
+            'condition' => ['enable_slider' => 'yes'],
+        ]);
+
+        $this->add_control('nav_color', [
+            'label'     => __('Arrow Color', 'oup'),
+            'type'      => Controls_Manager::COLOR,
+            'selectors' => ['{{WRAPPER}} .sce-swiper .swiper-button-prev, {{WRAPPER}} .sce-swiper .swiper-button-next' => 'color: {{VALUE}};'],
+        ]);
+
+        $this->add_control('pagination_color', [
+            'label'     => __('Pagination Active Color', 'oup'),
+            'type'      => Controls_Manager::COLOR,
+            'selectors' => ['{{WRAPPER}} .sce-swiper .swiper-pagination-bullet-active' => 'background: {{VALUE}};'],
+        ]);
+
+        $this->end_controls_section();
     }
 
     // HELPERS
     private function get_site_timezone(): \DateTimeZone
     {
-        $tz_string = get_option('timezone_string');
-
-        if (! $tz_string) {
-            $offset    = (float) get_option('gmt_offset', 0);
-            $sign      = $offset >= 0 ? '+' : '-';
-            $abs       = abs($offset);
-            $hours     = (int) $abs;
-            $minutes   = (int) round(($abs - $hours) * 60);
-            $tz_string = sprintf('UTC%s%02d:%02d', $sign, $hours, $minutes);
-        }
-
-        try {
-            return new \DateTimeZone($tz_string);
-        } catch (\Exception $e) {
-            return new \DateTimeZone('UTC');
-        }
+        return wp_timezone();
     }
 
     private function resolve_ts($value): int
     {
-        if (empty($value)) {
-            return 0;
-        }
-
-        if (is_numeric($value)) {
-            return (int) $value;
-        }
+        if (empty($value)) return 0;
+        if (is_numeric($value)) return (int) $value;
 
         try {
             $dt = new \DateTime($value, new \DateTimeZone('UTC'));
@@ -262,19 +396,15 @@ class Widget_SugarCalendarEvent extends Widget_Base
         }
     }
 
-    private function is_past_event(int $start_ts): bool
+    private function is_past_event(int $start_ts, int $end_ts = 0): bool
     {
         if (! $start_ts) {
             return false;
         }
 
-        $tz        = $this->get_site_timezone();
-        $today     = new \DateTime('today midnight', $tz);
-        $event_day = new \DateTime('@' . $start_ts);
-        $event_day->setTimezone($tz);
-        $event_day->setTime(0, 0, 0);
+        $ref_ts = $end_ts > 0 ? $end_ts : $start_ts;
 
-        return $event_day < $today;
+        return $ref_ts < time();
     }
 
     private function get_all_events(int $limit = 6, bool $ignore_past = false): array
@@ -300,7 +430,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
                 continue;
             }
 
-            if (! $ignore_past && $this->is_past_event($data['start_ts'])) {
+            if (! $ignore_past && $this->is_past_event($data['start_ts'], $data['end_ts'])) {
                 continue;
             }
 
@@ -319,9 +449,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
     private function build_event_data(int $event_id): ?array
     {
         global $wpdb;
-
         $post = get_post($event_id);
-
         if (! $post || $post->post_status !== 'publish') {
             return null;
         }
@@ -334,6 +462,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'start'          => '',
             'end'            => '',
             'start_ts'       => 0,
+            'end_ts'         => 0,
             'location'       => '',
             'duration_lines' => [],
         ];
@@ -349,6 +478,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
             $data['start']    = $sc_event->start;
             $data['end']      = $sc_event->end;
             $data['start_ts'] = $this->resolve_ts($sc_event->start);
+            $data['end_ts']   = $this->resolve_ts($sc_event->end);
 
             $data['location'] = (string) $wpdb->get_var(
                 $wpdb->prepare(
@@ -369,7 +499,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
 
         $data['duration_lines'] = $this->format_duration(
             $data['start_ts'],
-            $this->resolve_ts($data['end'])
+            $data['end_ts']
         );
 
         return $data;
@@ -383,7 +513,10 @@ class Widget_SugarCalendarEvent extends Widget_Base
             return $lines;
         }
 
-        $tz_label = ' AEDT';
+        $tz = $this->get_site_timezone();
+        $dt = new \DateTime('@' . $start_ts);
+        $dt->setTimezone($tz);
+        $tz_label = ' ' . $dt->format('T');
 
         $date_str = date_i18n('l, j F Y', $start_ts);
         $time_str = date_i18n('g:iA', $start_ts);
@@ -433,13 +566,132 @@ class Widget_SugarCalendarEvent extends Widget_Base
         </svg>';
     }
 
-    // Render
+    // Render card content (shared between grid + swiper)
+    private function render_card(array $event, array $settings, string $img_size, bool $is_editor): void
+    {
+        $notice   = trim((string) get_field('follow_up_event', $event['id']));
+        $footnote = trim((string) get_field('foot_note', $event['id']));
+        $pricing  = get_field('event_ticket_pricing', $event['id']);
+        $pricing  = is_array($pricing) ? array_values(array_filter($pricing)) : [];
+
+        $past_badge = '';
+        if ($is_editor && $this->is_past_event($event['start_ts'], $event['end_ts'])) {
+            $past_badge = '<div class="sce-past-badge">'
+                . esc_html__('⚠ This event has ended — it will be hidden on the front-end.', 'oup')
+                . '</div>';
+        }
+
+        $has_meta = ! empty($event['duration_lines']) || ! empty($notice) || ! empty($event['location']);
+
+        // Button
+        $btn_url      = ! empty($settings['button_url']['url']) ? $settings['button_url']['url'] : '#';
+        $btn_target   = ! empty($settings['button_url']['is_external']) ? ' target="_blank"' : '';
+        $btn_nofollow = ! empty($settings['button_url']['nofollow']) ? ' rel="nofollow"' : '';
+        $btn_text     = ! empty($settings['button_text']) ? $settings['button_text'] : __('Sign Up', 'oup');
+?>
+
+        <div class="sce-card">
+
+            <?php echo $past_badge; ?>
+
+            <?php
+            if (! empty($event['thumbnail_id'])) :
+                $img = wp_get_attachment_image(
+                    $event['thumbnail_id'],
+                    $img_size,
+                    false,
+                    ['class' => 'sce-img']
+                );
+                if ($img) : ?>
+                    <div class="sce-image"><?php echo $img; ?></div>
+            <?php endif;
+            endif; ?>
+
+            <h3 class="sce-title"><?php echo esc_html($event['title']); ?></h3>
+
+            <?php if (! empty($event['excerpt'])) : ?>
+                <div class="sce-excerpt"><?php echo wp_kses_post(wpautop($event['excerpt'])); ?></div>
+            <?php endif; ?>
+
+            <?php if ($has_meta) : ?>
+                <ul class="sce-meta">
+
+                    <?php if (! empty($event['duration_lines'])) : ?>
+                        <li class="sce-meta-item sce-meta-date">
+                            <span class="sce-meta-icon"><?php echo $this->svg_calendar(); ?></span>
+                            <div class="sce-meta-lines">
+                                <?php foreach ($event['duration_lines'] as $line) : ?>
+                                    <span class="sce-meta-line"><?php echo esc_html($line); ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (! empty($notice)) : ?>
+                        <li class="sce-meta-item sce-meta-notice">
+                            <span class="sce-meta-icon"><?php echo $this->svg_note(); ?></span>
+                            <span><?php echo wp_kses_post(nl2br(esc_html($notice))); ?></span>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (! empty($event['location'])) : ?>
+                        <li class="sce-meta-item sce-meta-location">
+                            <span class="sce-meta-icon"><?php echo $this->svg_location(); ?></span>
+                            <span><?php echo esc_html($event['location']); ?></span>
+                        </li>
+                    <?php endif; ?>
+
+                </ul>
+            <?php endif; ?>
+
+            <?php if (! empty($footnote)) : ?>
+                <p class="sce-footnote"><?php echo wp_kses_post(nl2br(esc_html($footnote))); ?></p>
+            <?php endif; ?>
+
+            <?php if (! empty($pricing)) :
+                $rows = array_chunk($pricing, 2);
+                foreach ($rows as $row) : ?>
+                    <div class="sce-pricing">
+                        <?php foreach ($row as $i => $ticket) :
+                            $ticket_name  = trim((string) ($ticket['ticket_name'] ?? ''));
+                            $ticket_price = trim((string) ($ticket['price'] ?? ''));
+                            if (! $ticket_name && ! $ticket_price) continue;
+                        ?>
+                            <?php if ($i > 0) : ?>
+                                <div class="sce-price-divider"></div>
+                            <?php endif; ?>
+
+                            <div class="sce-price-item">
+                                <div class="sce-price-amount-wrap">
+                                    <span class="sce-price-amount">$<?php echo esc_html($ticket_price); ?></span>
+                                    <span class="sce-price-suffix"><?php esc_html_e('inc. GST', 'oup'); ?></span>
+                                </div>
+                                <span class="sce-price-label"><?php echo esc_html($ticket_name); ?></span>
+                            </div>
+
+                        <?php endforeach; ?>
+                    </div>
+            <?php endforeach;
+            endif; ?>
+
+            <div class="sce-button-wrap">
+                <a href="<?php echo esc_url($btn_url); ?>" class="sce-button" <?php echo $btn_target . $btn_nofollow; ?>>
+                    <?php echo esc_html($btn_text); ?>
+                </a>
+            </div>
+
+        </div>
+
+    <?php
+    }
+
     protected function render()
     {
         $settings = $this->get_settings_for_display();
 
         $is_editor      = \Elementor\Plugin::$instance->editor->is_edit_mode();
         $posts_per_page = ! empty($settings['posts_per_page']) ? (int) $settings['posts_per_page'] : 6;
+        $enable_slider  = ! empty($settings['enable_slider']) && $settings['enable_slider'] === 'yes';
 
         $events = $this->get_all_events($posts_per_page, $is_editor);
 
@@ -454,120 +706,71 @@ class Widget_SugarCalendarEvent extends Widget_Base
 
         $img_size = ! empty($settings['featured_image_size']) ? $settings['featured_image_size'] : 'large';
 
-        echo '<div class="sce-event-list">';
-
-        foreach ($events as $event) :
-
-            $notice   = trim((string) get_field('follow_up_event', $event['id']));
-            $footnote = trim((string) get_field('foot_note', $event['id']));
-            $pricing  = get_field('event_ticket_pricing', $event['id']);
-            $pricing  = is_array($pricing) ? array_values(array_filter($pricing)) : [];
-
-            $past_badge = '';
-            if ($is_editor && $this->is_past_event($event['start_ts'])) {
-                $past_badge = '<div class="sce-past-badge">'
-                    . esc_html__('⚠ This event is in the past — it will be hidden on the front-end.', 'oup')
-                    . '</div>';
+        if (! $enable_slider) {
+            echo '<div class="sce-event-list">';
+            foreach ($events as $event) {
+                $this->render_card($event, $settings, $img_size, $is_editor);
             }
+            echo '</div>';
+            return;
+        }
 
-            $has_meta = ! empty($event['duration_lines']) || ! empty($notice) || ! empty($event['location']);
-?>
+        // Swiper layout
+        $total_events = count($events);
+        $needs_scroll = $total_events > 2;
+        $show_nav     = $needs_scroll && ! empty($settings['enable_navigation']) && $settings['enable_navigation'] === 'yes';
+        $show_pag     = $needs_scroll && ! empty($settings['enable_pagination']) && $settings['enable_pagination'] === 'yes';
 
-            <div class="sce-card">
+        $swiper_settings = [
+            'slidesPerView'  => 1,
+            'spaceBetween'   => 24,
+            'loop'           => $needs_scroll && ! empty($settings['enable_loop']) && $settings['enable_loop'] === 'yes',
+            'navigation'     => $show_nav,
+            'pagination'     => $show_pag,
+            'breakpoints'    => [
+                768  => [
+                    'slidesPerView' => 2,
+                    'spaceBetween'  => 36,
+                ],
+                1025 => [
+                    'slidesPerView' => 2,
+                    'spaceBetween'  => 50,
+                ],
+            ],
+        ];
 
-                <?php echo $past_badge; ?>
+        if (! empty($settings['enable_autoplay']) && $settings['enable_autoplay'] === 'yes') {
+            $swiper_settings['autoplay'] = [
+                'delay'                => ! empty($settings['autoplay_delay']) ? (int) $settings['autoplay_delay'] : 3000,
+                'disableOnInteraction' => false,
+            ];
+        }
 
-                <?php
-                if (! empty($event['thumbnail_id'])) :
-                    $img = wp_get_attachment_image(
-                        $event['thumbnail_id'],
-                        $img_size,
-                        false,
-                        ['class' => 'sce-img']
-                    );
-                    if ($img) : ?>
-                        <div class="sce-image"><?php echo $img; ?></div>
-                <?php endif;
-                endif; ?>
+        $unique_id = 'sce-swiper-' . $this->get_id();
+    ?>
 
-                <h2 class="sce-title"><?php echo esc_html($event['title']); ?></h2>
-
-                <?php if (! empty($event['excerpt'])) : ?>
-                    <div class="sce-excerpt"><?php echo wp_kses_post(wpautop($event['excerpt'])); ?></div>
-                <?php endif; ?>
-
-                <?php if ($has_meta) : ?>
-                    <div class="sce-meta">
-
-                        <?php if (! empty($event['duration_lines'])) : ?>
-                            <div class="sce-meta-item sce-meta-date">
-                                <span class="sce-meta-icon"><?php echo $this->svg_calendar(); ?></span>
-                                <div class="sce-meta-lines">
-                                    <?php foreach ($event['duration_lines'] as $line) : ?>
-                                        <span class="sce-meta-line"><?php echo esc_html($line); ?></span>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if (! empty($notice)) : ?>
-                            <div class="sce-meta-item sce-meta-notice">
-                                <span class="sce-meta-icon"><?php echo $this->svg_note(); ?></span>
-                                <span><?php echo wp_kses_post(nl2br(esc_html($notice))); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if (! empty($event['location'])) : ?>
-                            <div class="sce-meta-item sce-meta-location">
-                                <span class="sce-meta-icon"><?php echo $this->svg_location(); ?></span>
-                                <span><?php echo esc_html($event['location']); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                    </div>
-                <?php endif; ?>
-
-                <?php if (! empty($pricing)) :
-                    $rows = array_chunk($pricing, 2);
-                    foreach ($rows as $row) : ?>
-                        <div class="sce-pricing">
-                            <?php foreach ($row as $i => $ticket) :
-                                $ticket_name  = trim((string) ($ticket['ticket_name'] ?? ''));
-                                $ticket_price = trim((string) ($ticket['price'] ?? ''));
-                                if (! $ticket_name && ! $ticket_price) continue;
-                            ?>
-                                <?php if ($i > 0) : ?>
-                                    <div class="sce-price-divider"></div>
-                                <?php endif; ?>
-
-                                <div class="sce-price-item">
-                                    <div class="sce-price-amount-wrap">
-                                        <span class="sce-price-amount">$<?php echo esc_html($ticket_price); ?></span>
-                                        <span class="sce-price-suffix"><?php esc_html_e('inc. GST', 'oup'); ?></span>
-                                    </div>
-                                    <span class="sce-price-label"><?php echo esc_html($ticket_name); ?></span>
-                                </div>
-
-                            <?php endforeach; ?>
+        <div class="sce-swiper-outer">
+            <div class="swiper sce-swiper" id="<?php echo esc_attr($unique_id); ?>" data-swiper="<?php echo esc_attr(wp_json_encode($swiper_settings)); ?>">
+                <div class="swiper-wrapper">
+                    <?php foreach ($events as $event) : ?>
+                        <div class="swiper-slide">
+                            <?php $this->render_card($event, $settings, $img_size, $is_editor); ?>
                         </div>
-                <?php endforeach;
-                endif; ?>
-
-                <?php if (! empty($footnote)) : ?>
-                    <p class="sce-footnote"><?php echo wp_kses_post(nl2br(esc_html($footnote))); ?></p>
-                <?php endif; ?>
-
-                <div class="sce-button-wrap">
-                    <a href="#" class="sce-button">
-                        <?php esc_html_e('Sign Up', 'oup'); ?>
-                    </a>
+                    <?php endforeach; ?>
                 </div>
 
+                <?php if ($show_nav) : ?>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                <?php endif; ?>
+
+                <?php if ($show_pag) : ?>
+                    <div class="swiper-pagination"></div>
+                <?php endif; ?>
             </div>
+        </div>
 
-<?php endforeach;
-
-        echo '</div><!-- .sce-event-list -->';
+<?php
     }
 
     protected function content_template() {}
