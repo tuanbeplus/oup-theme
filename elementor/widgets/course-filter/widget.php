@@ -633,14 +633,12 @@ class Widget_CourseFilter extends Widget_Base
         ?>
         <article class="course-card-item">
             <div class="course-card-image">
-                <a href="<?php echo esc_url($permalink); ?>">
-                    <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy">
-                </a>
+                <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy">
             </div>
 
             <div class="course-card-content">
                 <h3 class="course-card-title">
-                    <a href="<?php echo esc_url($permalink); ?>" style="color: inherit; text-decoration: none;">
+                    <a href="<?php echo esc_url($permalink); ?>" class="course-card-link">
                         <?php echo esc_html($title); ?>
                     </a>
                 </h3>
@@ -674,7 +672,7 @@ class Widget_CourseFilter extends Widget_Base
                 </div>
 
                 <div class="course-card-action">
-                    <a href="<?php echo esc_url($button_link); ?>" class="course-btn">Enrol Now<?php echo $price_text; ?></a>
+                    <a href="<?php echo esc_url($button_link); ?>" class="course-btn">Enrol Now for<?php echo $price_text; ?></a>
                 </div>
             </div>
         </article>
@@ -746,6 +744,15 @@ class Widget_CourseFilter extends Widget_Base
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="filter-clear-group">
+                        <button type="button" class="course-clear-filters" aria-label="Clear all course filters">
+                            Close
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L9 9M9 1L1 9" stroke="#9677D7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>

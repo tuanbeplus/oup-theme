@@ -82,62 +82,7 @@
             });
         }
 
-        // Avoid re-initializing if already initialized
-        if ($wrapper.hasClass('custom-select-initialized')) {
-            return;
-        }
-        $wrapper.addClass('custom-select-initialized');
-
-        // Progressively enhance native selects into custom UI selects
-        $wrapper.find('.course-filters .select-wrapper').each(function() {
-            var $wrapperDiv = $(this);
-            var $select = $wrapperDiv.find('select');
-            
-            var $customWrapper = $('<div class="custom-select-wrapper"></div>');
-            $wrapperDiv.hide().after($customWrapper);
-            
-            var $trigger = $('<div class="custom-select-trigger"></div>');
-            var $text = $('<span></span>').text($select.find('option:selected').text());
-            var $icon = $('<svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.500001 0.5L3.79289 3.79289C4.18342 4.18342 4.81658 4.18342 5.20711 3.79289L8.5 0.500001" stroke="#9677D7" stroke-linecap="round"/></svg>');
-            
-            $trigger.append($text, $icon);
-            $customWrapper.append($trigger);
-            
-            var $options = $('<div class="custom-select-options"></div>');
-            $select.find('option').each(function() {
-                var $opt = $(this);
-                var $optionDiv = $('<div class="custom-option"></div>')
-                    .text($opt.text())
-                    .attr('data-value', $opt.val());
-                    
-                if ($opt.is(':selected')) {
-                    $optionDiv.addClass('selected');
-                }
-                
-                $optionDiv.on('click', function(e) {
-                    e.stopPropagation();
-                    $select.val($opt.val()).trigger('change');
-                    $text.text($opt.text());
-                    $options.find('.custom-option').removeClass('selected');
-                    $(this).addClass('selected');
-                    $customWrapper.removeClass('open');
-                });
-                
-                $options.append($optionDiv);
-            });
-            
-            $customWrapper.append($options);
-            
-            $trigger.on('click', function(e) {
-                e.stopPropagation();
-                $('.custom-select-wrapper').not($customWrapper).removeClass('open');
-                $customWrapper.toggleClass('open');
-            });
-        });
-
-        $(document).on('click', function() {
-            $('.custom-select-wrapper').removeClass('open');
-        });
+    
 
         // Trigger AJAX on native select change
         $wrapper.find('.course-filters select').on('change', function() {
@@ -147,6 +92,14 @@
             ajaxTimeout = setTimeout(function () {
                 fetchCourses();
             }, 300);
+        });
+
+        $wrapper.find('.course-clear-filters').on('click', function(e) {
+            e.preventDefault();
+      
+            $wrapper.find('.course-filters select').val('*');
+  
+            fetchCourses();
         });
     };
 
