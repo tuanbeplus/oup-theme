@@ -51,6 +51,8 @@ class ElementorWidgets {
 			'worksheet-accordion',
 			'sugar-calendar-event',
 			'course-filter',
+			'course-benefit',
+			'course-accordion',
 		);
 
 		return $this->widgets;
@@ -102,6 +104,22 @@ class ElementorWidgets {
 		wp_register_style(
 			'oup-course-filter-style',
 			get_stylesheet_directory_uri() . '/elementor/widgets/course-filter/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-course-benefit-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/course-benefit/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-course-accordion-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/course-accordion/style.css',
 			array(),
 			OUP_THEME_VER,
 			'all'
@@ -200,6 +218,22 @@ class ElementorWidgets {
 		);
 
 		wp_register_script(
+			'oup-course-benefit-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/course-benefit/script.js',
+			array('jquery', 'elementor-frontend'),
+			filemtime(get_stylesheet_directory() . '/elementor/widgets/course-benefit/script.js'),
+			true
+		);
+
+		wp_register_script(
+			'oup-course-accordion-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/course-accordion/script.js',
+			array('jquery', 'elementor-frontend'),
+			filemtime(get_stylesheet_directory() . '/elementor/widgets/course-accordion/script.js'),
+			true
+		);
+
+		wp_register_script(
 			'oup-worksheet-accordion-script',
 			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/script.js',
 			array('jquery'),
@@ -280,6 +314,8 @@ class ElementorWidgets {
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ArchivePostsFilter\Widget_ArchivePostsFilter());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\WorksheetFilter\Widget_WorksheetFilter());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\CourseFilter\Widget_CourseFilter());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\CourseBenefit\Widget_CourseBenefit());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\CourseAccordion\Widget_CourseAccordion());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogSearch\Widget_BlogSearch());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogDetailBreadcrumb\Widget_BlogDetailBreadcrumb());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogDetailToc\Widget_BlogDetailToc());
