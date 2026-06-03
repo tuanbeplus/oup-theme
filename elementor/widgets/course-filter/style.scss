@@ -93,14 +93,13 @@
         .filter-clear-group {
             display: none;
             align-items: center;
-            transition: all 0.3s ease;
             
             &.is-visible {
                 display: flex;
                 animation: fade-in-scale 0.3s ease;
             }
             
-            @media (max-width: 767px) {
+            @media (max-width: 991px) {
                 margin-top: 15px;
             }
             
@@ -140,6 +139,7 @@
 
         @media (max-width: 1024px) {
             grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
         }
 
         @media (max-width: 767px) {
@@ -353,14 +353,50 @@
         }
     }
 
+    .custom-ld-payment-btn {
+        width: 100%;
+        .learndash_checkout_buttons, .learndash_checkout_button, form {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        input[type="submit"], button, a {
+            display: block;
+            width: 100%;
+            background: #9677D7;
+            position: relative;
+            z-index: 2;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 12px 30px;
+            border-radius: 32px;
+            font-family: var(--e-global-typography-primary-font-family);
+            font-weight: 600;
+            font-size: 1.125rem;
+            line-height: 1.6;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            box-sizing: border-box;
+            
+            &:hover, &:focus {
+                background: #7a5bb8;
+                color: #FFFFFF;
+                outline: none;
+            }
+            
+            @media (max-width: 767px) {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    }
+
     @keyframes pulse {
         0% { opacity: 0.6; }
         50% { opacity: 1; }
         100% { opacity: 0.6; }
-    }
-
-    @keyframes fade-in-scale {
-        0% { opacity: 0; transform: scale(0.95); }
-        100% { opacity: 1; transform: scale(1); }
     }
 }
