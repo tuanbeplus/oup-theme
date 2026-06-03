@@ -14,19 +14,16 @@
 .course-filter-wrapper .course-filters {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 40px;
   flex-wrap: wrap;
+  width: 100%;
+  position: relative;
 }
 @media (max-width: 991px) {
   .course-filter-wrapper .course-filters {
     gap: 20px;
     justify-content: center;
-  }
-}
-@media (max-width: 767px) {
-  .course-filter-wrapper .course-filters {
-    width: 100%;
-    gap: 15px;
   }
 }
 .course-filter-wrapper .course-filters .filter-group {
@@ -93,18 +90,18 @@
   pointer-events: none;
 }
 .course-filter-wrapper .course-filters .filter-clear-group {
-  display: flex;
+  display: none;
   align-items: center;
-  opacity: 0;
-  visibility: hidden;
-  max-width: 0;
-  overflow: hidden;
-  transition: max-width 0.4s ease, opacity 0.3s ease, visibility 0.4s ease;
+  transition: all 0.3s ease;
 }
 .course-filter-wrapper .course-filters .filter-clear-group.is-visible {
-  opacity: 1;
-  visibility: visible;
-  max-width: 200px;
+  display: flex;
+  animation: fade-in-scale 0.3s ease;
+}
+@media (max-width: 767px) {
+  .course-filter-wrapper .course-filters .filter-clear-group {
+    margin-top: 15px;
+  }
 }
 .course-filter-wrapper .course-filters .filter-clear-group button.course-clear-filters {
   background: #fff;
@@ -139,7 +136,6 @@
 @media (max-width: 1024px) {
   .course-filter-wrapper .course-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
   }
 }
 @media (max-width: 767px) {
@@ -348,6 +344,16 @@
   }
   100% {
     opacity: 0.6;
+  }
+}
+@keyframes fade-in-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
