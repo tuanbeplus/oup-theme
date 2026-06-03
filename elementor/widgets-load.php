@@ -49,7 +49,8 @@ class ElementorWidgets {
 			'blog-detail-breadcrumb',
 			'blog-detail-toc',
 			'worksheet-accordion',
-			'sugar-calendar-event'
+			'sugar-calendar-event',
+			'course-filter',
 		);
 
 		return $this->widgets;
@@ -64,78 +65,88 @@ class ElementorWidgets {
 	 * @access public
 	 */
 	public function widget_styles() {
-        wp_register_style(
-            'oup-sample-widget-style',
-            get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/style.css',
-            array(),
-            OUP_THEME_VER,
-            'all'
-        );
 
-        wp_register_style(
-            'oup-archive-posts-filter-style',
-            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/style.css',
-            array(),
-            OUP_THEME_VER,
-            'all'
-        );
-
-        wp_register_style(
-            'oup-worksheet-filter-style',
-            get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/style.css',
-            array(),
-            OUP_THEME_VER,
-            'all'
-        );
-
-        wp_register_style(
-            'oup-blog-search-style',
-            get_stylesheet_directory_uri() . '/elementor/widgets/blog-search/style.css',
-            array(),
-            OUP_THEME_VER,
-            'all'
-        );
-
-        wp_register_style(
-            'oup-blog-detail-breadcrumb-style',
-            get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-breadcrumb/style.css',
-            array(),
-            OUP_THEME_VER,
-            'all'
-        );
-
-        wp_register_style(
-            'oup-worksheet-accordion-style',
-            get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/style.css',
-            array(),
-            OUP_THEME_VER,
-            'all'
-        );
-
-        wp_register_style(
-            'oup-blog-detail-toc-style',
-            get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/style.css',
-            array(),
-            OUP_THEME_VER,
-            'all'
-        );
-
-        wp_register_style(
-            'oup-sugar-calendar-event-style',
-            get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/style.css',
-            array( 'swiper-bundle' ),
-            OUP_THEME_VER,
-            'all'
-        );
+		// Swiper
+		wp_register_style(
+			'swiper-bundle',
+			'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
+			array(),
+			'11',
+			'all'
+		);
 
 		wp_register_style(
-            'swiper-bundle',
-            'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
-            array(),
-            '11',
-            'all'
-        );
-    }
+			'oup-sample-widget-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-archive-posts-filter-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-worksheet-filter-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-course-filter-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/course-filter/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-blog-search-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-search/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-blog-detail-breadcrumb-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-breadcrumb/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-worksheet-accordion-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-blog-detail-toc-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/style.css',
+			array(),
+			OUP_THEME_VER,
+			'all'
+		);
+
+		wp_register_style(
+			'oup-sugar-calendar-event-style',
+			get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/style.css',
+			array('swiper-bundle'),
+			OUP_THEME_VER,
+			'all'
+		);
+	}
 
 	/**
 	 * widget_scripts
@@ -146,62 +157,72 @@ class ElementorWidgets {
 	 * @access public
 	 */
 	 public function widget_scripts() {
-        wp_register_script(
-            'oup-sample-widget-script',
-            get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/script.js',
-            array(),
-            OUP_THEME_VER,
-            true
-        );
 
-        wp_register_script(
-            'oup-archive-posts-filter-script',
-            get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/script.js',
-            array( 'jquery' ),
-            OUP_THEME_VER,
-            true
-        );
-
-        wp_register_script(
-            'oup-worksheet-filter-script',
-            get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/script.js',
-            array( 'jquery' ),
-            OUP_THEME_VER,
-            true
-        );
-
-        wp_register_script(
-            'oup-worksheet-accordion-script',
-            get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/script.js',
-            array( 'jquery' ),
-            OUP_THEME_VER,
-            true
-        );
-
-        wp_register_script(
-            'oup-blog-detail-toc-script',
-            get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/script.js',
-            array( 'jquery' ),
-            OUP_THEME_VER,
-            true
-        );
-
-        wp_register_script(
-            'oup-sugar-calendar-event-script',
-            get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/script.js',
-            array( 'jquery', 'swiper-bundle' ),
-            OUP_THEME_VER,
-            true
-        );
+		// Swiper
+		wp_register_script(
+			'swiper-bundle',
+			'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+			array(),
+			'11',
+			true
+		);
 
 		wp_register_script(
-            'swiper-bundle',
-            'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
-            array(),
-            '11',
-            true
-        );
-    }
+			'oup-sample-widget-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/sample-widget/script.js',
+			array(),
+			OUP_THEME_VER,
+			true
+		);
+
+		wp_register_script(
+			'oup-archive-posts-filter-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/archive-posts-filter/script.js',
+			array('jquery'),
+			OUP_THEME_VER,
+			true
+		);
+
+		wp_register_script(
+			'oup-worksheet-filter-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-filter/script.js',
+			array('jquery'),
+			OUP_THEME_VER,
+			true
+		);
+
+		wp_register_script(
+			'oup-course-filter-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/course-filter/script.js',
+			array('jquery', 'elementor-frontend'),
+			filemtime(get_stylesheet_directory() . '/elementor/widgets/course-filter/script.js'),
+			true
+		);
+
+		wp_register_script(
+			'oup-worksheet-accordion-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/worksheet-accordion/script.js',
+			array('jquery'),
+			OUP_THEME_VER,
+			true
+		);
+
+		wp_register_script(
+			'oup-blog-detail-toc-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/blog-detail-toc/script.js',
+			array('jquery'),
+			OUP_THEME_VER,
+			true
+		);
+
+		wp_register_script(
+			'oup-sugar-calendar-event-script',
+			get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/script.js',
+			array('jquery', 'swiper-bundle'),
+			OUP_THEME_VER,
+			true
+		);
+	}
 
 	/**
 	 * Include Widgets files
@@ -258,6 +279,7 @@ class ElementorWidgets {
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\SampleWidget\Widget_SampleWidget());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\ArchivePostsFilter\Widget_ArchivePostsFilter());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\WorksheetFilter\Widget_WorksheetFilter());
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\CourseFilter\Widget_CourseFilter());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogSearch\Widget_BlogSearch());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogDetailBreadcrumb\Widget_BlogDetailBreadcrumb());
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type(new Widgets\BlogDetailToc\Widget_BlogDetailToc());
