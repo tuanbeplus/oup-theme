@@ -7,19 +7,11 @@ $bp-mobile: 767px;
 $color-text: #231F20;
 $color-white: #ffffff;
 $color-primary: #E46DAB;
-$color-primary-hover: #d03f67;
+$color-primary-hover: #005375;
 
 $color-muted: #555;
 $color-light: #888;
 $color-border: #D8D8D8;
-
-$color-editor-text: #aaa;
-$color-editor-bg: #f9f9f9;
-$color-editor-border: #ddd;
-
-$color-past-text: #a0522d;
-$color-past-bg: #fff8f0;
-$color-past-border: #f5c89a;
 
 $color-placeholder-text: #999;
 $color-placeholder-bg: #fff8fa;
@@ -40,7 +32,7 @@ $shadow-card: 2px 7px 7px 0px #0000001A;
 $shadow-card-hover: 4px 16px 24px 0px #0000002A;
 
 
-// Event List
+// Event List (grid)
 .sce-event-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -61,6 +53,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
     }
 }
 
+// Card
 .sce-card {
     background-color: $color-white;
     border-radius: $radius-card;
@@ -68,15 +61,11 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
     font-family: $font-body;
     color: $color-text;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; // enables spacer + bottom-aligned footer
     box-shadow: $shadow-card;
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 
     &:hover {
-        transform: translateY(-4px);
         box-shadow: $shadow-card-hover;
     }
 
@@ -95,34 +84,15 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         border-radius: 24px;
     }
 
-    // Editor
-    .sce-placeholder-meta {
-        font-size: 0.8rem;
-        color: $color-editor-text;
-        font-style: italic;
-        margin-bottom: 12px;
-        padding: 10px 14px;
-        background: $color-editor-bg;
-        border-radius: $radius-sm;
-        border: 1px dashed $color-editor-border;
-    }
 
-    .sce-past-badge {
-        font-size: 0.8rem;
-        color: $color-past-text;
-        background: $color-past-bg;
-        border: 1px solid $color-past-border;
-        border-radius: $radius-sm;
-        padding: 8px 12px;
-        margin-bottom: 12px;
-    }
-
-    // Image
+    // Image: fixed 430×243 aspect ratio, crops via object-fit
     .sce-image {
-        margin-bottom: 30px;
-        line-height: 0;
+        width: 100%;
+        aspect-ratio: 430 / 243;
         overflow: hidden;
         border-radius: $radius-image;
+        margin-bottom: 30px;
+        line-height: 0;
 
         @media (max-width: $bp-mobile) {
             margin-bottom: 22px;
@@ -130,18 +100,13 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
 
         img.sce-img {
             width: 100%;
-            height: auto;
+            height: 100%;
             display: block;
             object-fit: cover;
             border-radius: $radius-image;
-
-            transition: transform 0.4s ease;
         }
     }
 
-    &:hover .sce-image img.sce-img {
-        transform: scale(1.03);
-    }
 
     // Title
     .sce-title {
@@ -166,6 +131,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 
+
     // Excerpt
     .sce-excerpt {
         font-size: 0.9375rem;
@@ -182,7 +148,8 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 
-    // Meta
+
+    // Meta (date / notice / location)
     .sce-meta {
         display: flex;
         flex-direction: column;
@@ -227,29 +194,48 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         display: block;
     }
 
+
     // Footnote
     .sce-footnote {
         font-size: 0.938rem;
         line-height: 1.6;
         color: $color-text;
-        margin: 0 0 40px;
+        margin: 0;
 
         @media (max-width: $bp-mobile) {
-            margin-bottom: 28px;
             font-size: 0.875rem;
         }
     }
 
+
+    // Spacer: grows to fill remaining space, pushing pricing + button down
+    .sce-spacer {
+        flex-grow: 1;
+        min-height: 20px;
+    }
+
+
     // Pricing
+    .sce-pricing-wrap {
+        margin: 40px 0 30px;
+
+        @media (max-width: $bp-mobile) {
+            margin: 24px 0;
+        }
+    }
+
     .sce-pricing {
         display: flex;
         align-items: flex-start;
-        margin: 0 0 30px;
+
+        // Gap between consecutive rows
+        &+.sce-pricing {
+            margin-top: 16px;
+        }
 
         @media (max-width: $bp-mobile) {
             flex-direction: column;
             gap: 20px;
-            margin-bottom: 24px;
         }
     }
 
@@ -335,6 +321,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 
+
     // Button
     .sce-button {
         display: block;
@@ -349,10 +336,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         padding: 12px 30px;
         border-radius: $radius-pill;
         text-decoration: none;
-        transition:
-            background-color 0.2s ease,
-            transform 0.2s ease,
-            box-shadow 0.2s ease;
+        transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
         @media (max-width: $bp-mobile) {
             font-size: 1rem;
@@ -364,8 +348,6 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
             background-color: $color-primary-hover;
             color: $color-white;
             text-decoration: none;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba($color-primary, 0.35);
         }
 
         &:active {
@@ -375,18 +357,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
     }
 }
 
-// Placeholder
-.sce-placeholder {
-    padding: 24px;
-    border: 2px dashed $color-placeholder-border;
-    border-radius: $radius-image;
-    text-align: center;
-    color: $color-placeholder-text;
-    font-size: 0.875rem;
-    background: $color-placeholder-bg;
-}
-
-// Swiper wrapper
+// Swiper
 .sce-swiper-outer {
     position: relative;
     overflow: hidden;
@@ -409,7 +380,6 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 
-    // Navigation
     .swiper-button-prev,
     .swiper-button-next {
         color: $color-primary;
@@ -422,12 +392,11 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 
-    // Pagination
     .swiper-pagination {
         bottom: -36px;
 
         .swiper-pagination-bullet {
-            background: $color-border;
+            background: $color-white;
             opacity: 1;
         }
 

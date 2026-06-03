@@ -377,7 +377,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
         $this->end_controls_section();
     }
 
-    // HELPERS
+    // Helpers
     private function get_site_timezone(): \DateTimeZone
     {
         return wp_timezone();
@@ -396,18 +396,50 @@ class Widget_SugarCalendarEvent extends Widget_Base
         }
     }
 
-    private function is_past_event(int $start_ts, int $end_ts = 0): bool
+    private function get_venue_string(int $sc_event_row_id, int $post_id): string
     {
-        if (! $start_ts) {
-            return false;
+        global $wpdb;
+        $venue_id = 0;
+
+        if (function_exists('sugar_calendar_get_event_by_object')) {
+            $sc_obj = sugar_calendar_get_event_by_object($post_id, 'post');
+
+            if (! empty($sc_obj)) {
+                $venue_id = (int) ($sc_obj->venue_id ?? 0);
+            }
         }
 
-        $ref_ts = $end_ts > 0 ? $end_ts : $start_ts;
+        if ($venue_id > 0) {
+            $venue_post = get_post($venue_id);
 
-        return $ref_ts < time();
+            if ($venue_post && $venue_post->post_status === 'publish') {
+                $venue_name = trim($venue_post->post_title);
+                $address_1  = trim((string) get_post_meta($venue_id, 'sugarcalendar_venue_address_1', true));
+
+                if ($venue_name !== '') {
+                    return $address_1 !== ''
+                        ? $venue_name . ', ' . $address_1
+                        : $venue_name;
+                }
+            }
+        }
+
+        $legacy_location = (string) $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT meta_value
+                 FROM {$wpdb->prefix}sc_eventmeta
+                 WHERE sc_event_id = %d AND meta_key = %s
+                 LIMIT 1",
+                $sc_event_row_id,
+                'location'
+            )
+        );
+
+        return trim($legacy_location);
     }
 
-    private function get_all_events(int $limit = 6, bool $ignore_past = false): array
+    // Only fetch upcoming events — past events are always excluded
+    private function get_all_events(int $limit = 6): array
     {
         $ids = get_posts([
             'post_type'      => 'sc_event',
@@ -417,22 +449,19 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'fields'         => 'ids',
         ]);
 
-        if (empty($ids)) {
-            return [];
-        }
+        if (empty($ids)) return [];
 
+        $now    = time();
         $events = [];
 
         foreach ($ids as $event_id) {
             $data = $this->build_event_data($event_id);
 
-            if (! $data) {
-                continue;
-            }
+            if (! $data) continue;
 
-            if (! $ignore_past && $this->is_past_event($data['start_ts'], $data['end_ts'])) {
-                continue;
-            }
+            // Skip past events — same behaviour in editor and frontend
+            $ref_ts = $data['end_ts'] > 0 ? $data['end_ts'] : $data['start_ts'];
+            if ($ref_ts < $now) continue;
 
             $events[] = $data;
         }
@@ -449,10 +478,9 @@ class Widget_SugarCalendarEvent extends Widget_Base
     private function build_event_data(int $event_id): ?array
     {
         global $wpdb;
+
         $post = get_post($event_id);
-        if (! $post || $post->post_status !== 'publish') {
-            return null;
-        }
+        if (! $post || $post->post_status !== 'publish') return null;
 
         $data = [
             'id'             => $event_id,
@@ -480,64 +508,45 @@ class Widget_SugarCalendarEvent extends Widget_Base
             $data['start_ts'] = $this->resolve_ts($sc_event->start);
             $data['end_ts']   = $this->resolve_ts($sc_event->end);
 
-            $data['location'] = (string) $wpdb->get_var(
-                $wpdb->prepare(
-                    "SELECT meta_value
-                     FROM {$wpdb->prefix}sc_eventmeta
-                     WHERE sc_event_id = %d
-                     AND meta_key = %s
-                     LIMIT 1",
-                    $sc_event->id,
-                    'location'
-                )
-            );
+            // Use the new venue-aware helper instead of the old raw meta query
+            $data['location'] = $this->get_venue_string((int) $sc_event->id, $event_id);
         }
 
-        if (! $data['start_ts']) {
-            return null;
-        }
+        if (! $data['start_ts']) return null;
 
-        $data['duration_lines'] = $this->format_duration(
-            $data['start_ts'],
-            $data['end_ts']
-        );
+        $data['duration_lines'] = $this->format_duration($data['start_ts'], $data['end_ts']);
 
         return $data;
     }
 
     private function format_duration(int $start_ts, int $end_ts = 0): array
     {
-        $lines = [];
+        if (! $start_ts) return [];
 
-        if (! $start_ts) {
-            return $lines;
-        }
-
-        $tz = $this->get_site_timezone();
-        $dt = new \DateTime('@' . $start_ts);
+        $tz       = $this->get_site_timezone();
+        $dt       = new \DateTime('@' . $start_ts);
         $dt->setTimezone($tz);
         $tz_label = ' ' . $dt->format('T');
 
         $date_str = date_i18n('l, j F Y', $start_ts);
         $time_str = date_i18n('g:iA', $start_ts);
 
+        // Same-day range: append end time on same line
         if ($end_ts && date_i18n('Ymd', $start_ts) === date_i18n('Ymd', $end_ts)) {
             $time_str .= ' – ' . date_i18n('g:iA', $end_ts);
         }
 
         $lines[] = $date_str . ' at ' . $time_str . $tz_label;
 
+        // Multi-day: add end date as second line
         if ($end_ts && date_i18n('Ymd', $start_ts) !== date_i18n('Ymd', $end_ts)) {
-            $lines[] = date_i18n('l, j F Y', $end_ts)
-                . ' at ' . date_i18n('g:iA', $end_ts)
-                . $tz_label;
+            $lines[] = date_i18n('l, j F Y', $end_ts) . ' at ' . date_i18n('g:iA', $end_ts) . $tz_label;
         }
 
         return $lines;
     }
 
     // SVG Icons
-
     private function svg_calendar(): string
     {
         return '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -566,24 +575,16 @@ class Widget_SugarCalendarEvent extends Widget_Base
         </svg>';
     }
 
-    // Render card content (shared between grid + swiper)
-    private function render_card(array $event, array $settings, string $img_size, bool $is_editor): void
+    // Card renderer (shared by grid and swiper)
+    private function render_card(array $event, array $settings, string $img_size): void
     {
         $notice   = trim((string) get_field('follow_up_event', $event['id']));
         $footnote = trim((string) get_field('foot_note', $event['id']));
         $pricing  = get_field('event_ticket_pricing', $event['id']);
         $pricing  = is_array($pricing) ? array_values(array_filter($pricing)) : [];
 
-        $past_badge = '';
-        if ($is_editor && $this->is_past_event($event['start_ts'], $event['end_ts'])) {
-            $past_badge = '<div class="sce-past-badge">'
-                . esc_html__('⚠ This event has ended — it will be hidden on the front-end.', 'oup')
-                . '</div>';
-        }
-
         $has_meta = ! empty($event['duration_lines']) || ! empty($notice) || ! empty($event['location']);
 
-        // Button
         $btn_url      = ! empty($settings['button_url']['url']) ? $settings['button_url']['url'] : '#';
         $btn_target   = ! empty($settings['button_url']['is_external']) ? ' target="_blank"' : '';
         $btn_nofollow = ! empty($settings['button_url']['nofollow']) ? ' rel="nofollow"' : '';
@@ -592,9 +593,8 @@ class Widget_SugarCalendarEvent extends Widget_Base
 
         <div class="sce-card">
 
-            <?php echo $past_badge; ?>
-
             <?php
+            // Featured image — fixed 430×243 aspect ratio via CSS
             if (! empty($event['thumbnail_id'])) :
                 $img = wp_get_attachment_image(
                     $event['thumbnail_id'],
@@ -648,31 +648,37 @@ class Widget_SugarCalendarEvent extends Widget_Base
                 <p class="sce-footnote"><?php echo wp_kses_post(nl2br(esc_html($footnote))); ?></p>
             <?php endif; ?>
 
+            <?php // Spacer pushes pricing + button to the bottom of the card 
+            ?>
+            <div class="sce-spacer"></div>
+
             <?php if (! empty($pricing)) :
-                $rows = array_chunk($pricing, 2);
-                foreach ($rows as $row) : ?>
-                    <div class="sce-pricing">
-                        <?php foreach ($row as $i => $ticket) :
-                            $ticket_name  = trim((string) ($ticket['ticket_name'] ?? ''));
-                            $ticket_price = trim((string) ($ticket['price'] ?? ''));
-                            if (! $ticket_name && ! $ticket_price) continue;
-                        ?>
-                            <?php if ($i > 0) : ?>
-                                <div class="sce-price-divider"></div>
-                            <?php endif; ?>
+                $rows = array_chunk($pricing, 2); ?>
+                <div class="sce-pricing-wrap">
+                    <?php foreach ($rows as $row) : ?>
+                        <div class="sce-pricing">
+                            <?php foreach ($row as $i => $ticket) :
+                                $ticket_name  = trim((string) ($ticket['ticket_name'] ?? ''));
+                                $ticket_price = trim((string) ($ticket['price'] ?? ''));
+                                if (! $ticket_name && ! $ticket_price) continue;
+                            ?>
+                                <?php if ($i > 0) : ?>
+                                    <div class="sce-price-divider"></div>
+                                <?php endif; ?>
 
-                            <div class="sce-price-item">
-                                <div class="sce-price-amount-wrap">
-                                    <span class="sce-price-amount">$<?php echo esc_html($ticket_price); ?></span>
-                                    <span class="sce-price-suffix"><?php esc_html_e('inc. GST', 'oup'); ?></span>
+                                <div class="sce-price-item">
+                                    <div class="sce-price-amount-wrap">
+                                        <span class="sce-price-amount">$<?php echo esc_html($ticket_price); ?></span>
+                                        <span class="sce-price-suffix"><?php esc_html_e('inc. GST', 'oup'); ?></span>
+                                    </div>
+                                    <span class="sce-price-label"><?php echo esc_html($ticket_name); ?></span>
                                 </div>
-                                <span class="sce-price-label"><?php echo esc_html($ticket_name); ?></span>
-                            </div>
 
-                        <?php endforeach; ?>
-                    </div>
-            <?php endforeach;
-            endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
             <div class="sce-button-wrap">
                 <a href="<?php echo esc_url($btn_url); ?>" class="sce-button" <?php echo $btn_target . $btn_nofollow; ?>>
@@ -693,7 +699,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
         $posts_per_page = ! empty($settings['posts_per_page']) ? (int) $settings['posts_per_page'] : 6;
         $enable_slider  = ! empty($settings['enable_slider']) && $settings['enable_slider'] === 'yes';
 
-        $events = $this->get_all_events($posts_per_page, $is_editor);
+        $events = $this->get_all_events($posts_per_page);
 
         if (empty($events)) {
             if ($is_editor) {
@@ -706,36 +712,31 @@ class Widget_SugarCalendarEvent extends Widget_Base
 
         $img_size = ! empty($settings['featured_image_size']) ? $settings['featured_image_size'] : 'large';
 
+        // Grid layout
         if (! $enable_slider) {
             echo '<div class="sce-event-list">';
             foreach ($events as $event) {
-                $this->render_card($event, $settings, $img_size, $is_editor);
+                $this->render_card($event, $settings, $img_size);
             }
             echo '</div>';
             return;
         }
 
-        // Swiper layout
+        // Swiper layout — navigation/pagination only shown when > 2 slides
         $total_events = count($events);
         $needs_scroll = $total_events > 2;
         $show_nav     = $needs_scroll && ! empty($settings['enable_navigation']) && $settings['enable_navigation'] === 'yes';
         $show_pag     = $needs_scroll && ! empty($settings['enable_pagination']) && $settings['enable_pagination'] === 'yes';
 
         $swiper_settings = [
-            'slidesPerView'  => 1,
-            'spaceBetween'   => 24,
-            'loop'           => $needs_scroll && ! empty($settings['enable_loop']) && $settings['enable_loop'] === 'yes',
-            'navigation'     => $show_nav,
-            'pagination'     => $show_pag,
-            'breakpoints'    => [
-                768  => [
-                    'slidesPerView' => 2,
-                    'spaceBetween'  => 36,
-                ],
-                1025 => [
-                    'slidesPerView' => 2,
-                    'spaceBetween'  => 50,
-                ],
+            'slidesPerView' => 1,
+            'spaceBetween'  => 24,
+            'loop'          => $needs_scroll && ! empty($settings['enable_loop']) && $settings['enable_loop'] === 'yes',
+            'navigation'    => $show_nav,
+            'pagination'    => $show_pag,
+            'breakpoints'   => [
+                768  => ['slidesPerView' => 2, 'spaceBetween' => 36],
+                1025 => ['slidesPerView' => 2, 'spaceBetween' => 50],
             ],
         ];
 
@@ -754,7 +755,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
                 <div class="swiper-wrapper">
                     <?php foreach ($events as $event) : ?>
                         <div class="swiper-slide">
-                            <?php $this->render_card($event, $settings, $img_size, $is_editor); ?>
+                            <?php $this->render_card($event, $settings, $img_size); ?>
                         </div>
                     <?php endforeach; ?>
                 </div>
