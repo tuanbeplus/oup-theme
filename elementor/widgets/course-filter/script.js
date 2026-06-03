@@ -20,6 +20,23 @@
         
         var ajaxTimeout = null;
 
+        function toggleClearButton() {
+            var hasActiveFilter = false;
+            $wrapper.find('.course-filters select').each(function() {
+                if ($(this).val() !== '*') {
+                    hasActiveFilter = true;
+                    return false;
+                }
+            });
+            
+            if (hasActiveFilter) {
+                $wrapper.find('.filter-clear-group').addClass('is-visible');
+            } else {
+                $wrapper.find('.filter-clear-group').removeClass('is-visible');
+            }
+        }
+        toggleClearButton();
+
         function fetchCourses() {
             var getResponsivePostsPerPage = function() {
                 var w = $(window).width();
@@ -92,12 +109,15 @@
             ajaxTimeout = setTimeout(function () {
                 fetchCourses();
             }, 300);
+            
+            toggleClearButton();
         });
 
         $wrapper.find('.course-clear-filters').on('click', function(e) {
             e.preventDefault();
       
             $wrapper.find('.course-filters select').val('*');
+            toggleClearButton();
   
             fetchCourses();
         });

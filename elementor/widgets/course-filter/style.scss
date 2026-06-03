@@ -95,6 +95,17 @@
         .filter-clear-group {
             display: flex;
             align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            max-width: 0;
+            overflow: hidden;
+            transition: max-width 0.4s ease, opacity 0.3s ease, visibility 0.4s ease;
+            
+            &.is-visible {
+                opacity: 1;
+                visibility: visible;
+                max-width: 200px;
+            }
             
             button.course-clear-filters {
                 background: #fff;
