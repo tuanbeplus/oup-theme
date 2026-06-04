@@ -13,32 +13,32 @@ if (! defined('ABSPATH')) {
 
 class Widget_SugarCalendarEvent extends Widget_Base
 {
-    public function get_name()
+    public function get_name(): string
     {
         return 'sugar-calendar-event';
     }
 
-    public function get_title()
+    public function get_title(): string
     {
         return __('Sugar Calendar Event Card', 'oup');
     }
 
-    public function get_icon()
+    public function get_icon(): string
     {
         return 'eicon-calendar';
     }
 
-    public function get_categories()
+    public function get_categories(): array
     {
         return ['oup'];
     }
 
-    public function get_style_depends()
+    public function get_style_depends(): array
     {
         return ['oup-sugar-calendar-event-style'];
     }
 
-    public function get_script_depends()
+    public function get_script_depends(): array
     {
         return ['oup-sugar-calendar-event-script'];
     }
@@ -48,14 +48,20 @@ class Widget_SugarCalendarEvent extends Widget_Base
         return true;
     }
 
-    protected function register_controls()
+    // Controls
+    protected function register_controls(): void
+    {
+        $this->register_content_controls();
+        $this->register_style_controls();
+    }
+
+    private function register_content_controls(): void
     {
         // Query
         $this->start_controls_section('section_query', [
             'label' => __('Query', 'oup'),
             'tab'   => Controls_Manager::TAB_CONTENT,
         ]);
-
         $this->add_control('posts_per_page', [
             'label'       => __('Posts Per Page', 'oup'),
             'type'        => Controls_Manager::NUMBER,
@@ -64,21 +70,18 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'default'     => 6,
             'description' => __('Maximum number of upcoming events to display.', 'oup'),
         ]);
-
         $this->end_controls_section();
 
-        // Image
+        // Featured Image
         $this->start_controls_section('section_image', [
             'label' => __('Featured Image', 'oup'),
             'tab'   => Controls_Manager::TAB_CONTENT,
         ]);
-
         $this->add_group_control(Group_Control_Image_Size::get_type(), [
             'name'    => 'featured_image',
             'default' => 'large',
             'exclude' => ['custom'],
         ]);
-
         $this->end_controls_section();
 
         // Button
@@ -86,25 +89,18 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'label' => __('Button', 'oup'),
             'tab'   => Controls_Manager::TAB_CONTENT,
         ]);
-
         $this->add_control('button_text', [
             'label'   => __('Button Text', 'oup'),
             'type'    => Controls_Manager::TEXT,
             'default' => __('Sign Up', 'oup'),
         ]);
-
         $this->add_control('button_url', [
             'label'         => __('Button URL', 'oup'),
             'type'          => Controls_Manager::URL,
             'placeholder'   => __('https://...', 'oup'),
-            'default'       => [
-                'url'         => '#',
-                'is_external' => false,
-                'nofollow'    => false,
-            ],
+            'default'       => ['url' => '#', 'is_external' => false, 'nofollow' => false],
             'show_external' => true,
         ]);
-
         $this->end_controls_section();
 
         // Slider
@@ -112,7 +108,6 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'label' => __('Slider', 'oup'),
             'tab'   => Controls_Manager::TAB_CONTENT,
         ]);
-
         $this->add_control('enable_slider', [
             'label'        => __('Enable Slider', 'oup'),
             'type'         => Controls_Manager::SWITCHER,
@@ -121,7 +116,6 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'return_value' => 'yes',
             'default'      => '',
         ]);
-
         $this->add_control('enable_navigation', [
             'label'        => __('Navigation Arrows', 'oup'),
             'type'         => Controls_Manager::SWITCHER,
@@ -131,23 +125,18 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'default'      => 'yes',
             'condition'    => ['enable_slider' => 'yes'],
         ]);
-
         $this->add_responsive_control('nav_visibility', [
             'label'          => __('Navigation Visibility', 'oup'),
             'type'           => Controls_Manager::SELECT,
-            'options'        => [
-                'flex' => __('Show', 'oup'),
-                'none' => __('Hide', 'oup'),
-            ],
+            'options'        => ['flex' => __('Show', 'oup'), 'none' => __('Hide', 'oup')],
             'default'        => 'flex',
             'tablet_default' => 'flex',
             'mobile_default' => 'none',
             'selectors'      => [
                 '{{WRAPPER}} .swiper-button-prev, {{WRAPPER}} .swiper-button-next' => 'display: {{VALUE}} !important;',
             ],
-            'condition'      => ['enable_slider' => 'yes', 'enable_navigation' => 'yes'],
+            'condition' => ['enable_slider' => 'yes', 'enable_navigation' => 'yes'],
         ]);
-
         $this->add_control('enable_pagination', [
             'label'        => __('Pagination Dots', 'oup'),
             'type'         => Controls_Manager::SWITCHER,
@@ -157,23 +146,16 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'default'      => 'yes',
             'condition'    => ['enable_slider' => 'yes'],
         ]);
-
         $this->add_responsive_control('pag_visibility', [
             'label'          => __('Pagination Visibility', 'oup'),
             'type'           => Controls_Manager::SELECT,
-            'options'        => [
-                'block' => __('Show', 'oup'),
-                'none'  => __('Hide', 'oup'),
-            ],
+            'options'        => ['block' => __('Show', 'oup'), 'none' => __('Hide', 'oup')],
             'default'        => 'block',
             'tablet_default' => 'block',
             'mobile_default' => 'block',
-            'selectors'      => [
-                '{{WRAPPER}} .swiper-pagination' => 'display: {{VALUE}} !important;',
-            ],
+            'selectors'      => ['{{WRAPPER}} .swiper-pagination' => 'display: {{VALUE}} !important;'],
             'condition'      => ['enable_slider' => 'yes', 'enable_pagination' => 'yes'],
         ]);
-
         $this->add_control('enable_autoplay', [
             'label'        => __('Autoplay', 'oup'),
             'type'         => Controls_Manager::SWITCHER,
@@ -183,7 +165,6 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'default'      => '',
             'condition'    => ['enable_slider' => 'yes'],
         ]);
-
         $this->add_control('autoplay_delay', [
             'label'     => __('Autoplay Delay (ms)', 'oup'),
             'type'      => Controls_Manager::NUMBER,
@@ -191,12 +172,8 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'max'       => 10000,
             'step'      => 100,
             'default'   => 3000,
-            'condition' => [
-                'enable_slider'   => 'yes',
-                'enable_autoplay' => 'yes',
-            ],
+            'condition' => ['enable_slider' => 'yes', 'enable_autoplay' => 'yes'],
         ]);
-
         $this->add_control('enable_loop', [
             'label'        => __('Loop', 'oup'),
             'type'         => Controls_Manager::SWITCHER,
@@ -206,174 +183,148 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'default'      => '',
             'condition'    => ['enable_slider' => 'yes'],
         ]);
-
         $this->end_controls_section();
+    }
 
-        // STYLE: Card
+    private function register_style_controls(): void
+    {
+        // Card
         $this->start_controls_section('style_card', [
             'label' => __('Card', 'oup'),
             'tab'   => Controls_Manager::TAB_STYLE,
         ]);
-
         $this->add_control('card_bg_color', [
             'label'     => __('Background Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
             'selectors' => ['{{WRAPPER}} .sce-card' => 'background-color: {{VALUE}};'],
         ]);
-
         $this->add_responsive_control('card_padding', [
             'label'      => __('Padding', 'oup'),
             'type'       => Controls_Manager::DIMENSIONS,
             'size_units' => ['px', 'em', 'rem'],
             'selectors'  => ['{{WRAPPER}} .sce-card' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
-
         $this->add_control('card_border_radius', [
             'label'      => __('Border Radius', 'oup'),
             'type'       => Controls_Manager::DIMENSIONS,
             'size_units' => ['px', '%'],
             'selectors'  => ['{{WRAPPER}} .sce-card' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
-
-        $this->add_control('card_box_shadow', [
-            'label'     => __('Box Shadow', 'oup'),
-            'type'      => Controls_Manager::BOX_SHADOW,
-            'selectors' => ['{{WRAPPER}} .sce-card' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};'],
-        ]);
-
         $this->end_controls_section();
 
-        // STYLE: Image
+        // Featured Image
         $this->start_controls_section('style_image', [
             'label' => __('Featured Image', 'oup'),
             'tab'   => Controls_Manager::TAB_STYLE,
         ]);
-
         $this->add_responsive_control('image_border_radius', [
             'label'      => __('Border Radius', 'oup'),
             'type'       => Controls_Manager::DIMENSIONS,
             'size_units' => ['px', '%'],
             'selectors'  => ['{{WRAPPER}} .sce-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
-
         $this->add_responsive_control('image_margin_bottom', [
             'label'      => __('Bottom Spacing', 'oup'),
             'type'       => Controls_Manager::SLIDER,
             'size_units' => ['px', 'em'],
             'selectors'  => ['{{WRAPPER}} .sce-image' => 'margin-bottom: {{SIZE}}{{UNIT}};'],
         ]);
-
         $this->end_controls_section();
 
-        // STYLE: Typography
+        // Typography
         $this->start_controls_section('style_typography', [
             'label' => __('Typography', 'oup'),
             'tab'   => Controls_Manager::TAB_STYLE,
         ]);
-
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name'     => 'title_typography',
             'label'    => __('Title', 'oup'),
             'selector' => '{{WRAPPER}} .sce-title',
         ]);
-
         $this->add_control('title_color', [
             'label'     => __('Title Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
             'selectors' => ['{{WRAPPER}} .sce-title' => 'color: {{VALUE}};'],
         ]);
-
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name'     => 'excerpt_typography',
             'label'    => __('Excerpt', 'oup'),
             'selector' => '{{WRAPPER}} .sce-excerpt',
         ]);
-
         $this->add_control('excerpt_color', [
             'label'     => __('Excerpt Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
             'selectors' => ['{{WRAPPER}} .sce-excerpt' => 'color: {{VALUE}};'],
         ]);
-
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name'     => 'meta_typography',
             'label'    => __('Meta (Date / Notice / Location)', 'oup'),
             'selector' => '{{WRAPPER}} .sce-meta-item',
         ]);
-
         $this->add_control('meta_color', [
             'label'     => __('Meta Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
             'selectors' => ['{{WRAPPER}} .sce-meta-item' => 'color: {{VALUE}};'],
         ]);
-
         $this->end_controls_section();
 
-        // STYLE: Button
+        // Button
         $this->start_controls_section('style_button', [
             'label' => __('Button', 'oup'),
             'tab'   => Controls_Manager::TAB_STYLE,
         ]);
-
         $this->add_control('button_bg_color', [
             'label'     => __('Background Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
             'selectors' => ['{{WRAPPER}} .sce-button' => 'background-color: {{VALUE}};'],
         ]);
-
         $this->add_control('button_text_color', [
             'label'     => __('Text Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
             'selectors' => ['{{WRAPPER}} .sce-button' => 'color: {{VALUE}};'],
         ]);
-
         $this->add_control('button_hover_bg_color', [
             'label'     => __('Hover Background Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
             'selectors' => ['{{WRAPPER}} .sce-button:hover' => 'background-color: {{VALUE}};'],
         ]);
-
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name'     => 'button_typography',
             'label'    => __('Typography', 'oup'),
             'selector' => '{{WRAPPER}} .sce-button',
         ]);
-
         $this->add_responsive_control('button_border_radius', [
             'label'      => __('Border Radius', 'oup'),
-            'type'       => Controls_Manager::DIMENSIONS,
             'size_units' => ['px', '%'],
+            'type'       => Controls_Manager::DIMENSIONS,
             'selectors'  => ['{{WRAPPER}} .sce-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
-
         $this->add_responsive_control('button_padding', [
             'label'      => __('Padding', 'oup'),
             'type'       => Controls_Manager::DIMENSIONS,
             'size_units' => ['px', 'em'],
             'selectors'  => ['{{WRAPPER}} .sce-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'],
         ]);
-
         $this->end_controls_section();
 
-        // STYLE: Slider
+        // Slider
         $this->start_controls_section('style_slider', [
             'label'     => __('Slider', 'oup'),
             'tab'       => Controls_Manager::TAB_STYLE,
             'condition' => ['enable_slider' => 'yes'],
         ]);
-
         $this->add_control('nav_color', [
             'label'     => __('Arrow Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
-            'selectors' => ['{{WRAPPER}} .sce-swiper .swiper-button-prev, {{WRAPPER}} .sce-swiper .swiper-button-next' => 'color: {{VALUE}};'],
+            'selectors' => [
+                '{{WRAPPER}} .sce-swiper .swiper-button-prev, {{WRAPPER}} .sce-swiper .swiper-button-next' => 'color: {{VALUE}};',
+            ],
         ]);
-
         $this->add_control('pagination_color', [
             'label'     => __('Pagination Active Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
             'selectors' => ['{{WRAPPER}} .sce-swiper .swiper-pagination-bullet-active' => 'background: {{VALUE}};'],
         ]);
-
         $this->end_controls_section();
     }
 
@@ -389,8 +340,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
         if (is_numeric($value)) return (int) $value;
 
         try {
-            $dt = new \DateTime($value, new \DateTimeZone('UTC'));
-            return $dt->getTimestamp();
+            return (new \DateTime($value, new \DateTimeZone('UTC')))->getTimestamp();
         } catch (\Exception $e) {
             return 0;
         }
@@ -399,50 +349,135 @@ class Widget_SugarCalendarEvent extends Widget_Base
     private function get_venue_string(int $sc_event_row_id, int $post_id): string
     {
         global $wpdb;
-        $venue_id = 0;
 
         if (function_exists('sugar_calendar_get_event_by_object')) {
-            $sc_obj = sugar_calendar_get_event_by_object($post_id, 'post');
+            $sc_obj   = sugar_calendar_get_event_by_object($post_id, 'post');
+            $venue_id = (int) ($sc_obj->venue_id ?? 0);
 
-            if (! empty($sc_obj)) {
-                $venue_id = (int) ($sc_obj->venue_id ?? 0);
-            }
-        }
+            if ($venue_id > 0) {
+                $venue_post = get_post($venue_id);
+                if ($venue_post && $venue_post->post_status === 'publish') {
+                    $name    = trim($venue_post->post_title);
+                    $address = trim((string) get_post_meta($venue_id, 'sugarcalendar_venue_address_1', true));
 
-        if ($venue_id > 0) {
-            $venue_post = get_post($venue_id);
-
-            if ($venue_post && $venue_post->post_status === 'publish') {
-                $venue_name = trim($venue_post->post_title);
-                $address_1  = trim((string) get_post_meta($venue_id, 'sugarcalendar_venue_address_1', true));
-
-                if ($venue_name !== '') {
-                    return $address_1 !== ''
-                        ? $venue_name . ', ' . $address_1
-                        : $venue_name;
+                    if ($name !== '') {
+                        return $address !== '' ? $name . ', ' . $address : $name;
+                    }
                 }
             }
         }
 
-        $legacy_location = (string) $wpdb->get_var(
-            $wpdb->prepare(
-                "SELECT meta_value
-                 FROM {$wpdb->prefix}sc_eventmeta
-                 WHERE sc_event_id = %d AND meta_key = %s
-                 LIMIT 1",
-                $sc_event_row_id,
-                'location'
-            )
-        );
-
-        return trim($legacy_location);
+        return trim((string) $wpdb->get_var($wpdb->prepare(
+            "SELECT meta_value FROM {$wpdb->prefix}sc_eventmeta WHERE sc_event_id = %d AND meta_key = %s LIMIT 1",
+            $sc_event_row_id,
+            'location'
+        )));
     }
 
-    // Only fetch upcoming events — past events are always excluded
-    private function get_all_events(int $limit = 6): array
+    private function get_sc_event_rows(int $post_id): array
+    {
+        global $wpdb;
+
+        return $wpdb->get_results($wpdb->prepare(
+            "SELECT * FROM {$wpdb->prefix}sc_events WHERE object_id = %d ORDER BY start ASC",
+            $post_id
+        )) ?: [];
+    }
+
+    private function get_step_seconds(string $rule, int $interval, int $from_ts): int
+    {
+        $rule = strtolower(trim($rule));
+
+        if ($rule === 'daily') {
+            return DAY_IN_SECONDS * $interval;
+        }
+
+        if ($rule === 'weekly') {
+            return WEEK_IN_SECONDS * $interval;
+        }
+
+        try {
+            $dt  = (new \DateTime('@' . $from_ts))->setTimezone(new \DateTimeZone('UTC'));
+            $mod = $rule === 'yearly' ? "+{$interval} year" : "+{$interval} month";
+            $dt->modify($mod);
+            return max(DAY_IN_SECONDS, $dt->getTimestamp() - $from_ts);
+        } catch (\Exception $e) {
+            return ($rule === 'yearly' ? 365 : 30) * DAY_IN_SECONDS * $interval;
+        }
+    }
+
+    private function calculate_occurrences(
+        array  $members,
+        string $rule,
+        int    $interval = 1,
+        string $recurrence_end = '',
+        int    $recurrence_end_count = 0
+    ): array {
+        if (empty($members)) return [];
+
+        $first_start = $members[0]['start_ts'];
+        $duration    = max(0, $members[0]['end_ts'] - $first_start);
+
+        $build = function (int $ts) use ($duration): array {
+            $end_ts = $ts + $duration;
+            return [
+                'start_ts' => $ts,
+                'end_ts'   => $end_ts,
+                'lines'    => $this->format_duration($ts, $end_ts),
+            ];
+        };
+
+        // Case 1: After X times
+        if ($recurrence_end_count > 0) {
+            $occurrences = [];
+            $ts          = $first_start;
+            for ($i = 0; $i < $recurrence_end_count; $i++) {
+                $occurrences[] = $build($ts);
+                $ts += $this->get_step_seconds($rule, $interval, $ts);
+            }
+            return $occurrences;
+        }
+
+        // Case 2: Until date
+        $end_boundary = (! empty($recurrence_end) && $recurrence_end !== '0000-00-00 00:00:00')
+            ? $this->resolve_ts($recurrence_end)
+            : 0;
+
+        if ($end_boundary > 0) {
+            $occurrences = [];
+            $ts          = $first_start;
+            while ($ts <= $end_boundary) {
+                $occurrences[] = $build($ts);
+                $ts += $this->get_step_seconds($rule, $interval, $ts);
+            }
+            return $occurrences;
+        }
+
+        // Case 3: Fallback — post count
+        $occurrences = [];
+        $ts          = $first_start;
+        for ($i = 0, $count = count($members); $i < $count; $i++) {
+            $occurrences[] = $build($ts);
+            $ts += $this->get_step_seconds($rule, $interval, $ts);
+        }
+
+        return $occurrences;
+    }
+
+    private function get_event_expiry_ts(array $event): int
+    {
+        if ($event['is_recurring'] && ! empty($event['occurrences'])) {
+            $last = end($event['occurrences']);
+            return $last['end_ts'] ?: $last['start_ts'];
+        }
+
+        return $event['end_ts'] ?: $event['start_ts'];
+    }
+
+    private function get_all_events(int $limit = 0): array
     {
         $ids = get_posts([
-            'post_type'      => 'sc_event',
+            'post_type'      => ['sc_event', 'sc_recurring_event'],
             'post_status'    => 'publish',
             'posts_per_page' => -1,
             'no_found_rows'  => true,
@@ -451,72 +486,81 @@ class Widget_SugarCalendarEvent extends Widget_Base
 
         if (empty($ids)) return [];
 
-        $now    = time();
-        $events = [];
+        $now  = time();
+        $flat = [];
 
         foreach ($ids as $event_id) {
-            $data = $this->build_event_data($event_id);
+            $rows = $this->get_sc_event_rows($event_id);
+            if (empty($rows)) continue;
 
-            if (! $data) continue;
+            $row       = $rows[0];
+            $flat[] = [
+                'post_id'              => $event_id,
+                'title'                => get_the_title($event_id),
+                'recurrence_rule'      => trim((string) ($row->recurrence ?? '')),
+                'recurrence_interval'  => max(1, (int) ($row->recurrence_interval ?? 1)),
+                'recurrence_end'       => (string) ($row->recurrence_end ?? ''),
+                'recurrence_end_count' => (int) ($row->recurrence_count ?? 0),
+                'start_ts'             => $this->resolve_ts($row->start),
+                'end_ts'               => $this->resolve_ts($row->end),
+                'sc_id'                => (int) $row->id,
+            ];
+        }
 
-            // Skip past events — same behaviour in editor and frontend
-            $ref_ts = $data['end_ts'] > 0 ? $data['end_ts'] : $data['start_ts'];
-            if ($ref_ts < $now) continue;
+        // Group by recurring title or single post ID
+        $groups = [];
+        foreach ($flat as $item) {
+            $is_recurring = ! empty($item['recurrence_rule']) && $item['recurrence_rule'] !== 'never';
+            $key          = $is_recurring
+                ? 'recurring|' . strtolower(trim($item['title']))
+                : 'single|' . $item['post_id'];
+            $groups[$key][] = $item;
+        }
 
-            $events[] = $data;
+        $events = [];
+        foreach ($groups as $key => $members) {
+            usort($members, fn($a, $b) => $a['start_ts'] <=> $b['start_ts']);
+
+            $primary      = $members[0];
+            $post_id      = $primary['post_id'];
+            $is_recurring = str_starts_with($key, 'recurring|');
+
+            $event = [
+                'id'             => $post_id,
+                'title'          => get_the_title($post_id),
+                'excerpt'        => get_the_excerpt($post_id),
+                'thumbnail_id'   => get_post_thumbnail_id($post_id),
+                'start_ts'       => $primary['start_ts'],
+                'end_ts'         => $primary['end_ts'],
+                'location'       => $this->get_venue_string($primary['sc_id'], $post_id),
+                'duration_lines' => [],
+                'occurrences'    => [],
+                'is_recurring'   => $is_recurring,
+            ];
+
+            if ($is_recurring) {
+                $event['occurrences'] = $this->calculate_occurrences(
+                    $members,
+                    $primary['recurrence_rule'],
+                    $primary['recurrence_interval'],
+                    $primary['recurrence_end'],
+                    $primary['recurrence_end_count']
+                );
+            } else {
+                $event['duration_lines'] = $this->format_duration($primary['start_ts'], $primary['end_ts']);
+            }
+
+            if (! $event['start_ts']) continue;
+
+            $expiry = $this->get_event_expiry_ts($event);
+            if ($expiry > 0 && $expiry <= $now) continue;
+
+            $events[] = $event;
         }
 
         usort($events, fn($a, $b) => $a['start_ts'] <=> $b['start_ts']);
 
-        if ($limit > 0) {
-            $events = array_slice($events, 0, $limit);
-        }
-
-        return $events;
-    }
-
-    private function build_event_data(int $event_id): ?array
-    {
-        global $wpdb;
-
-        $post = get_post($event_id);
-        if (! $post || $post->post_status !== 'publish') return null;
-
-        $data = [
-            'id'             => $event_id,
-            'title'          => get_the_title($event_id),
-            'excerpt'        => get_the_excerpt($event_id),
-            'thumbnail_id'   => get_post_thumbnail_id($event_id),
-            'start'          => '',
-            'end'            => '',
-            'start_ts'       => 0,
-            'end_ts'         => 0,
-            'location'       => '',
-            'duration_lines' => [],
-        ];
-
-        $sc_event = $wpdb->get_row(
-            $wpdb->prepare(
-                "SELECT * FROM {$wpdb->prefix}sc_events WHERE object_id = %d",
-                $event_id
-            )
-        );
-
-        if ($sc_event) {
-            $data['start']    = $sc_event->start;
-            $data['end']      = $sc_event->end;
-            $data['start_ts'] = $this->resolve_ts($sc_event->start);
-            $data['end_ts']   = $this->resolve_ts($sc_event->end);
-
-            // Use the new venue-aware helper instead of the old raw meta query
-            $data['location'] = $this->get_venue_string((int) $sc_event->id, $event_id);
-        }
-
-        if (! $data['start_ts']) return null;
-
-        $data['duration_lines'] = $this->format_duration($data['start_ts'], $data['end_ts']);
-
-        return $data;
+        return $limit > 0 ? array_slice($events, 0, $limit) : $events;
     }
 
     private function format_duration(int $start_ts, int $end_ts = 0): array
@@ -524,22 +568,19 @@ class Widget_SugarCalendarEvent extends Widget_Base
         if (! $start_ts) return [];
 
         $tz       = $this->get_site_timezone();
-        $dt       = new \DateTime('@' . $start_ts);
-        $dt->setTimezone($tz);
+        $dt       = (new \DateTime('@' . $start_ts))->setTimezone($tz);
         $tz_label = ' ' . $dt->format('T');
-
-        $date_str = date_i18n('l, j F Y', $start_ts);
         $time_str = date_i18n('g:iA', $start_ts);
 
-        // Same-day range: append end time on same line
-        if ($end_ts && date_i18n('Ymd', $start_ts) === date_i18n('Ymd', $end_ts)) {
+        $same_day = $end_ts && date_i18n('Ymd', $start_ts) === date_i18n('Ymd', $end_ts);
+
+        if ($same_day) {
             $time_str .= ' – ' . date_i18n('g:iA', $end_ts);
         }
 
-        $lines[] = $date_str . ' at ' . $time_str . $tz_label;
+        $lines = [date_i18n('l, j F Y', $start_ts) . ' at ' . $time_str . $tz_label];
 
-        // Multi-day: add end date as second line
-        if ($end_ts && date_i18n('Ymd', $start_ts) !== date_i18n('Ymd', $end_ts)) {
+        if ($end_ts && ! $same_day) {
             $lines[] = date_i18n('l, j F Y', $end_ts) . ' at ' . date_i18n('g:iA', $end_ts) . $tz_label;
         }
 
@@ -575,7 +616,35 @@ class Widget_SugarCalendarEvent extends Widget_Base
         </svg>';
     }
 
-    // Card renderer (shared by grid and swiper)
+    // Rendering
+    private function render_date_meta_items(array $event): void
+    {
+        if ($event['is_recurring'] && ! empty($event['occurrences'])) {
+            foreach ($event['occurrences'] as $occurrence) {
+                foreach ($occurrence['lines'] as $line) { ?>
+                    <li class="sce-meta-item sce-meta-date">
+                        <span class="sce-meta-icon"><?php echo $this->svg_calendar(); ?></span>
+                        <div class="sce-meta-lines">
+                            <span class="sce-meta-line"><?php echo esc_html($line); ?></span>
+                        </div>
+                    </li>
+            <?php }
+            }
+            return;
+        }
+
+        if (! empty($event['duration_lines'])) { ?>
+            <li class="sce-meta-item sce-meta-date">
+                <span class="sce-meta-icon"><?php echo $this->svg_calendar(); ?></span>
+                <div class="sce-meta-lines">
+                    <?php foreach ($event['duration_lines'] as $line) { ?>
+                        <span class="sce-meta-line"><?php echo esc_html($line); ?></span>
+                    <?php } ?>
+                </div>
+            </li>
+        <?php }
+    }
+
     private function render_card(array $event, array $settings, string $img_size): void
     {
         $notice   = trim((string) get_field('follow_up_event', $event['id']));
@@ -583,25 +652,18 @@ class Widget_SugarCalendarEvent extends Widget_Base
         $pricing  = get_field('event_ticket_pricing', $event['id']);
         $pricing  = is_array($pricing) ? array_values(array_filter($pricing)) : [];
 
-        $has_meta = ! empty($event['duration_lines']) || ! empty($notice) || ! empty($event['location']);
+        $has_date = $event['is_recurring'] ? ! empty($event['occurrences']) : ! empty($event['duration_lines']);
+        $has_meta = $has_date || ! empty($notice) || ! empty($event['location']);
 
         $btn_url      = ! empty($settings['button_url']['url']) ? $settings['button_url']['url'] : '#';
         $btn_target   = ! empty($settings['button_url']['is_external']) ? ' target="_blank"' : '';
         $btn_nofollow = ! empty($settings['button_url']['nofollow']) ? ' rel="nofollow"' : '';
         $btn_text     = ! empty($settings['button_text']) ? $settings['button_text'] : __('Sign Up', 'oup');
-?>
-
+        ?>
         <div class="sce-card">
 
-            <?php
-            // Featured image — fixed 430×243 aspect ratio via CSS
-            if (! empty($event['thumbnail_id'])) :
-                $img = wp_get_attachment_image(
-                    $event['thumbnail_id'],
-                    $img_size,
-                    false,
-                    ['class' => 'sce-img']
-                );
+            <?php if (! empty($event['thumbnail_id'])) :
+                $img = wp_get_attachment_image($event['thumbnail_id'], $img_size, false, ['class' => 'sce-img']);
                 if ($img) : ?>
                     <div class="sce-image"><?php echo $img; ?></div>
             <?php endif;
@@ -615,17 +677,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
 
             <?php if ($has_meta) : ?>
                 <ul class="sce-meta">
-
-                    <?php if (! empty($event['duration_lines'])) : ?>
-                        <li class="sce-meta-item sce-meta-date">
-                            <span class="sce-meta-icon"><?php echo $this->svg_calendar(); ?></span>
-                            <div class="sce-meta-lines">
-                                <?php foreach ($event['duration_lines'] as $line) : ?>
-                                    <span class="sce-meta-line"><?php echo esc_html($line); ?></span>
-                                <?php endforeach; ?>
-                            </div>
-                        </li>
-                    <?php endif; ?>
+                    <?php $this->render_date_meta_items($event); ?>
 
                     <?php if (! empty($notice)) : ?>
                         <li class="sce-meta-item sce-meta-notice">
@@ -640,7 +692,6 @@ class Widget_SugarCalendarEvent extends Widget_Base
                             <span><?php echo esc_html($event['location']); ?></span>
                         </li>
                     <?php endif; ?>
-
                 </ul>
             <?php endif; ?>
 
@@ -648,8 +699,6 @@ class Widget_SugarCalendarEvent extends Widget_Base
                 <p class="sce-footnote"><?php echo wp_kses_post(nl2br(esc_html($footnote))); ?></p>
             <?php endif; ?>
 
-            <?php // Spacer pushes pricing + button to the bottom of the card 
-            ?>
             <div class="sce-spacer"></div>
 
             <?php if (! empty($pricing)) :
@@ -662,10 +711,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
                                 $ticket_price = trim((string) ($ticket['price'] ?? ''));
                                 if (! $ticket_name && ! $ticket_price) continue;
                             ?>
-                                <?php if ($i > 0) : ?>
-                                    <div class="sce-price-divider"></div>
-                                <?php endif; ?>
-
+                                <?php if ($i > 0) : ?><div class="sce-price-divider"></div><?php endif; ?>
                                 <div class="sce-price-item">
                                     <div class="sce-price-amount-wrap">
                                         <span class="sce-price-amount">$<?php echo esc_html($ticket_price); ?></span>
@@ -673,7 +719,6 @@ class Widget_SugarCalendarEvent extends Widget_Base
                                     </div>
                                     <span class="sce-price-label"><?php echo esc_html($ticket_name); ?></span>
                                 </div>
-
                             <?php endforeach; ?>
                         </div>
                     <?php endforeach; ?>
@@ -687,32 +732,25 @@ class Widget_SugarCalendarEvent extends Widget_Base
             </div>
 
         </div>
-
     <?php
     }
 
-    protected function render()
+    protected function render(): void
     {
-        $settings = $this->get_settings_for_display();
+        $settings  = $this->get_settings_for_display();
+        $is_editor = \Elementor\Plugin::$instance->editor->is_edit_mode();
 
-        $is_editor      = \Elementor\Plugin::$instance->editor->is_edit_mode();
-        $posts_per_page = ! empty($settings['posts_per_page']) ? (int) $settings['posts_per_page'] : 6;
-        $enable_slider  = ! empty($settings['enable_slider']) && $settings['enable_slider'] === 'yes';
-
-        $events = $this->get_all_events($posts_per_page);
+        $posts_per_page = $is_editor ? 0 : (int) ($settings['posts_per_page'] ?? 6);
+        $enable_slider  = ($settings['enable_slider'] ?? '') === 'yes';
+        $events         = $this->get_all_events($posts_per_page);
 
         if (empty($events)) {
-            if ($is_editor) {
-                echo '<div class="sce-placeholder"><p>'
-                    . esc_html__('Sugar Calendar Event Cards: No upcoming events found. Make sure events are published and set to a future date.', 'oup')
-                    . '</p></div>';
-            }
+            echo '<div class="sce-placeholder"><p>' . esc_html__('No upcoming events found.', 'oup') . '</p></div>';
             return;
         }
 
-        $img_size = ! empty($settings['featured_image_size']) ? $settings['featured_image_size'] : 'large';
+        $img_size = $settings['featured_image_size'] ?? 'large';
 
-        // Grid layout
         if (! $enable_slider) {
             echo '<div class="sce-event-list">';
             foreach ($events as $event) {
@@ -722,16 +760,15 @@ class Widget_SugarCalendarEvent extends Widget_Base
             return;
         }
 
-        // Swiper layout — navigation/pagination only shown when > 2 slides
-        $total_events = count($events);
-        $needs_scroll = $total_events > 2;
-        $show_nav     = $needs_scroll && ! empty($settings['enable_navigation']) && $settings['enable_navigation'] === 'yes';
-        $show_pag     = $needs_scroll && ! empty($settings['enable_pagination']) && $settings['enable_pagination'] === 'yes';
+        $total        = count($events);
+        $needs_scroll = $total > 2;
+        $show_nav     = $needs_scroll && ($settings['enable_navigation'] ?? '') === 'yes';
+        $show_pag     = $needs_scroll && ($settings['enable_pagination'] ?? '') === 'yes';
 
-        $swiper_settings = [
+        $swiper_cfg = [
             'slidesPerView' => 1,
             'spaceBetween'  => 24,
-            'loop'          => $needs_scroll && ! empty($settings['enable_loop']) && $settings['enable_loop'] === 'yes',
+            'loop'          => $needs_scroll && ($settings['enable_loop'] ?? '') === 'yes',
             'navigation'    => $show_nav,
             'pagination'    => $show_pag,
             'breakpoints'   => [
@@ -740,18 +777,17 @@ class Widget_SugarCalendarEvent extends Widget_Base
             ],
         ];
 
-        if (! empty($settings['enable_autoplay']) && $settings['enable_autoplay'] === 'yes') {
-            $swiper_settings['autoplay'] = [
-                'delay'                => ! empty($settings['autoplay_delay']) ? (int) $settings['autoplay_delay'] : 3000,
+        if (($settings['enable_autoplay'] ?? '') === 'yes') {
+            $swiper_cfg['autoplay'] = [
+                'delay'                => (int) ($settings['autoplay_delay'] ?? 3000),
                 'disableOnInteraction' => false,
             ];
         }
 
-        $unique_id = 'sce-swiper-' . $this->get_id();
+        $uid = 'sce-swiper-' . $this->get_id();
     ?>
-
         <div class="sce-swiper-outer">
-            <div class="swiper sce-swiper" id="<?php echo esc_attr($unique_id); ?>" data-swiper="<?php echo esc_attr(wp_json_encode($swiper_settings)); ?>">
+            <div class="swiper sce-swiper" id="<?php echo esc_attr($uid); ?>" data-swiper="<?php echo esc_attr(wp_json_encode($swiper_cfg)); ?>">
                 <div class="swiper-wrapper">
                     <?php foreach ($events as $event) : ?>
                         <div class="swiper-slide">
@@ -759,20 +795,17 @@ class Widget_SugarCalendarEvent extends Widget_Base
                         </div>
                     <?php endforeach; ?>
                 </div>
-
                 <?php if ($show_nav) : ?>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
                 <?php endif; ?>
-
                 <?php if ($show_pag) : ?>
                     <div class="swiper-pagination"></div>
                 <?php endif; ?>
             </div>
         </div>
-
 <?php
     }
 
-    protected function content_template() {}
+    protected function content_template(): void {}
 }
