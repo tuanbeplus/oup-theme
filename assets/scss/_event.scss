@@ -1,0 +1,161 @@
+// Breakpoints
+$bp-xl: 1200px;
+$bp-lg: 1024px;
+$bp-mobile: 767px;
+
+// Colors
+$color-text: #231F20;
+
+// Typography
+$font-body: "Plus Jakarta Sans", sans-serif;
+$font-heading: "League Spartan", sans-serif;
+
+// Meta list  (widget card + [oup_event_meta])
+.sce-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0 0 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.sce-meta-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.938rem;
+    line-height: 1.6;
+    color: $color-text;
+    font-family: $font-body;
+
+    @media (max-width: $bp-mobile) {
+        font-size: 0.875rem;
+    }
+}
+
+.sce-meta-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    color: inherit;
+
+    svg {
+        display: block;
+    }
+}
+
+.sce-meta-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.sce-meta-line {
+    display: block;
+}
+
+// Pricing
+.sce-pricing-wrap {
+    margin: 40px 0 30px;
+
+    @media (max-width: $bp-mobile) {
+        margin: 24px 0;
+    }
+}
+
+.sce-pricing {
+    display: flex;
+    align-items: flex-start;
+
+    &+.sce-pricing {
+        margin-top: 16px;
+    }
+
+    @media (max-width: $bp-mobile) {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.sce-price-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 50px;
+
+    @media (max-width: $bp-xl) {
+        padding: 0 36px;
+    }
+
+    @media (max-width: $bp-lg) {
+        padding: 0 28px;
+    }
+
+    @media (max-width: $bp-mobile) {
+        padding: 0;
+    }
+
+    &:first-child {
+        padding-left: 0;
+    }
+
+    &:last-child {
+        padding-right: 0;
+    }
+}
+
+.sce-price-amount-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.sce-price-amount {
+    font-family: $font-heading;
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 1.1;
+    color: $color-text;
+    letter-spacing: -0.01em;
+
+    @media (max-width: $bp-lg) {
+        font-size: 1.625rem;
+    }
+
+    @media (max-width: $bp-mobile) {
+        font-size: 1.5rem;
+    }
+}
+
+.sce-price-suffix {
+    font-size: 0.938rem;
+    color: $color-text;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.sce-price-label {
+    font-size: 0.938rem;
+    color: $color-text;
+    font-weight: 600;
+    line-height: 1.6;
+
+    @media (max-width: $bp-mobile) {
+        font-size: 0.875rem;
+    }
+}
+
+.sce-price-divider {
+    width: 1px;
+    background-color: $color-text;
+    flex-shrink: 0;
+    align-self: stretch;
+    min-height: 40px;
+    margin: 2px 0;
+
+    @media (max-width: $bp-mobile) {
+        display: none;
+    }
+}
