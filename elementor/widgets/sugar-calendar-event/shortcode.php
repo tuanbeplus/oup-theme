@@ -308,6 +308,7 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
 
 endif;
 
+
 // OUP_Event_Pricing_Shortcode
 if (! class_exists('OUP_Event_Pricing_Shortcode')) :
 
@@ -342,29 +343,23 @@ if (! class_exists('OUP_Event_Pricing_Shortcode')) :
         // Render HTML
         private static function render_pricing_block(array $pricing): void
         {
-            $rows = array_chunk($pricing, 2);
             ?>
             <div class="sce-pricing-wrap">
-                <?php foreach ($rows as $row) : ?>
-                    <div class="sce-pricing">
-                        <?php foreach ($row as $i => $ticket) :
-                            $ticket_name  = trim((string) ($ticket['ticket_name'] ?? ''));
-                            $ticket_price = trim((string) ($ticket['price'] ?? ''));
-                            if (! $ticket_name && ! $ticket_price) continue;
-                        ?>
-                            <?php if ($i > 0) : ?><div class="sce-price-divider"></div><?php endif; ?>
-                            <div class="sce-price-item">
-                                <div class="sce-price-amount-wrap">
-                                    <span class="sce-price-amount">$<?php echo esc_html($ticket_price); ?></span>
-                                    <span class="sce-price-suffix"><?php esc_html_e('inc. GST', 'oup'); ?></span>
-                                </div>
-                                <span class="sce-price-label"><?php echo esc_html($ticket_name); ?></span>
-                            </div>
-                        <?php endforeach; ?>
+                <?php foreach ($pricing as $ticket) :
+                    $ticket_name  = trim((string) ($ticket['ticket_name'] ?? ''));
+                    $ticket_price = trim((string) ($ticket['price'] ?? ''));
+                    if (! $ticket_name && ! $ticket_price) continue;
+                ?>
+                    <div class="sce-price-item">
+                        <div class="sce-price-amount-wrap">
+                            <span class="sce-price-amount">$<?php echo esc_html($ticket_price); ?></span>
+                            <span class="sce-price-suffix"><?php esc_html_e('inc. GST', 'oup'); ?></span>
+                        </div>
+                        <span class="sce-price-label"><?php echo esc_html($ticket_name); ?></span>
                     </div>
                 <?php endforeach; ?>
             </div>
-<?php
+            <?php
         }
     }
 

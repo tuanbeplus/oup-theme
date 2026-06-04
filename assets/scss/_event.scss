@@ -55,8 +55,11 @@ $font-heading: "League Spartan", sans-serif;
     display: block;
 }
 
-// Pricing
+// Pricing  (widget card + [oup_event_pricing])
 .sce-pricing-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     margin: 40px 0 30px;
 
     @media (max-width: $bp-mobile) {
@@ -64,45 +67,10 @@ $font-heading: "League Spartan", sans-serif;
     }
 }
 
-.sce-pricing {
-    display: flex;
-    align-items: flex-start;
-
-    &+.sce-pricing {
-        margin-top: 16px;
-    }
-
-    @media (max-width: $bp-mobile) {
-        flex-direction: column;
-        gap: 20px;
-    }
-}
-
 .sce-price-item {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    padding: 0 50px;
-
-    @media (max-width: $bp-xl) {
-        padding: 0 36px;
-    }
-
-    @media (max-width: $bp-lg) {
-        padding: 0 28px;
-    }
-
-    @media (max-width: $bp-mobile) {
-        padding: 0;
-    }
-
-    &:first-child {
-        padding-left: 0;
-    }
-
-    &:last-child {
-        padding-right: 0;
-    }
 }
 
 .sce-price-amount-wrap {
@@ -144,18 +112,5 @@ $font-heading: "League Spartan", sans-serif;
 
     @media (max-width: $bp-mobile) {
         font-size: 0.875rem;
-    }
-}
-
-.sce-price-divider {
-    width: 1px;
-    background-color: $color-text;
-    flex-shrink: 0;
-    align-self: stretch;
-    min-height: 40px;
-    margin: 2px 0;
-
-    @media (max-width: $bp-mobile) {
-        display: none;
     }
 }
