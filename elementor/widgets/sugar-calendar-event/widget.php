@@ -94,12 +94,22 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'type'    => Controls_Manager::TEXT,
             'default' => __('Sign Up', 'oup'),
         ]);
+        $this->add_control('button_use_event_link', [
+            'label'        => __('Link to Single Event Page', 'oup'),
+            'type'         => Controls_Manager::SWITCHER,
+            'label_on'     => __('Yes', 'oup'),
+            'label_off'    => __('No', 'oup'),
+            'return_value' => 'yes',
+            'default'      => 'yes',
+            'description'  => __('When enabled, the button links to the single event page instead of a custom URL.', 'oup'),
+        ]);
         $this->add_control('button_url', [
             'label'         => __('Button URL', 'oup'),
             'type'          => Controls_Manager::URL,
             'placeholder'   => __('https://...', 'oup'),
             'default'       => ['url' => '#', 'is_external' => false, 'nofollow' => false],
             'show_external' => true,
+            'condition'     => ['button_use_event_link!' => 'yes'],
         ]);
         $this->end_controls_section();
 
@@ -239,12 +249,20 @@ class Widget_SugarCalendarEvent extends Widget_Base
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name'     => 'title_typography',
             'label'    => __('Title', 'oup'),
-            'selector' => '{{WRAPPER}} .sce-title',
+            'selector' => '{{WRAPPER}} .sce-title, {{WRAPPER}} .sce-title a',
         ]);
         $this->add_control('title_color', [
             'label'     => __('Title Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
-            'selectors' => ['{{WRAPPER}} .sce-title' => 'color: {{VALUE}};'],
+            'selectors' => [
+                '{{WRAPPER}} .sce-title'   => 'color: {{VALUE}};',
+                '{{WRAPPER}} .sce-title a' => 'color: {{VALUE}};',
+            ],
+        ]);
+        $this->add_control('title_hover_color', [
+            'label'     => __('Title Hover Color', 'oup'),
+            'type'      => Controls_Manager::COLOR,
+            'selectors' => ['{{WRAPPER}} .sce-title a:hover' => 'color: {{VALUE}};'],
         ]);
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name'     => 'excerpt_typography',
@@ -329,6 +347,50 @@ class Widget_SugarCalendarEvent extends Widget_Base
     }
 
     // Helpers
+    private function get_sc_event_permalink(int $post_id, int $start_ts): string
+    {
+        if (function_exists('sugar_calendar_get_event_link')) {
+            $url = sugar_calendar_get_event_link($post_id);
+            if (! empty($url) && $url !== '#') {
+                return $url;
+            }
+        }
+
+        if (function_exists('SC') && is_callable([SC(), 'events']) && method_exists(SC()->events, 'get_link')) {
+            $url = SC()->events->get_link($post_id);
+            if (! empty($url) && $url !== '#') {
+                return $url;
+            }
+        }
+
+        $base_slug = 'events';
+        $sc_option = get_option('sc_event_permalink_base');
+        if (! empty($sc_option)) {
+            $base_slug = trim($sc_option, '/');
+        } else {
+            $post_type_obj = get_post_type_object('sc_event');
+            if (
+                $post_type_obj &&
+                ! empty($post_type_obj->rewrite['slug']) &&
+                strpos($post_type_obj->rewrite['slug'], 'sc_') === false
+            ) {
+                $base_slug = trim($post_type_obj->rewrite['slug'], '/');
+            }
+        }
+
+        $post_slug = get_post_field('post_name', $post_id);
+        if (empty($post_slug)) {
+            return get_permalink($post_id) ?: '#';
+        }
+
+        $date_part = gmdate('Y-m-d', $start_ts);
+
+        return trailingslashit(home_url())
+            . trailingslashit($base_slug)
+            . trailingslashit($post_slug)
+            . trailingslashit($date_part);
+    }
+
     private function get_sc_event_rows(int $post_id): array
     {
         global $wpdb;
@@ -413,6 +475,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
             $event = [
                 'id'           => $post_id,
                 'title'        => get_the_title($post_id),
+                'permalink'    => '',
                 'excerpt'      => get_the_excerpt($post_id),
                 'thumbnail_id' => get_post_thumbnail_id($post_id),
                 'start_ts'     => $primary['start_ts'],
@@ -476,6 +539,9 @@ class Widget_SugarCalendarEvent extends Widget_Base
             $expiry = $this->get_event_expiry_ts($event);
             if ($expiry > 0 && $expiry <= $now) continue;
 
+            // Build SC permalink with the correct /events/{slug}/{YYYY-MM-DD}/ structure
+            $event['permalink'] = $this->get_sc_event_permalink($post_id, $event['start_ts']);
+
             $events[] = $event;
         }
 
@@ -484,14 +550,34 @@ class Widget_SugarCalendarEvent extends Widget_Base
         return $limit > 0 ? array_slice($events, 0, $limit) : $events;
     }
 
+    private function resolve_button_url(array $event, array $settings): array
+    {
+        if (($settings['button_use_event_link'] ?? 'yes') === 'yes') {
+            return [
+                'url'         => $event['permalink'] ?: $this->get_sc_event_permalink($event['id'], $event['start_ts']),
+                'is_external' => false,
+                'nofollow'    => false,
+            ];
+        }
+
+        return [
+            'url'         => ! empty($settings['button_url']['url']) ? $settings['button_url']['url'] : '#',
+            'is_external' => ! empty($settings['button_url']['is_external']),
+            'nofollow'    => ! empty($settings['button_url']['nofollow']),
+        ];
+    }
+
     // Rendering
     private function render_card(array $event, array $settings, string $img_size): void
     {
-        $footnote     = trim((string) get_field('foot_note', $event['id']));
-        $btn_url      = ! empty($settings['button_url']['url']) ? $settings['button_url']['url'] : '#';
-        $btn_target   = ! empty($settings['button_url']['is_external']) ? ' target="_blank"' : '';
-        $btn_nofollow = ! empty($settings['button_url']['nofollow']) ? ' rel="nofollow"' : '';
-        $btn_text     = ! empty($settings['button_text']) ? $settings['button_text'] : __('Sign Up', 'oup');
+        $footnote  = trim((string) get_field('foot_note', $event['id']));
+        $btn_text  = ! empty($settings['button_text']) ? $settings['button_text'] : __('Sign Up', 'oup');
+
+        $resolved     = $this->resolve_button_url($event, $settings);
+        $btn_url      = $resolved['url'];
+        $btn_target   = $resolved['is_external'] ? ' target="_blank"' : '';
+        $btn_nofollow = $resolved['nofollow'] ? ' rel="nofollow"' : '';
+        $event_permalink = $event['permalink'] ?: $this->get_sc_event_permalink($event['id'], $event['start_ts']);
 ?>
         <div class="sce-card">
 
@@ -502,7 +588,11 @@ class Widget_SugarCalendarEvent extends Widget_Base
             <?php endif;
             endif; ?>
 
-            <h3 class="sce-title"><?php echo esc_html($event['title']); ?></h3>
+            <h3 class="sce-title">
+                <a href="<?php echo esc_url($event_permalink); ?>">
+                    <?php echo esc_html($event['title']); ?>
+                </a>
+            </h3>
 
             <?php if (! empty($event['excerpt'])) : ?>
                 <div class="sce-excerpt"><?php echo wp_kses_post(wpautop($event['excerpt'])); ?></div>
