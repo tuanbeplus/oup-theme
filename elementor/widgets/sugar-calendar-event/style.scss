@@ -37,7 +37,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 50px;
-    align-items: start;
+    align-items: stretch;
 
     @media (max-width: $bp-xl) {
         gap: 36px;
