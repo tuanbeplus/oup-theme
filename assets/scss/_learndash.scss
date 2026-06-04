@@ -1,3 +1,4 @@
+// Custom Course Accordion styling
 .course-accordion-wrapper {
     display: flex;
     flex-direction: column;
@@ -42,7 +43,7 @@
                 word-break: break-word;
                 
                 @media (max-width: 1024px) {
-                    font-size: 1.5rem;
+                    font-size: 1.25rem;
                 }
             }
 
@@ -145,3 +146,4 @@
         }
     }
 }
+

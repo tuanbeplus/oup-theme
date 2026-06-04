@@ -25,7 +25,93 @@ if (!function_exists('enqueue_oup_styles_and_scripts')) {
         wp_localize_script('oup-main-script', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
 }
+/**
+ * Turn off the default LearnDash interface on the course detail page.
+ */
+add_filter('learndash_template_preprocess_filter', function($run, $post_id) {
+    if ( is_singular('sfwd-courses') ) {
+        return false;
+    }
+    return $run;
+}, 10, 2);
 
+/**
+* Get the price of the current LearnDash course.
+ */
+function get_learndash_course_price() {
+    $course_id = get_the_ID();
+    $course_settings = get_post_meta($course_id, '_sfwd-courses', true);
+    
+    if (isset($course_settings['sfwd-courses_course_price']) && !empty($course_settings['sfwd-courses_course_price'])) {
+        return $course_settings['sfwd-courses_course_price'];
+    } else {
+        return 'Free';
+    }
+}
+
+/**
+ * Create a custom variable to specify the login page path using your course ID.
+ */
+function get_custom_ld_register_link() {
+    $course_id = get_the_ID();
+    $base_url = home_url('/registration/');
+    
+    if ($course_id) {
+        return esc_url($base_url . '?ld_register_id=' . $course_id);
+    }
+    return '#';
+}
+//Shortcode for Course Accordion to show all lesson and topic
+if (!function_exists('oup_course_accordion_shortcode_callback')) {
+    function oup_course_accordion_shortcode_callback($atts) {
+        $atts = shortcode_atts(array(
+            'course_id'     => 0,
+            'default_state' => 'first_expanded',
+            'max_items'     => 'multiple',
+            'anim_duration' => 400
+        ), $atts, 'oup_course_accordion');
+
+        $course_id = intval($atts['course_id']);
+        if (!$course_id) {
+            $course_id = get_the_ID();
+        }
+
+        if (!$course_id || get_post_type($course_id) !== 'sfwd-courses' || !function_exists('learndash_get_course_lessons_list')) {
+            return '';
+        }
+
+        $transient_key = 'oup_course_accordion_' . $course_id;
+        $lessons_list  = get_transient($transient_key);
+
+        if (false === $lessons_list) {
+            $lessons_list = \learndash_get_course_lessons_list($course_id, null, ['nopaging' => true]);
+            if (!empty($lessons_list) && is_array($lessons_list)) {
+                foreach ($lessons_list as $key => $lesson) {
+                    $lesson_id = isset($lesson['id']) ? $lesson['id'] : $lesson['post']->ID;
+                    $lessons_list[$key]['topics']  = function_exists('learndash_get_topic_list') ? \learndash_get_topic_list($lesson_id, $course_id) : [];
+                    $lessons_list[$key]['quizzes'] = function_exists('learndash_get_lesson_quiz_list') ? \learndash_get_lesson_quiz_list($lesson_id, null, $course_id) : [];
+                }
+            }
+            set_transient($transient_key, $lessons_list, HOUR_IN_SECONDS);
+        }
+
+        if (empty($lessons_list)) {
+            return '';
+        }
+
+        ob_start();
+        get_template_part('elementor/shortcode/course-accordion', null, [
+            'lessons_list'  => $lessons_list,
+            'default_state' => $atts['default_state'],
+            'max_items'     => $atts['max_items'],
+            'anim_duration' => intval($atts['anim_duration'])
+        ]);
+        return ob_get_clean();
+    }
+}
+add_shortcode('ld_register_link', 'get_custom_ld_register_link');
+add_shortcode('ld_course_price', 'get_learndash_course_price');
+add_shortcode('oup_course_accordion', 'oup_course_accordion_shortcode_callback');
 /**
  * Shortcode: [oup_author_role]
  * @return string
@@ -63,3 +149,5 @@ require_once get_stylesheet_directory() . '/inc/woo.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/archive-posts-filter/ajax.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/worksheet-filter/ajax.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/course-filter/ajax.php';
+
+
