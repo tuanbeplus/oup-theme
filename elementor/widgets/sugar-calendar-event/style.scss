@@ -53,6 +53,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
     }
 }
 
+
 // Card
 .sce-card {
     background-color: $color-white;
@@ -61,7 +62,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
     font-family: $font-body;
     color: $color-text;
     display: flex;
-    flex-direction: column; // enables spacer + bottom-aligned footer
+    flex-direction: column;
     box-shadow: $shadow-card;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 
@@ -84,8 +85,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         border-radius: 24px;
     }
 
-
-    // Image: fixed 430×243 aspect ratio, crops via object-fit
+    // Image
     .sce-image {
         width: 100%;
         aspect-ratio: 430 / 243;
@@ -106,7 +106,6 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
             border-radius: $radius-image;
         }
     }
-
 
     // Title
     .sce-title {
@@ -131,7 +130,6 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 
-
     // Excerpt
     .sce-excerpt {
         font-size: 0.9375rem;
@@ -148,53 +146,6 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 
-
-    // Meta (date / notice / location)
-    .sce-meta {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin: 0 0 20px;
-        padding: 0;
-        list-style: none;
-    }
-
-    .sce-meta-item {
-        display: flex;
-        align-items: start;
-        gap: 10px;
-        font-size: 0.938rem;
-        line-height: 1.6;
-        color: $color-text;
-
-        @media (max-width: $bp-mobile) {
-            font-size: 0.875rem;
-        }
-    }
-
-    .sce-meta-icon {
-        flex-shrink: 0;
-        display: flex;
-        align-items: start;
-        margin-top: 0;
-        color: inherit;
-
-        svg {
-            display: block;
-        }
-    }
-
-    .sce-meta-lines {
-        display: flex;
-        flex-direction: column;
-        gap: 1px;
-    }
-
-    .sce-meta-line {
-        display: block;
-    }
-
-
     // Footnote
     .sce-footnote {
         font-size: 0.938rem;
@@ -207,120 +158,11 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 
-
-    // Spacer: grows to fill remaining space, pushing pricing + button down
+    // Spacer
     .sce-spacer {
         flex-grow: 1;
         min-height: 20px;
     }
-
-
-    // Pricing
-    .sce-pricing-wrap {
-        margin: 40px 0 30px;
-
-        @media (max-width: $bp-mobile) {
-            margin: 24px 0;
-        }
-    }
-
-    .sce-pricing {
-        display: flex;
-        align-items: flex-start;
-
-        // Gap between consecutive rows
-        &+.sce-pricing {
-            margin-top: 16px;
-        }
-
-        @media (max-width: $bp-mobile) {
-            flex-direction: column;
-            gap: 20px;
-        }
-    }
-
-    .sce-price-item {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        padding: 0 50px;
-
-        @media (max-width: $bp-xl) {
-            padding: 0 36px;
-        }
-
-        @media (max-width: $bp-lg) {
-            padding: 0 28px;
-        }
-
-        @media (max-width: $bp-mobile) {
-            padding: 0;
-        }
-
-        &:first-child {
-            padding-left: 0;
-        }
-
-        &:last-child {
-            padding-right: 0;
-        }
-    }
-
-    .sce-price-amount-wrap {
-        display: flex;
-        align-items: baseline;
-        gap: 6px;
-        flex-wrap: wrap;
-    }
-
-    .sce-price-amount {
-        font-family: $font-heading;
-        font-size: 1.875rem;
-        font-weight: 600;
-        line-height: 1.1;
-        color: $color-text;
-        letter-spacing: -0.01em;
-
-        @media (max-width: $bp-lg) {
-            font-size: 1.625rem;
-        }
-
-        @media (max-width: $bp-mobile) {
-            font-size: 1.5rem;
-        }
-    }
-
-    .sce-price-suffix {
-        font-size: 0.938rem;
-        color: $color-text;
-        font-weight: 400;
-        line-height: 1;
-    }
-
-    .sce-price-label {
-        font-size: 0.938rem;
-        color: $color-text;
-        font-weight: 600;
-        line-height: 1.6;
-
-        @media (max-width: $bp-mobile) {
-            font-size: 0.875rem;
-        }
-    }
-
-    .sce-price-divider {
-        width: 1px;
-        background-color: $color-text;
-        flex-shrink: 0;
-        align-self: stretch;
-        min-height: 40px;
-        margin: 2px 0;
-
-        @media (max-width: $bp-mobile) {
-            display: none;
-        }
-    }
-
 
     // Button
     .sce-button {
@@ -356,6 +198,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 }
+
 
 // Swiper
 .sce-swiper-outer {

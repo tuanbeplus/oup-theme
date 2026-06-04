@@ -844,4 +844,158 @@ body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer inp
   color: var(--e-global-color-secondary);
 }
 
+.sce-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.sce-meta-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.938rem;
+  line-height: 1.6;
+  color: #231F20;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+@media (max-width: 767px) {
+  .sce-meta-item {
+    font-size: 0.875rem;
+  }
+}
+
+.sce-meta-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  color: inherit;
+}
+.sce-meta-icon svg {
+  display: block;
+}
+
+.sce-meta-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sce-meta-line {
+  display: block;
+}
+
+.sce-pricing-wrap {
+  margin: 40px 0 30px;
+}
+@media (max-width: 767px) {
+  .sce-pricing-wrap {
+    margin: 24px 0;
+  }
+}
+
+.sce-pricing {
+  display: flex;
+  align-items: flex-start;
+}
+.sce-pricing + .sce-pricing {
+  margin-top: 16px;
+}
+@media (max-width: 767px) {
+  .sce-pricing {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.sce-price-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 50px;
+}
+@media (max-width: 1200px) {
+  .sce-price-item {
+    padding: 0 36px;
+  }
+}
+@media (max-width: 1024px) {
+  .sce-price-item {
+    padding: 0 28px;
+  }
+}
+@media (max-width: 767px) {
+  .sce-price-item {
+    padding: 0;
+  }
+}
+.sce-price-item:first-child {
+  padding-left: 0;
+}
+.sce-price-item:last-child {
+  padding-right: 0;
+}
+
+.sce-price-amount-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sce-price-amount {
+  font-family: "League Spartan", sans-serif;
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: #231F20;
+  letter-spacing: -0.01em;
+}
+@media (max-width: 1024px) {
+  .sce-price-amount {
+    font-size: 1.625rem;
+  }
+}
+@media (max-width: 767px) {
+  .sce-price-amount {
+    font-size: 1.5rem;
+  }
+}
+
+.sce-price-suffix {
+  font-size: 0.938rem;
+  color: #231F20;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.sce-price-label {
+  font-size: 0.938rem;
+  color: #231F20;
+  font-weight: 600;
+  line-height: 1.6;
+}
+@media (max-width: 767px) {
+  .sce-price-label {
+    font-size: 0.875rem;
+  }
+}
+
+.sce-price-divider {
+  width: 1px;
+  background-color: #231F20;
+  flex-shrink: 0;
+  align-self: stretch;
+  min-height: 40px;
+  margin: 2px 0;
+}
+@media (max-width: 767px) {
+  .sce-price-divider {
+    display: none;
+  }
+}
+
 /*# sourceMappingURL=main.css.map*/
