@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 50px;
-  align-items: start;
+  align-items: stretch;
 }
 @media (max-width: 1200px) {
   .sce-event-list {

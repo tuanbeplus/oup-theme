@@ -349,29 +349,41 @@ class Widget_SugarCalendarEvent extends Widget_Base
     private function get_venue_string(int $sc_event_row_id, int $post_id): string
     {
         global $wpdb;
+        static $cache = [];
 
-        if (function_exists('sugar_calendar_get_event_by_object')) {
-            $sc_obj   = sugar_calendar_get_event_by_object($post_id, 'post');
-            $venue_id = (int) ($sc_obj->venue_id ?? 0);
-
-            if ($venue_id > 0) {
-                $venue_post = get_post($venue_id);
-                if ($venue_post && $venue_post->post_status === 'publish') {
-                    $name    = trim($venue_post->post_title);
-                    $address = trim((string) get_post_meta($venue_id, 'sugarcalendar_venue_address_1', true));
-
-                    if ($name !== '') {
-                        return $address !== '' ? $name . ', ' . $address : $name;
-                    }
-                }
-            }
+        // Return cached result if already computed in this request
+        if (isset($cache[$sc_event_row_id])) {
+            return $cache[$sc_event_row_id];
         }
 
-        return trim((string) $wpdb->get_var($wpdb->prepare(
-            "SELECT meta_value FROM {$wpdb->prefix}sc_eventmeta WHERE sc_event_id = %d AND meta_key = %s LIMIT 1",
-            $sc_event_row_id,
-            'location'
-        )));
+        // Get venue_id from sc_events table
+        $venue_id = (int) $wpdb->get_var($wpdb->prepare(
+            "SELECT venue_id FROM {$wpdb->prefix}sc_events WHERE id = %d",
+            $sc_event_row_id
+        ));
+
+        // Fallback: use event meta location if no venue is set
+        if ($venue_id <= 0) {
+            $fallback = trim((string) get_post_meta($post_id, 'location', true));
+            return $cache[$sc_event_row_id] = $fallback;
+        }
+
+        // Load venue post
+        $venue_post = get_post($venue_id);
+        if (!$venue_post || $venue_post->post_status !== 'publish') {
+            return $cache[$sc_event_row_id] = '';
+        }
+
+        // Venue name
+        $name = trim($venue_post->post_title);
+
+        // Optional address
+        $address = trim((string) get_post_meta($venue_id, 'sugarcalendar_venue_address_1', true));
+
+        // Build final string
+        $result = $address !== '' ? $name . ', ' . $address : $name;
+
+        return $cache[$sc_event_row_id] = $result;
     }
 
     private function get_sc_event_rows(int $post_id): array

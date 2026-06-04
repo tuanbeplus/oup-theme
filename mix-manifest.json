@@ -1,5 +1,5 @@
 {
-    "/elementor/widgets/course-filter/style.css": "/elementor/widgets/course-filter/style.css",
+    "/elementor/widgets/course-benefit/style.css": "/elementor/widgets/course-benefit/style.css",
     "/elementor/widgets/blog-search/style.css": "/elementor/widgets/blog-search/style.css",
     "/elementor/widgets/blog-detail-toc/style.css": "/elementor/widgets/blog-detail-toc/style.css",
     "/elementor/widgets/blog-detail-breadcrumb/style.css": "/elementor/widgets/blog-detail-breadcrumb/style.css",
@@ -8,5 +8,6 @@
     "/elementor/widgets/worksheet-filter/style.css": "/elementor/widgets/worksheet-filter/style.css",
     "/elementor/widgets/worksheet-accordion/style.css": "/elementor/widgets/worksheet-accordion/style.css",
     "/elementor/widgets/sugar-calendar-event/style.css": "/elementor/widgets/sugar-calendar-event/style.css",
-    "/elementor/widgets/sample-widget/style.css": "/elementor/widgets/sample-widget/style.css"
+    "/elementor/widgets/sample-widget/style.css": "/elementor/widgets/sample-widget/style.css",
+    "/elementor/widgets/course-filter/style.css": "/elementor/widgets/course-filter/style.css"
 }
