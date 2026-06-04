@@ -61,7 +61,7 @@ function get_custom_ld_register_link() {
     }
     return '#';
 }
-//Shortcode for Course Accordion to show all lesson and topic
+// Shortcode for Course Accordion to show all lessons, topics, and quizzes
 if (!function_exists('oup_course_accordion_shortcode_callback')) {
     function oup_course_accordion_shortcode_callback($atts) {
         $atts = shortcode_atts(array(
@@ -80,19 +80,14 @@ if (!function_exists('oup_course_accordion_shortcode_callback')) {
             return '';
         }
 
-        $transient_key = 'oup_course_accordion_' . $course_id;
-        $lessons_list  = get_transient($transient_key);
 
-        if (false === $lessons_list) {
-            $lessons_list = \learndash_get_course_lessons_list($course_id, null, ['nopaging' => true]);
-            if (!empty($lessons_list) && is_array($lessons_list)) {
-                foreach ($lessons_list as $key => $lesson) {
-                    $lesson_id = isset($lesson['id']) ? $lesson['id'] : $lesson['post']->ID;
-                    $lessons_list[$key]['topics']  = function_exists('learndash_get_topic_list') ? \learndash_get_topic_list($lesson_id, $course_id) : [];
-                    $lessons_list[$key]['quizzes'] = function_exists('learndash_get_lesson_quiz_list') ? \learndash_get_lesson_quiz_list($lesson_id, null, $course_id) : [];
-                }
+        $lessons_list = \learndash_get_course_lessons_list($course_id, null, ['nopaging' => true]);
+        if (!empty($lessons_list) && is_array($lessons_list)) {
+            foreach ($lessons_list as $key => $lesson) {
+                $lesson_id = isset($lesson['id']) ? $lesson['id'] : $lesson['post']->ID;
+                $lessons_list[$key]['topics']  = function_exists('learndash_get_topic_list') ? \learndash_get_topic_list($lesson_id, $course_id) : [];
+                $lessons_list[$key]['quizzes'] = function_exists('learndash_get_lesson_quiz_list') ? \learndash_get_lesson_quiz_list($lesson_id, null, $course_id) : [];
             }
-            set_transient($transient_key, $lessons_list, HOUR_IN_SECONDS);
         }
 
         if (empty($lessons_list)) {
@@ -112,6 +107,7 @@ if (!function_exists('oup_course_accordion_shortcode_callback')) {
 add_shortcode('ld_register_link', 'get_custom_ld_register_link');
 add_shortcode('ld_course_price', 'get_learndash_course_price');
 add_shortcode('oup_course_accordion', 'oup_course_accordion_shortcode_callback');
+
 /**
  * Shortcode: [oup_author_role]
  * @return string
