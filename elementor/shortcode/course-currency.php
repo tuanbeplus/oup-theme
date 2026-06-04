@@ -36,8 +36,11 @@ function get_learndash_course_price() {
     if ( ! empty( $active_currency ) ) {
         if ( function_exists( 'learndash_get_currency_symbol' ) ) {
             $currency_prefix = learndash_get_currency_symbol( $active_currency );
-        }elseif (function_exists('get_woocommerce_currency_symbol')) {
+        } elseif ( function_exists( 'get_woocommerce_currency_symbol' ) ) {
             $currency_prefix = get_woocommerce_currency_symbol( $active_currency );
+        }
+        if ( strtoupper( $active_currency ) === 'AUD' && $currency_prefix === 'A$' ) {
+            $currency_prefix = '$';
         }
     }
 
