@@ -808,15 +808,20 @@ body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer inp
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: #577282;
   transition: color 0.2s ease;
+}
+@media (max-width: 767px) {
+  .course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item {
+    font-size: 1rem;
+  }
 }
 .course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item .step-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #9275D9;
+  color: var(--e-global-color-accent);
   flex-shrink: 0;
 }
 .course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item .step-icon svg {
@@ -836,7 +841,7 @@ body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer inp
   width: 100%;
 }
 .course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item a:hover {
-  color: #9275D9;
+  color: var(--e-global-color-secondary);
 }
 
 /*# sourceMappingURL=main.css.map*/
