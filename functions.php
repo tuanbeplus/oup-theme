@@ -35,19 +35,7 @@ add_filter('learndash_template_preprocess_filter', function($run, $post_id) {
     return $run;
 }, 10, 2);
 
-/**
-* Get the price of the current LearnDash course.
- */
-function get_learndash_course_price() {
-    $course_id = get_the_ID();
-    $course_settings = get_post_meta($course_id, '_sfwd-courses', true);
-    
-    if (isset($course_settings['sfwd-courses_course_price']) && !empty($course_settings['sfwd-courses_course_price'])) {
-        return $course_settings['sfwd-courses_course_price'];
-    } else {
-        return 'Free';
-    }
-}
+
 
 
 // Shortcode for Course Accordion to show all lessons, topics, and quizzes
@@ -93,7 +81,6 @@ if (!function_exists('oup_course_accordion_shortcode_callback')) {
         return ob_get_clean();
     }
 }
-add_shortcode('ld_course_price', 'get_learndash_course_price');
 add_shortcode('oup_course_accordion', 'oup_course_accordion_shortcode_callback');
 
 /**
@@ -126,6 +113,11 @@ if (!function_exists('oup_author_role_shortcode')) {
 $button_file = get_stylesheet_directory() . '/elementor/shortcode/course-button-link.php';
 if (file_exists($button_file)) {
     require_once $button_file;
+}
+/* Course Price Shortcode */
+$currency_file = get_stylesheet_directory() . '/elementor/shortcode/course-currency.php';
+if (file_exists($currency_file)) {
+    require_once $currency_file;
 }
 /* Widgets Load */
 require_once get_stylesheet_directory() . '/elementor/widgets-load.php';
