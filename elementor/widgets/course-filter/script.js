@@ -127,4 +127,21 @@
         elementorFrontend.hooks.addAction('frontend/element_ready/course-filter.default', WidgetCourseFilterHandler);
     });
 
+    if (typeof window.learnDashPaymentsShowFormSubmittedSuccessfullyMessage === 'undefined') {
+        window.learnDashPaymentsShowFormSubmittedSuccessfullyMessage = function(afterAlertHook) {
+            if (typeof afterAlertHook === 'function') {
+                afterAlertHook();
+            }
+        };
+    }
+    $(document).on('submit', '.learndash-payment-gateway-form-stripe_connect', function() {
+        var $btn = $(this).find('button');
+        if ($btn.length) {
+            $btn.text('Redirecting to Checkout...').css({
+                opacity: 0.7, 
+                pointerEvents: 'none'
+            });
+        }
+    });
+
 })(jQuery);

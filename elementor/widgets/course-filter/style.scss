@@ -14,17 +14,15 @@
     .course-filters {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 40px;
         flex-wrap: wrap;
+        width: 100%;
+        position: relative;
 
         @media (max-width: 991px) {
             gap: 20px;
             justify-content: center;
-        }
-
-        @media (max-width: 767px) {
-            width: 100%;
-            gap: 15px;
         }
 
         .filter-group {
@@ -93,18 +91,16 @@
         }
 
         .filter-clear-group {
-            display: flex;
+            display: none;
             align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            max-width: 0;
-            overflow: hidden;
-            transition: max-width 0.4s ease, opacity 0.3s ease, visibility 0.4s ease;
             
             &.is-visible {
-                opacity: 1;
-                visibility: visible;
-                max-width: 200px;
+                display: flex;
+                animation: fade-in-scale 0.3s ease;
+            }
+            
+            @media (max-width: 991px) {
+                margin-top: 15px;
             }
             
             button.course-clear-filters {
@@ -354,6 +350,47 @@
         @media (max-width: 767px) {
             padding: 10px 20px;
             font-size: 1rem;
+        }
+    }
+
+    .custom-ld-payment-btn {
+        width: 100%;
+        .learndash_checkout_buttons, .learndash_checkout_button, form {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        input[type="submit"], button, a {
+            display: block;
+            width: 100%;
+            background: #9677D7;
+            position: relative;
+            z-index: 2;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 12px 30px;
+            border-radius: 32px;
+            font-family: var(--e-global-typography-primary-font-family);
+            font-weight: 600;
+            font-size: 1.125rem;
+            line-height: 1.6;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            box-sizing: border-box;
+            
+            &:hover, &:focus {
+                background: #7a5bb8;
+                color: #FFFFFF;
+                outline: none;
+            }
+            
+            @media (max-width: 767px) {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
         }
     }
 

@@ -14,19 +14,16 @@
 .course-filter-wrapper .course-filters {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 40px;
   flex-wrap: wrap;
+  width: 100%;
+  position: relative;
 }
 @media (max-width: 991px) {
   .course-filter-wrapper .course-filters {
     gap: 20px;
     justify-content: center;
-  }
-}
-@media (max-width: 767px) {
-  .course-filter-wrapper .course-filters {
-    width: 100%;
-    gap: 15px;
   }
 }
 .course-filter-wrapper .course-filters .filter-group {
@@ -93,18 +90,17 @@
   pointer-events: none;
 }
 .course-filter-wrapper .course-filters .filter-clear-group {
-  display: flex;
+  display: none;
   align-items: center;
-  opacity: 0;
-  visibility: hidden;
-  max-width: 0;
-  overflow: hidden;
-  transition: max-width 0.4s ease, opacity 0.3s ease, visibility 0.4s ease;
 }
 .course-filter-wrapper .course-filters .filter-clear-group.is-visible {
-  opacity: 1;
-  visibility: visible;
-  max-width: 200px;
+  display: flex;
+  animation: fade-in-scale 0.3s ease;
+}
+@media (max-width: 991px) {
+  .course-filter-wrapper .course-filters .filter-clear-group {
+    margin-top: 15px;
+  }
 }
 .course-filter-wrapper .course-filters .filter-clear-group button.course-clear-filters {
   background: #fff;
@@ -335,6 +331,45 @@
 }
 @media (max-width: 767px) {
   .course-filter-wrapper .course-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}
+.course-filter-wrapper .custom-ld-payment-btn {
+  width: 100%;
+}
+.course-filter-wrapper .custom-ld-payment-btn .learndash_checkout_buttons, .course-filter-wrapper .custom-ld-payment-btn .learndash_checkout_button, .course-filter-wrapper .custom-ld-payment-btn form {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.course-filter-wrapper .custom-ld-payment-btn input[type=submit], .course-filter-wrapper .custom-ld-payment-btn button, .course-filter-wrapper .custom-ld-payment-btn a {
+  display: block;
+  width: 100%;
+  background: #9677D7;
+  position: relative;
+  z-index: 2;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 12px 30px;
+  border-radius: 32px;
+  font-family: var(--e-global-typography-primary-font-family);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.course-filter-wrapper .custom-ld-payment-btn input[type=submit]:hover, .course-filter-wrapper .custom-ld-payment-btn input[type=submit]:focus, .course-filter-wrapper .custom-ld-payment-btn button:hover, .course-filter-wrapper .custom-ld-payment-btn button:focus, .course-filter-wrapper .custom-ld-payment-btn a:hover, .course-filter-wrapper .custom-ld-payment-btn a:focus {
+  background: #7a5bb8;
+  color: #FFFFFF;
+  outline: none;
+}
+@media (max-width: 767px) {
+  .course-filter-wrapper .custom-ld-payment-btn input[type=submit], .course-filter-wrapper .custom-ld-payment-btn button, .course-filter-wrapper .custom-ld-payment-btn a {
     padding: 10px 20px;
     font-size: 1rem;
   }

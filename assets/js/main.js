@@ -149,4 +149,28 @@
         }
     });
 
+    // Course Accordion Shortcode Toggle
+    $(document).on('click', '.oup-course-accordion-container .course-accordion-header', function (e) {
+        e.preventDefault();
+        var $header = $(this);
+        var $wrapper = $header.closest('.oup-course-accordion-container');
+        var $content = $header.next('.course-accordion-content');
+        var maxItems = $wrapper.data('max-items') || 'one';
+        var animDuration = parseInt($wrapper.data('anim-duration'), 10) || 400;
+        var isActive = $header.hasClass('active');
+
+        if (maxItems === 'one' && !isActive) {
+            $wrapper.find('.course-accordion-header').not($header).removeClass('active').attr('aria-expanded', 'false');
+            $wrapper.find('.course-accordion-content').not($content).slideUp(animDuration);
+        }
+
+        if (isActive) {
+            $header.removeClass('active').attr('aria-expanded', 'false');
+            $content.slideUp(animDuration);
+        } else {
+            $header.addClass('active').attr('aria-expanded', 'true');
+            $content.slideDown(animDuration);
+        }
+    });
+
 })(jQuery);
