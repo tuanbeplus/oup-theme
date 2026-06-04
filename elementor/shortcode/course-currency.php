@@ -32,17 +32,13 @@ function get_learndash_course_price() {
     if ( ! empty( $ld_defaults['currency'] ) ) {
         $active_currency = $ld_defaults['currency'];
     }
-    if ( empty( $active_currency ) && function_exists( 'get_woocommerce_currency' ) ) {
-        $active_currency = get_woocommerce_currency();
-    }
-
-    // AUD → show 'AUD', other currencies → show their proper symbol (₫, €, $, £...)
-    if ( strtoupper( $active_currency ) === 'AUD' ) {
-        $currency_prefix = 'AUD';
-    } elseif ( ! empty( $active_currency ) && function_exists( 'get_woocommerce_currency_symbol' ) ) {
-        $currency_prefix = get_woocommerce_currency_symbol( $active_currency );
-    } else {
-        $currency_prefix = '';
+    $currency_prefix = '';  
+    if ( ! empty( $active_currency ) ) {
+        if ( function_exists( 'learndash_get_currency_symbol' ) ) {
+            $currency_prefix = learndash_get_currency_symbol( $active_currency );
+        }elseif (function_exists('get_woocommerce_currency_symbol')) {
+            $currency_prefix = get_woocommerce_currency_symbol( $active_currency );
+        }
     }
 
     // Format price string

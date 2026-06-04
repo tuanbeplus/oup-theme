@@ -809,7 +809,7 @@ body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer inp
   align-items: center;
   gap: 10px;
   font-size: 1.125rem;
-  color: #5b7a8b;
+  color: #005375;
   transition: color 0.2s ease;
 }
 @media (max-width: 767px) {
