@@ -1,5 +1,10 @@
 body.woocommerce-cart {
     main.site-main {
+      
+        &:has(.wp-block-woocommerce-empty-cart-block) {
+            min-height: 50vh;
+        }
+
         .page-content {
             .wp-block-woocommerce-cart {
                 margin-inline: 0 !important;

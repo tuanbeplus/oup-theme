@@ -708,6 +708,9 @@ body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer inp
   background-color: var(--e-global-color-5e87840, #FCCDE5);
 }
 
+body.woocommerce-cart main.site-main:has(.wp-block-woocommerce-empty-cart-block) {
+  min-height: 50vh;
+}
 body.woocommerce-cart main.site-main .page-content .wp-block-woocommerce-cart {
   margin-inline: 0 !important;
 }
