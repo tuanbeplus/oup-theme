@@ -1,0 +1,65 @@
+.woocommerce-order {
+    font-family: var(--e-global-typography-text-font-family);
+
+ 
+    a {
+        color: var(--e-global-color-primary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: var(--e-global-color-accent);
+        }
+    }
+
+
+    h2 {
+        color: var(--e-global-color-primary);
+        font-weight: 600;
+        font-size: 1.875rem;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+
+    table.shop_table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--e-global-color-primary);
+        }
+
+        tfoot {
+            th, td {
+                border-top: 2px solid #eee;
+                font-weight: 600;
+            }
+        }
+    }
+
+   
+    address {
+        background: #f9f9f9;
+        padding: 25px;
+        border-radius: 8px;
+        font-style: normal;
+        line-height: 1.6;
+        
+        p {
+            margin-bottom: 5px;
+        }
+    }
+}

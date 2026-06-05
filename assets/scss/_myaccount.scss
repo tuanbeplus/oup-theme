@@ -1,0 +1,250 @@
+body.woocommerce-account {
+    .woocommerce {
+        font-family: var(--e-global-typography-text-font-family);
+    }
+}
+
+
+body.woocommerce-account:not(.logged-in) .woocommerce {
+    max-width: 500px;
+    margin: 0 auto;
+
+    h2 {
+        color: var(--e-global-color-primary);
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-top: 0;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    form.login, form.register {
+        background: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        border: none;
+        margin: 0;
+
+        @media (max-width: 767px) {
+            padding: 20px;
+        }
+
+        .form-row {
+            margin-bottom: 20px;
+
+            label {
+                display: block;
+                font-weight: 500;
+                margin-bottom: 8px;
+                color: var(--e-global-color-text);
+            }
+
+            input.input-text {
+                width: 100%;
+                padding: 12px 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
+
+                &:focus {
+                    border-color: var(--e-global-color-primary);
+                    outline: none;
+                    box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+                }
+            }
+        }
+
+        .woocommerce-button {
+            background-color: var(--e-global-color-secondary);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: var(--e-global-color-primary);
+            }
+        }
+        
+        .woocommerce-LostPassword {
+            margin-top: 15px;
+            text-align: center;
+            a {
+                color: var(--e-global-color-primary);
+                text-decoration: none;
+                &:hover {
+                    color: var(--e-global-color-accent);
+                }
+            }
+        }
+    }
+
+  
+}
+
+
+body.woocommerce-account.logged-in .woocommerce {
+    display: flex;
+    flex-wrap: wrap;
+    > .woocommerce-notices-wrapper {
+        width: 100%;
+    }
+
+    .woocommerce-MyAccount-navigation {
+        width: 20%;
+        margin-right: 30px;
+
+        
+        @media (max-width: 767px) {
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin-bottom: 10px;
+
+                a {
+                    display: block;
+                    padding: 15px 20px;
+                    background: #dfdfdf;
+                    border-radius: 8px;
+                    color: var(--e-global-color-text);
+                    text-decoration: none;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background: var(--e-global-color-primary);
+                        color: #fff;
+                    }
+                }
+
+                &.is-active a {
+                    background: var(--e-global-color-primary);
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .woocommerce-MyAccount-content {
+        width: calc(75% - 30px);
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,10%);
+        box-sizing: border-box;
+
+        @media (max-width: 767px) {
+            width: 100%;
+            padding: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        a {
+            color: var(--e-global-color-primary);
+            text-decoration: none;
+            font-weight: 500;
+
+            &:hover {
+                color: var(--e-global-color-accent);
+            }
+        }
+
+        h3 {
+            color: var(--e-global-color-primary);
+            margin-top: 0;
+        }
+        table.shop_table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: none;
+
+            th, td {
+                padding: 15px;
+                border-bottom: 1px solid #eee;
+                text-align: left;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+            }
+
+            th {
+                font-weight: 600;
+                color: var(--e-global-color-primary);
+                background: transparent;
+            }
+
+            .woocommerce-button {
+                background: var(--e-global-color-primary);
+                color: #fff;
+                padding: 8px 15px;
+                border-radius: 20px;
+                font-size: 0.875rem;
+                text-decoration: none;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: var(--e-global-color-secondary);
+                }
+            }
+        }
+        
+    
+        form {
+            .form-row {
+                margin-bottom: 20px;
+                
+                label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 500;
+                }
+                
+                input.input-text, textarea {
+                    width: 100%;
+                    padding: 12px 15px;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    box-sizing: border-box;
+                    &:focus {
+                        border-color: var(--e-global-color-primary);
+                        outline: none;
+                    }
+                }
+            }
+            
+            button.button {
+                background: var(--e-global-color-secondary);
+                color: #fff;
+                border: none;
+                margin-top: 20px;
+                padding: 12px 30px;
+                border-radius: 30px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: var(--e-global-color-primary);
+                }
+            }
+        }
+    }
+}

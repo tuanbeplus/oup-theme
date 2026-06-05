@@ -1,0 +1,263 @@
+body.woocommerce-checkout {
+    main.site-main {
+        .page-content {
+            .wp-block-woocommerce-checkout {
+                margin-inline: 0 !important;
+                padding-top:0;
+            }
+            //main content
+            .wc-block-components-sidebar-layout{
+                .wc-block-components-main{
+                 .wc-block-components-form{
+                    //payment method
+                    .wc-block-checkout__payment-method{
+                        .wc-stripe-payment-method-instruction a {
+                            color: var(--e-global-color-primary);
+                        }
+                    }
+                    .wc-block-components-radio-control-accordion-option{
+                            box-shadow: none;
+                            border: 1px solid var(--e-global-color-9500430);
+                    }
+                    //action
+                    .wc-block-checkout__actions {
+                        .wc-block-components-checkout-step__heading{
+                            font-weight: 600;
+                            font-size: 1.5rem;
+                            color: var(--e-global-color-primary);
+                            @media (max-width:767px) {
+                                font-size: 1.25rem;
+                            }
+                        }
+                        .checkout-order-summary-block-fill{
+                              .wp-block-woocommerce-checkout-order-summary-cart-items-block {
+                                .wc-block-components-order-summary-item__image{
+                                    .wc-block-components-order-summary-item__quantity{
+                                      background-color: var(--e-global-color-secondary);
+                                    }
+                                    img{
+                                        border-radius: 12px;
+                                    }
+                                }
+
+                                .wc-block-components-order-summary-item__total-price{
+                                  span.wc-block-formatted-money-amount{
+                                    font-weight: 600;
+                                  }
+                                }
+                            }
+                            .wp-block-woocommerce-checkout-order-summary-coupon-form-block{
+                                .wc-block-components-panel__content{
+                                      .wc-block-components-totals-coupon__content {
+                                .wc-block-components-totals-coupon__form {
+                                    .wc-block-components-text-input {
+                                        input {
+                                            font-size: 0.938rem;
+                                            border: 1px solid #ddd;
+                                            border-radius: 8px;
+                                            padding: 12px 15px;
+                                            transition: all 0.3s ease;
+                                            width: 100%;
+
+                                            &:focus {
+                                                border-color: var(--e-global-color-accent);
+                                                outline: none;
+                                                box-shadow: 0 0 0 2px rgba(var(--e-global-color-accent-rgb), 0.2);
+                                            }
+
+                                        }
+
+                                        &.is-active label {
+                                            opacity: 0 !important;
+                                            visibility: hidden !important;
+                                            top: 50% !important;
+                                            transform: translateY(-50%) scale(1) !important;
+                                        }
+                                    }
+
+
+
+                                    .wc-block-components-totals-coupon__button {
+                                        &.wc-block-components-button {
+                                            font-size: 0.938rem;
+                                            background-color: var(--e-global-color-accent);
+                                            color: #ffffff;
+                                            border-radius: 8px;
+                                            padding: 12px 15px;
+                                            font-weight: 600;
+                                            transition: all 0.3s ease;
+                                            border: none;
+                                            cursor: pointer;
+
+                                            &:hover:not(:disabled) {
+                                                background-color: color-mix(in srgb, var(--e-global-color-accent) 85%, black);
+                                                transform: translateY(-2px);
+                                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                                            }
+
+
+                                            &:disabled {
+                                                background-color: #e0e0e0;
+                                                color: #a0a0a0;
+                                                cursor: not-allowed;
+                                                opacity: 0.7;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                                }
+                          }
+                            .wc-block-components-totals-wrapper{
+                                .wc-block-components-totals-item.wc-block-components-totals-footer-item{
+                                    .wc-block-components-totals-item__label,.wc-block-components-totals-item__value{
+                                        font-weight: 600;
+                                        @media (max-width:767px) {
+                                          font-size: 1.125rem;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        button{
+                            border:none;
+                              background-color: var(--e-global-color-secondary);
+                            color: #fff;
+                            transition: background-color 0.3s ease;
+                            @media (max-width:767px) {
+                              font-size: 1rem;
+                            }
+                            &:hover{
+                                background-color: var(--e-global-color-primary);
+                            }
+                        }
+                    }
+                    //heading h2
+                    .wc-block-components-checkout-step__heading-container{
+                        .wc-block-components-checkout-step__heading{
+                            .wc-block-components-title{
+                                font-size: 1.25rem;
+                                color: var(--e-global-color-primary);
+                                font-weight: 600;
+                                @media (max-width:767px) {
+                                  font-size: 1.125rem;
+                                }
+                            }
+                        }
+                    }
+                 }
+                }
+
+
+                .wc-block-components-sidebar{
+                      font-family: var(--e-global-typography-text-font-family);
+                      .wp-block-woocommerce-checkout-order-summary-block{
+                        .wc-block-components-checkout-order-summary__title{
+                            p{
+                                color: var(--e-global-color-primary);
+                                font-weight: 600;
+                                font-size: 1.5rem;
+                                   @media (max-width:767px) {
+                                  font-size: 1.25rem;
+                                }
+                            }
+                        }
+                    
+                        .wc-block-components-checkout-order-summary__content{
+                            .wp-block-woocommerce-checkout-order-summary-cart-items-block {
+                                .wc-block-components-order-summary-item__image{
+                                    .wc-block-components-order-summary-item__quantity{
+                                      background-color: var(--e-global-color-secondary);
+                                    }
+                                    img{
+                                        border-radius: 12px;
+                                    }
+                                }
+
+                                .wc-block-components-order-summary-item__total-price{
+                                  span.wc-block-formatted-money-amount{
+                                    font-weight: 600;
+                                  }
+                                }
+                            }
+                            .wp-block-woocommerce-checkout-order-summary-coupon-form-block{
+                                .wc-block-components-panel__content{
+                                      .wc-block-components-totals-coupon__content {
+                                .wc-block-components-totals-coupon__form {
+                                    .wc-block-components-text-input {
+                                        input {
+                                            font-size: 0.938rem;
+                                            border: 1px solid #ddd;
+                                            border-radius: 8px;
+                                            padding: 12px 15px;
+                                            transition: all 0.3s ease;
+                                            width: 100%;
+
+                                            &:focus {
+                                                border-color: var(--e-global-color-accent);
+                                                outline: none;
+                                                box-shadow: 0 0 0 2px rgba(var(--e-global-color-accent-rgb), 0.2);
+                                            }
+
+                                        }
+
+                                        &.is-active label {
+                                            opacity: 0 !important;
+                                            visibility: hidden !important;
+                                            top: 50% !important;
+                                            transform: translateY(-50%) scale(1) !important;
+                                        }
+                                    }
+
+
+
+                                    .wc-block-components-totals-coupon__button {
+                                        &.wc-block-components-button {
+                                            font-size: 0.938rem;
+                                            background-color: var(--e-global-color-accent);
+                                            color: #ffffff;
+                                            border-radius: 8px;
+                                            padding: 12px 15px;
+                                            font-weight: 600;
+                                            transition: all 0.3s ease;
+                                            border: none;
+                                            cursor: pointer;
+
+                                            &:hover:not(:disabled) {
+                                                background-color: color-mix(in srgb, var(--e-global-color-accent) 85%, black);
+                                                transform: translateY(-2px);
+                                                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+                                            }
+
+
+                                            &:disabled {
+                                                background-color: #e0e0e0;
+                                                color: #a0a0a0;
+                                                cursor: not-allowed;
+                                                opacity: 0.7;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                                }
+                          }
+                            .wc-block-components-totals-wrapper{
+                                .wc-block-components-totals-item.wc-block-components-totals-footer-item{
+                                    .wc-block-components-totals-item__label,.wc-block-components-totals-item__value{
+                                        font-weight: 600;
+                                    }
+                                }
+                            }
+                        }
+                      }
+                }
+            }
+        }
+
+
+        
+           
+        
+    }
+}
