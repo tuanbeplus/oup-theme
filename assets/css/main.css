@@ -273,7 +273,7 @@
 .entry-content img {
   display: block;
   height: auto;
-  border-radius: 20px;
+  border-radius: 20px !important;
 }
 .elementor-widget-theme-post-content figcaption,
 .elementor-text-editor figcaption,
