@@ -173,4 +173,29 @@
         }
     });
 
+    function doSearchRedirect($input) {
+        var query = $.trim($input.val());
+        var base = window.location.origin + '/';
+        if (!query) {
+            window.location.href = base + '?s=';
+            return;
+        }
+        window.location.href = base + '?s=' + encodeURIComponent(query);
+    }
+
+    // Submit button click
+    $(document).on('click', '.e-search-submit', function (e) {
+        e.preventDefault();
+        var $input = $(this).closest('.e-search-form').find('input[type="search"]');
+        doSearchRedirect($input);
+    });
+
+    // Enter key press  
+    $(document).on('keydown', '.e-search-form input[type="search"]', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            e.preventDefault();
+            doSearchRedirect($(this));
+        }
+    });
+
 })(jQuery);

@@ -99,6 +99,25 @@ function redirect_worksheet_category_archive() {
     }
 }
 
+add_filter('term_link', 'custom_post_category_term_link', 10, 3);
+function custom_post_category_term_link($url, $term, $taxonomy)
+{
+    if ('category' === $taxonomy || 'post_tag' === $taxonomy) {
+        $archive_url = home_url('/blogs/');
+        $url = $archive_url;
+    }
+    return $url;
+}
+
+add_action('template_redirect', 'redirect_post_category_archive');
+function redirect_post_category_archive()
+{
+    if (is_category() || is_tag()) {
+        wp_redirect(home_url('/blogs/'), 301);
+        exit;
+    }
+}
+
 add_shortcode('oup_course_accordion', 'oup_course_accordion_shortcode_callback');
 
 /**
@@ -148,4 +167,8 @@ require_once get_stylesheet_directory() . '/elementor/widgets/archive-posts-filt
 require_once get_stylesheet_directory() . '/elementor/widgets/worksheet-filter/ajax.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/course-filter/ajax.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/sugar-calendar-event/shortcode.php';
+
+// Search Hook
+require_once get_stylesheet_directory() . '/inc/hooks/search.php';
+
 
