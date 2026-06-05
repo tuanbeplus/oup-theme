@@ -34,3 +34,530 @@
 		}
 	}
 }
+
+
+// ─── Single Product Page ─────────────────────────────────────────
+body.single-product {
+	.summary.entry-summary {
+		width: 100% !important;
+	}
+	main.site-main {
+		max-width: 1280px !important;
+		margin: 0 auto;
+		padding: 0 40px 80px;
+		font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
+
+		@media (max-width: 767px) {
+			padding: 0 20px 50px;
+		}
+
+		// ── Breadcrumb ────────────────────────────────────────
+		.woocommerce-breadcrumb {
+			font-size: 0.875rem;
+			line-height: 1.5;
+			color: #666;
+			padding: 24px 0;
+			font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
+
+			@media (max-width: 767px) {
+				padding: 16px 0;
+				font-size: 0.8125rem;
+			}
+
+			a {
+				color: #005375;
+				text-decoration: none;
+				transition: color 0.25s ease;
+
+				&:hover {
+					color: #0091B3;
+					text-decoration: underline;
+					text-underline-offset: 3px;
+				}
+			}
+		}
+
+		// ── Product Layout (gallery + summary) ───────────────
+		> .product {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 60px;
+			align-items: start;
+
+			@media (max-width: 991px) {
+				grid-template-columns: 1fr;
+				gap: 40px;
+			}
+
+			@media (max-width: 767px) {
+				gap: 30px;
+			}
+		}
+
+		// ── Product Gallery ──────────────────────────────────
+		.woocommerce-product-gallery {
+			width: 100%;
+
+			.woocommerce-product-gallery__wrapper {
+				.woocommerce-product-gallery__image {
+					a {
+						display: block;
+						border-radius: 16px;
+						overflow: hidden;
+
+						@media (max-width: 767px) {
+							border-radius: 12px;
+						}
+					}
+
+					img {
+						width: 100%;
+						height: auto;
+						display: block;
+						object-fit: cover;
+						border-radius: 16px;
+
+						@media (max-width: 767px) {
+							border-radius: 12px;
+						}
+					}
+				}
+			}
+
+			// Thumbnails (flexslider)
+			.flex-control-thumbs {
+				display: flex;
+				gap: 12px;
+				margin-top: 16px;
+				padding: 0;
+				list-style: none;
+
+				li {
+					flex: 0 0 auto;
+					width: 80px;
+					height: 80px;
+
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						border-radius: 8px;
+						border: 2px solid transparent;
+						cursor: pointer;
+						transition: border-color 0.25s ease, opacity 0.25s ease;
+						opacity: 0.6;
+
+						&:hover,
+						&.flex-active {
+							border-color: #005375;
+							opacity: 1;
+						}
+					}
+				}
+			}
+		}
+
+		// ── Product Summary ──────────────────────────────────
+		.summary.entry-summary {
+			.product_title {
+				font-family: var(--e-global-typography-secondary-font-family, "League Spartan", sans-serif);
+				font-size: clamp(1.75rem, 3vw, 2.25rem);
+				font-weight: 700;
+				line-height: 1.2;
+				letter-spacing: -0.02em;
+				color: var(--e-global-color-accent, #231F20);
+				margin: 0 0 16px;
+			}
+
+			// ── Price ──
+			p.price {
+				font-size: 1.5rem;
+				font-weight: 700;
+				color: var(--e-global-color-accent, #231F20);
+				margin-bottom: 24px;
+				font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
+
+				@media (max-width: 767px) {
+					font-size: 1.25rem;
+					margin-bottom: 20px;
+				}
+
+				del {
+					color: #999;
+					font-weight: 400;
+					margin-right: 8px;
+				}
+
+				ins {
+					text-decoration: none;
+				}
+			}
+
+			// ── Short Description ──
+			.woocommerce-product-details__short-description {
+				font-size: 1.125rem;
+				line-height: 1.65;
+				color: #231F20;
+				margin-bottom: 24px;
+
+				@media (max-width: 767px) {
+					font-size: 1rem;
+					margin-bottom: 20px;
+				}
+
+				p:last-child {
+					margin-bottom: 0;
+				}
+			}
+
+			// ── Add to Cart Form ──
+			form.cart {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 32px;
+
+				@media (max-width: 767px) {
+					margin-bottom: 24px;
+				}
+
+				.quantity {
+					display: flex;
+					align-items: center;
+
+					input.qty {
+						width: 70px;
+						height: 50px;
+						text-align: center;
+						font-size: 1rem;
+						font-family: inherit;
+						font-weight: 600;
+						color: #231F20;
+						border: 1px solid #ddd;
+						border-radius: 12px;
+						background-color: #f9f9f9;
+						-webkit-appearance: none;
+						-moz-appearance: textfield;
+						transition: border-color 0.25s ease;
+
+						&:focus {
+							outline: none;
+							border-color: #005375;
+						}
+
+						// Hide spinners
+						&::-webkit-outer-spin-button,
+						&::-webkit-inner-spin-button {
+							-webkit-appearance: none;
+							margin: 0;
+						}
+					}
+				}
+
+				.single_add_to_cart_button {
+					flex: 1;
+					height: 50px;
+					font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
+					font-size: 1rem;
+					font-weight: 600;
+					color: #fff;
+					background-color: var(--e-global-color-secondary, #0091B3);
+					border: none;
+					border-radius: 32px;
+					padding: 0 30px;
+					cursor: pointer;
+					transition: all 0.3s ease;
+					text-transform: none;
+					letter-spacing: 0;
+
+					@media (max-width: 767px) {
+						padding: 0 20px;
+						font-size: 0.9375rem;
+					}
+
+					&:hover {
+						background-color: var(--e-global-color-accent, #005375);
+						transform: translateY(-2px);
+						box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+					}
+
+					&:active {
+						transform: scale(0.98);
+					}
+				}
+			}
+
+			// ── Product Meta ──
+			.product_meta {
+				font-size: 0.875rem;
+				line-height: 1.6;
+				color: #666;
+				padding-top: 24px;
+				border-top: 1px solid #E2E8F0;
+
+				@media (max-width: 767px) {
+					padding-top: 20px;
+				}
+
+				> span {
+					display: block;
+					margin-bottom: 6px;
+
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+
+				a {
+					color: #005375;
+					text-decoration: none;
+					transition: color 0.25s ease;
+
+					&:hover {
+						color: #0091B3;
+						text-decoration: underline;
+						text-underline-offset: 3px;
+					}
+				}
+			}
+		}
+
+		// ── Related Products ────────────────────────────────
+		.related.products {
+			grid-column: 1 / -1;
+			margin-top: 60px;
+			padding-top: 60px;
+			border-top: 1px solid #E2E8F0;
+
+			@media (max-width: 767px) {
+				margin-top: 40px;
+				padding-top: 40px;
+			}
+
+			> h2 {
+				font-family: var(--e-global-typography-secondary-font-family, "League Spartan", sans-serif);
+				font-size: 1.875rem;
+				font-weight: 700;
+				line-height: 1.25;
+				letter-spacing: -0.02em;
+				color: var(--e-global-color-accent, #231F20);
+				margin: 0 0 32px;
+
+				@media (max-width: 767px) {
+					font-size: 1.5rem;
+					margin-bottom: 24px;
+				}
+			}
+
+			ul.products {
+				&::before,
+				&::after {
+					display: none !important;
+				}
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: 24px;
+				list-style: none;
+				padding: 0;
+				margin: 0;
+
+				@media (max-width: 991px) {
+					grid-template-columns: repeat(3, 1fr);
+				}
+
+				@media (max-width: 767px) {
+					grid-template-columns: repeat(2, 1fr);
+					gap: 16px;
+				}
+
+				li.product {
+					width: 100%;
+					text-align: center;
+					background-color: #fff;
+					border-radius: 20px;
+					padding: 16px;
+					display: flex;
+					flex-direction: column;
+
+					@media (max-width: 767px) {
+						padding: 12px;
+						border-radius: 16px;
+					}
+
+					a.woocommerce-loop-product__link {
+						display: block;
+						text-decoration: none;
+						flex: 1;
+
+						img {
+							width: 100%;
+							height: auto;
+							border-radius: 12px;
+							margin-bottom: 12px;
+							transition: transform 0.3s ease;
+						}
+
+						&:hover img {
+							transform: scale(1.02);
+						}
+
+						h2.woocommerce-loop-product__title {
+							font-family: var(--e-global-typography-secondary-font-family, "League Spartan", sans-serif);
+							font-size: 1rem;
+							font-weight: 600;
+							line-height: 1.3;
+							color: var(--e-global-color-accent, #231F20);
+							margin: 0 0 4px;
+							text-decoration: none;
+						}
+
+						.price {
+							font-size: 0.875rem;
+							font-weight: 600;
+							color: var(--e-global-color-accent, #231F20);
+							font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
+							margin-bottom: 12px;
+							display: block;
+
+							del {
+								color: #999;
+								font-weight: 400;
+								margin-right: 4px;
+							}
+
+							ins {
+								text-decoration: none;
+							}
+						}
+					}
+
+					// Quantity controls (if present in loop)
+					.quantity {
+						display: inline-flex;
+						align-items: center;
+						justify-content: center;
+						gap: 0;
+						margin-bottom: 8px;
+						border: 1px solid #ddd;
+						border-radius: 8px;
+						overflow: hidden;
+
+						input.qty {
+							width: 36px;
+							height: 32px;
+							text-align: center;
+							font-size: 0.875rem;
+							font-family: inherit;
+							font-weight: 600;
+							color: #231F20;
+							border: none;
+							border-left: 1px solid #ddd;
+							border-right: 1px solid #ddd;
+							background-color: #fff;
+							-webkit-appearance: none;
+							-moz-appearance: textfield;
+							padding: 0;
+
+							&:focus {
+								outline: none;
+							}
+
+							&::-webkit-outer-spin-button,
+							&::-webkit-inner-spin-button {
+								-webkit-appearance: none;
+								margin: 0;
+							}
+						}
+
+						// +/- buttons if theme adds them
+						.minus,
+						.plus {
+							width: 32px;
+							height: 32px;
+							background: transparent;
+							border: none;
+							font-size: 1rem;
+							color: #231F20;
+							cursor: pointer;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							transition: background-color 0.2s ease;
+
+							&:hover {
+								background-color: #f0f0f0;
+							}
+						}
+					}
+
+					// Loop add-to-cart button
+					a.button.add_to_cart_button,
+					button.button.add_to_cart_button {
+						display: block;
+						width: 100%;
+						margin-top: auto;
+						padding: 12px 20px;
+						font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
+						font-size: 0.875rem;
+						font-weight: 600;
+						color: #fff;
+						background-color: #005375;
+						border: none;
+						border-radius: 32px;
+						cursor: pointer;
+						transition: all 0.3s ease;
+						text-decoration: none;
+						line-height: 1;
+						text-align: center;
+						box-sizing: border-box;
+
+						&:hover {
+							background-color: #0091B3;
+							transform: translateY(-2px);
+							box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+						}
+
+						&:active {
+							transform: scale(0.98);
+						}
+					}
+				}
+			}
+		}
+
+		// ── WooCommerce Notices ──────────────────────────────
+		.woocommerce-notices-wrapper {
+			.woocommerce-message,
+			.woocommerce-error,
+			.woocommerce-info {
+				font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
+				font-size: 0.9375rem;
+				border-radius: 12px;
+				padding: 16px 20px;
+				margin-bottom: 24px;
+			}
+
+			.woocommerce-message {
+				background-color: #e6f7ed;
+				border-color: #2ecc71;
+				color: #231F20;
+			}
+		}
+
+		// ── Sale Badge ──────────────────────────────────────
+		.onsale {
+			font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
+			font-size: 0.75rem;
+			font-weight: 700;
+			background-color: var(--e-global-color-5e87840, #FCCDE5);
+			color: #231F20;
+			border-radius: 20px;
+			padding: 6px 14px;
+			line-height: 1;
+			min-height: auto;
+			min-width: auto;
+			z-index: 2;
+		}
+	}
+}
+
