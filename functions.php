@@ -131,4 +131,5 @@ require_once get_stylesheet_directory() . '/elementor/widgets/worksheet-filter/a
 require_once get_stylesheet_directory() . '/elementor/widgets/course-filter/ajax.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/sugar-calendar-event/shortcode.php';
 
-
+// Search Hook
+require_once get_stylesheet_directory() . '/inc/hooks/search.php';
