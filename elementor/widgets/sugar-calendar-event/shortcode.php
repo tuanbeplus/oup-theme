@@ -359,7 +359,7 @@ if (! class_exists('OUP_Event_Pricing_Shortcode')) :
                     </div>
                 <?php endforeach; ?>
             </div>
-            <?php
+<?php
         }
     }
 

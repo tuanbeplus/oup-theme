@@ -94,12 +94,22 @@ class Widget_SugarCalendarEvent extends Widget_Base
             'type'    => Controls_Manager::TEXT,
             'default' => __('Sign Up', 'oup'),
         ]);
+        $this->add_control('button_use_event_link', [
+            'label'        => __('Link to Single Event Page', 'oup'),
+            'type'         => Controls_Manager::SWITCHER,
+            'label_on'     => __('Yes', 'oup'),
+            'label_off'    => __('No', 'oup'),
+            'return_value' => 'yes',
+            'default'      => 'yes',
+            'description'  => __('When enabled, the button links to the single event page instead of a custom URL.', 'oup'),
+        ]);
         $this->add_control('button_url', [
             'label'         => __('Button URL', 'oup'),
             'type'          => Controls_Manager::URL,
             'placeholder'   => __('https://...', 'oup'),
             'default'       => ['url' => '#', 'is_external' => false, 'nofollow' => false],
             'show_external' => true,
+            'condition'     => ['button_use_event_link!' => 'yes'],
         ]);
         $this->end_controls_section();
 
@@ -239,12 +249,20 @@ class Widget_SugarCalendarEvent extends Widget_Base
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name'     => 'title_typography',
             'label'    => __('Title', 'oup'),
-            'selector' => '{{WRAPPER}} .sce-title',
+            'selector' => '{{WRAPPER}} .sce-title, {{WRAPPER}} .sce-title a',
         ]);
         $this->add_control('title_color', [
             'label'     => __('Title Color', 'oup'),
             'type'      => Controls_Manager::COLOR,
-            'selectors' => ['{{WRAPPER}} .sce-title' => 'color: {{VALUE}};'],
+            'selectors' => [
+                '{{WRAPPER}} .sce-title'   => 'color: {{VALUE}};',
+                '{{WRAPPER}} .sce-title a' => 'color: {{VALUE}};',
+            ],
+        ]);
+        $this->add_control('title_hover_color', [
+            'label'     => __('Title Hover Color', 'oup'),
+            'type'      => Controls_Manager::COLOR,
+            'selectors' => ['{{WRAPPER}} .sce-title a:hover' => 'color: {{VALUE}};'],
         ]);
         $this->add_group_control(Group_Control_Typography::get_type(), [
             'name'     => 'excerpt_typography',
@@ -332,6 +350,73 @@ class Widget_SugarCalendarEvent extends Widget_Base
     private function get_site_timezone(): \DateTimeZone
     {
         return wp_timezone();
+    }
+
+    private function get_sc_event_permalink(int $post_id, int $start_ts, bool $is_recurring = false): string
+    {
+        // Sugar Calendar public API (preferred)
+        if (function_exists('sugar_calendar_get_event_link')) {
+            $url = sugar_calendar_get_event_link($post_id);
+            if (! empty($url) && $url !== '#') {
+                return $url;
+            }
+        }
+
+        if (function_exists('SC') && is_callable([SC(), 'events']) && method_exists(SC()->events, 'get_link')) {
+            $url = SC()->events->get_link($post_id);
+            if (! empty($url) && $url !== '#') {
+                return $url;
+            }
+        }
+
+        // Manual fallback
+        $base_slug = 'events';
+        $sc_option = get_option('sc_event_permalink_base');
+        if (! empty($sc_option)) {
+            $base_slug = trim($sc_option, '/');
+        } else {
+            $post_type_obj = get_post_type_object('sc_event');
+            if (
+                $post_type_obj &&
+                ! empty($post_type_obj->rewrite['slug']) &&
+                strpos($post_type_obj->rewrite['slug'], 'sc_') === false
+            ) {
+                $base_slug = trim($post_type_obj->rewrite['slug'], '/');
+            }
+        }
+
+        $post_slug = get_post_field('post_name', $post_id);
+        if (empty($post_slug)) {
+            return get_permalink($post_id) ?: '#';
+        }
+
+        $base_url = trailingslashit(home_url())
+            . trailingslashit($base_slug)
+            . trailingslashit($post_slug);
+
+        // Only recurring events get the /YYYY-MM-DD/ date segment.
+        if ($is_recurring && $start_ts > 0) {
+            $base_url .= trailingslashit(gmdate('Y-m-d', $start_ts));
+        }
+
+        return $base_url;
+    }
+
+    private function resolve_button_url(array $event, array $settings): array
+    {
+        if (($settings['button_use_event_link'] ?? 'yes') === 'yes') {
+            return [
+                'url'         => $event['permalink'] ?: $this->get_sc_event_permalink($event['id'], $event['start_ts'], $event['is_recurring']),
+                'is_external' => false,
+                'nofollow'    => false,
+            ];
+        }
+
+        return [
+            'url'         => ! empty($settings['button_url']['url']) ? $settings['button_url']['url'] : '#',
+            'is_external' => ! empty($settings['button_url']['is_external']),
+            'nofollow'    => ! empty($settings['button_url']['nofollow']),
+        ];
     }
 
     private function resolve_ts($value): int
@@ -540,6 +625,7 @@ class Widget_SugarCalendarEvent extends Widget_Base
             $event = [
                 'id'             => $post_id,
                 'title'          => get_the_title($post_id),
+                'permalink'      => '',
                 'excerpt'        => get_the_excerpt($post_id),
                 'thumbnail_id'   => get_post_thumbnail_id($post_id),
                 'start_ts'       => $primary['start_ts'],
@@ -566,6 +652,8 @@ class Widget_SugarCalendarEvent extends Widget_Base
 
             $expiry = $this->get_event_expiry_ts($event);
             if ($expiry > 0 && $expiry <= $now) continue;
+
+            $event['permalink'] = $this->get_sc_event_permalink($post_id, $event['start_ts'], $is_recurring);
 
             $events[] = $event;
         }
@@ -599,79 +687,21 @@ class Widget_SugarCalendarEvent extends Widget_Base
         return $lines;
     }
 
-    // SVG Icons
-    private function svg_calendar(): string
-    {
-        return '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-            <line x1="8" y1="2" x2="8" y2="6"/>
-            <line x1="16" y1="2" x2="16" y2="6"/>
-            <line x1="3" y1="10" x2="21" y2="10"/>
-        </svg>';
-    }
-
-    private function svg_note(): string
-    {
-        return '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5.15 15.125H16.85"/>
-            <path d="M5.15 12.2H16.85"/>
-            <path d="M5.15 9.275H16.85"/>
-            <path d="M3.8 19.4C3.305 19.4 2.88125 19.2237 2.52875 18.8712C2.17625 18.5187 2 18.095 2 17.6V6.8C2 6.305 2.17625 5.88125 2.52875 5.52875C2.88125 5.17625 3.305 5 3.8 5H18.2C18.695 5 19.1187 5.17625 19.4712 5.52875C19.8237 5.88125 20 6.305 20 6.8V23L16.4 19.4H3.8Z"/>
-        </svg>';
-    }
-
-    private function svg_location(): string
-    {
-        return '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 10C21 17 12 23 12 23S3 17 3 10A9 9 0 0 1 21 10Z"/>
-            <circle cx="12" cy="10" r="3"/>
-        </svg>';
-    }
-
     // Rendering
-    private function render_date_meta_items(array $event): void
-    {
-        if ($event['is_recurring'] && ! empty($event['occurrences'])) {
-            foreach ($event['occurrences'] as $occurrence) {
-                foreach ($occurrence['lines'] as $line) { ?>
-                    <li class="sce-meta-item sce-meta-date">
-                        <span class="sce-meta-icon"><?php echo $this->svg_calendar(); ?></span>
-                        <div class="sce-meta-lines">
-                            <span class="sce-meta-line"><?php echo esc_html($line); ?></span>
-                        </div>
-                    </li>
-            <?php }
-            }
-            return;
-        }
-
-        if (! empty($event['duration_lines'])) { ?>
-            <li class="sce-meta-item sce-meta-date">
-                <span class="sce-meta-icon"><?php echo $this->svg_calendar(); ?></span>
-                <div class="sce-meta-lines">
-                    <?php foreach ($event['duration_lines'] as $line) { ?>
-                        <span class="sce-meta-line"><?php echo esc_html($line); ?></span>
-                    <?php } ?>
-                </div>
-            </li>
-        <?php }
-    }
-
     private function render_card(array $event, array $settings, string $img_size): void
     {
-        $notice   = trim((string) get_field('follow_up_event', $event['id']));
         $footnote = trim((string) get_field('foot_note', $event['id']));
         $pricing  = get_field('event_ticket_pricing', $event['id']);
         $pricing  = is_array($pricing) ? array_values(array_filter($pricing)) : [];
 
-        $has_date = $event['is_recurring'] ? ! empty($event['occurrences']) : ! empty($event['duration_lines']);
-        $has_meta = $has_date || ! empty($notice) || ! empty($event['location']);
+        $btn_text = ! empty($settings['button_text']) ? $settings['button_text'] : __('Sign Up', 'oup');
 
-        $btn_url      = ! empty($settings['button_url']['url']) ? $settings['button_url']['url'] : '#';
-        $btn_target   = ! empty($settings['button_url']['is_external']) ? ' target="_blank"' : '';
-        $btn_nofollow = ! empty($settings['button_url']['nofollow']) ? ' rel="nofollow"' : '';
-        $btn_text     = ! empty($settings['button_text']) ? $settings['button_text'] : __('Sign Up', 'oup');
-        ?>
+        $resolved        = $this->resolve_button_url($event, $settings);
+        $btn_url         = $resolved['url'];
+        $btn_target      = $resolved['is_external'] ? ' target="_blank"' : '';
+        $btn_nofollow    = $resolved['nofollow'] ? ' rel="nofollow"' : '';
+        $event_permalink = $event['permalink'] ?: $this->get_sc_event_permalink($event['id'], $event['start_ts'], $event['is_recurring']);
+?>
         <div class="sce-card">
 
             <?php if (! empty($event['thumbnail_id'])) :
@@ -681,31 +711,17 @@ class Widget_SugarCalendarEvent extends Widget_Base
             <?php endif;
             endif; ?>
 
-            <h3 class="sce-title"><?php echo esc_html($event['title']); ?></h3>
+            <h3 class="sce-title">
+                <a href="<?php echo esc_url($event_permalink); ?>">
+                    <?php echo esc_html($event['title']); ?>
+                </a>
+            </h3>
 
             <?php if (! empty($event['excerpt'])) : ?>
                 <div class="sce-excerpt"><?php echo wp_kses_post(wpautop($event['excerpt'])); ?></div>
             <?php endif; ?>
 
-            <?php if ($has_meta) : ?>
-                <ul class="sce-meta">
-                    <?php $this->render_date_meta_items($event); ?>
-
-                    <?php if (! empty($notice)) : ?>
-                        <li class="sce-meta-item sce-meta-notice">
-                            <span class="sce-meta-icon"><?php echo $this->svg_note(); ?></span>
-                            <span><?php echo wp_kses_post(nl2br(esc_html($notice))); ?></span>
-                        </li>
-                    <?php endif; ?>
-
-                    <?php if (! empty($event['location'])) : ?>
-                        <li class="sce-meta-item sce-meta-location">
-                            <span class="sce-meta-icon"><?php echo $this->svg_location(); ?></span>
-                            <span><?php echo esc_html($event['location']); ?></span>
-                        </li>
-                    <?php endif; ?>
-                </ul>
-            <?php endif; ?>
+            <?php echo do_shortcode('[oup_event_meta event_id="' . (int) $event['id'] . '"]'); ?>
 
             <?php if (! empty($footnote)) : ?>
                 <p class="sce-footnote"><?php echo wp_kses_post(nl2br(esc_html($footnote))); ?></p>
