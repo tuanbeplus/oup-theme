@@ -35,9 +35,6 @@ add_filter('learndash_template_preprocess_filter', function($run, $post_id) {
     return $run;
 }, 10, 2);
 
-
-
-
 // Shortcode for Course Accordion to show all lessons, topics, and quizzes
 if (!function_exists('oup_course_accordion_shortcode_callback')) {
     function oup_course_accordion_shortcode_callback($atts) {
@@ -151,6 +148,4 @@ require_once get_stylesheet_directory() . '/elementor/widgets/archive-posts-filt
 require_once get_stylesheet_directory() . '/elementor/widgets/worksheet-filter/ajax.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/course-filter/ajax.php';
 require_once get_stylesheet_directory() . '/elementor/widgets/sugar-calendar-event/shortcode.php';
-
-
 
