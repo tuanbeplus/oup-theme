@@ -165,6 +165,9 @@ body.woocommerce-checkout {
                                 .wc-block-components-totals-item.wc-block-components-totals-footer-item{
                                     .wc-block-components-totals-item__label,.wc-block-components-totals-item__value{
                                         font-weight: 600;
+                                        @media (max-width:767px) {
+                                          font-size: 1.125rem;
+                                        }
                                     }
                                 }
                             }
