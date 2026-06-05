@@ -892,7 +892,7 @@ body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer inp
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin: 40px 0 30px;
+  margin: 30px 0;
 }
 @media (max-width: 767px) {
   .sce-pricing-wrap {
@@ -903,7 +903,6 @@ body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer inp
 .sce-price-item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .sce-price-amount-wrap {
