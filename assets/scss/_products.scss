@@ -48,11 +48,11 @@ body.single-product {
 	main.site-main {
 		max-width: 1280px !important;
 		margin: 0 auto;
-		padding: 0 40px 80px;
+		padding: 80px 40px;
 		font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
 
 		@media (max-width: 767px) {
-			padding: 0 20px 50px;
+			padding: 50px 20px !important;
 		}
 
 		// ── Breadcrumb ────────────────────────────────────────
@@ -60,13 +60,9 @@ body.single-product {
 			font-size: 0.875rem;
 			line-height: 1.5;
 			color: #666;
-			padding: 24px 0;
+			padding: 0;
+			margin-bottom: 32px;
 			font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
-
-			@media (max-width: 767px) {
-				padding: 16px 0;
-				font-size: 0.8125rem;
-			}
 
 			a {
 				color: #005375;
@@ -165,7 +161,7 @@ body.single-product {
 		.summary.entry-summary {
 			.product_title {
 				font-family: var(--e-global-typography-secondary-font-family, "League Spartan", sans-serif);
-				font-size: clamp(1.75rem, 3vw, 2.25rem);
+				font-size: clamp(2.25rem, 4vw, 3rem);
 				font-weight: 700;
 				line-height: 1.2;
 				letter-spacing: -0.02em;
@@ -177,7 +173,7 @@ body.single-product {
 			p.price {
 				font-size: 1.5rem;
 				font-weight: 700;
-				color: var(--e-global-color-accent, #231F20);
+				color: var( --e-global-color-text );
 				margin-bottom: 24px;
 				font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
 
@@ -240,20 +236,10 @@ body.single-product {
 						border: 1px solid #ddd;
 						border-radius: 12px;
 						background-color: #f9f9f9;
-						-webkit-appearance: none;
-						-moz-appearance: textfield;
 						transition: border-color 0.25s ease;
-
 						&:focus {
 							outline: none;
 							border-color: #005375;
-						}
-
-						// Hide spinners
-						&::-webkit-outer-spin-button,
-						&::-webkit-inner-spin-button {
-							-webkit-appearance: none;
-							margin: 0;
 						}
 					}
 				}
@@ -262,7 +248,7 @@ body.single-product {
 					flex: 1;
 					height: 50px;
 					font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
-					font-size: 1rem;
+					font-size: 1.125rem;
 					font-weight: 600;
 					color: #fff;
 					background-color: var(--e-global-color-secondary, #0091B3);
@@ -281,7 +267,6 @@ body.single-product {
 
 					&:hover {
 						background-color: var(--e-global-color-accent, #005375);
-						transform: translateY(-2px);
 						box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 					}
 
@@ -329,18 +314,15 @@ body.single-product {
 		// ── Related Products ────────────────────────────────
 		.related.products {
 			grid-column: 1 / -1;
-			margin-top: 60px;
 			padding-top: 60px;
 			border-top: 1px solid #E2E8F0;
-
 			@media (max-width: 767px) {
-				margin-top: 40px;
 				padding-top: 40px;
 			}
 
 			>h2 {
 				font-family: var(--e-global-typography-secondary-font-family, "League Spartan", sans-serif);
-				font-size: 1.875rem;
+				font-size: clamp(2rem, 4vw, 2.5rem);
 				font-weight: 700;
 				line-height: 1.25;
 				letter-spacing: -0.02em;
@@ -348,7 +330,6 @@ body.single-product {
 				margin: 0 0 32px;
 
 				@media (max-width: 767px) {
-					font-size: 1.5rem;
 					margin-bottom: 24px;
 				}
 			}
@@ -361,33 +342,44 @@ body.single-product {
 				}
 
 				display: grid;
-				grid-template-columns: repeat(4, 1fr);
-				gap: 24px;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 50px;
 				list-style: none;
 				padding: 0;
 				margin: 0;
 
-				@media (max-width: 991px) {
-					grid-template-columns: repeat(3, 1fr);
+				@media (max-width: 1024px) {
+					grid-template-columns: repeat(2, 1fr);
 				}
 
 				@media (max-width: 767px) {
-					grid-template-columns: repeat(2, 1fr);
+					grid-template-columns: repeat(1, 1fr);
 					gap: 16px;
 				}
 
 				li.product {
 					width: 100%;
 					text-align: center;
+<<<<<<< HEAD
 					background-color: var(--e-global-color-ed9b819);
 					border-radius: 20px;
 					padding: 16px;
+=======
+					background-color: #fff;
+					border-radius: 27px;
+					padding: 40px;
+>>>>>>> 3945af7a2917c3333a856c22faf966e0d1708beb
 					display: flex;
 					flex-direction: column;
-
+					margin: 0;
+					box-shadow: 2px 7px 7px 0px rgba(0, 0, 0, 0.1);
+					border: 1px solid #eee;
+					@media (max-width: 1024px) {
+						padding: 32px;
+					}
 					@media (max-width: 767px) {
-						padding: 12px;
-						border-radius: 16px;
+						padding: 24px;
+						border-radius: 20px;
 					}
 
 					a.woocommerce-loop-product__link {
@@ -398,8 +390,8 @@ body.single-product {
 						img {
 							width: 100%;
 							height: auto;
-							border-radius: 12px;
-							margin-bottom: 12px;
+							border-radius: 0;
+							margin-bottom: 30px;
 							transition: transform 0.3s ease;
 						}
 
@@ -408,21 +400,22 @@ body.single-product {
 						}
 
 						h2.woocommerce-loop-product__title {
-							font-family: var(--e-global-typography-secondary-font-family, "League Spartan", sans-serif);
-							font-size: 1rem;
-							font-weight: 600;
-							line-height: 1.3;
-							color: var(--e-global-color-accent, #231F20);
-							margin: 0 0 4px;
+							font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
+							font-size: 1.5rem;
+							font-weight: 700;
+							line-height: 1.2;
+							color: var(--e-global-color-text);
+							padding: 0;
+							margin: 0 0 5px;
 							text-decoration: none;
 						}
 
 						.price {
-							font-size: 0.875rem;
-							font-weight: 600;
-							color: var(--e-global-color-accent, #231F20);
+							font-size: 1.125rem;
+							font-weight: 500;
+							color: var(--e-global-color-text);
 							font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
-							margin-bottom: 12px;
+							margin-bottom: 30px;
 							display: block;
 
 							del {
@@ -502,29 +495,34 @@ body.single-product {
 						display: block;
 						width: 100%;
 						margin-top: auto;
-						padding: 12px 20px;
+						padding: 10px 20px;
 						font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
-						font-size: 0.875rem;
+						font-size: 1.125rem;
 						font-weight: 600;
+<<<<<<< HEAD
 						color: var(--e-global-color-ed9b819);
 						background-color: var(--e-global-color-primary);
+=======
+						line-height: 1.5;
+						color: #fff;
+						background-color: #005375;
+>>>>>>> 3945af7a2917c3333a856c22faf966e0d1708beb
 						border: none;
 						border-radius: 32px;
 						cursor: pointer;
 						transition: all 0.3s ease;
 						text-decoration: none;
-						line-height: 1;
 						text-align: center;
 						box-sizing: border-box;
 
 						&:hover {
+<<<<<<< HEAD
 							background-color: var(--e-global-color-secondary);
 							transform: translateY(-2px);
+=======
+							background-color: #0091B3;
+>>>>>>> 3945af7a2917c3333a856c22faf966e0d1708beb
 							box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-						}
-
-						&:active {
-							transform: scale(0.98);
 						}
 					}
 				}
@@ -566,4 +564,8 @@ body.single-product {
 			z-index: 2;
 		}
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3945af7a2917c3333a856c22faf966e0d1708beb
