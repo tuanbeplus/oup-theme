@@ -1,4 +1,5 @@
 <?php
+
 namespace OupElementorWidgets;
 
 /**
@@ -7,7 +8,8 @@ namespace OupElementorWidgets;
  * Main ElementorWidgets class
  * @since 1.0.0
  */
-class ElementorWidgets {
+class ElementorWidgets
+{
 
 	/**
 	 * Instance
@@ -30,8 +32,9 @@ class ElementorWidgets {
 	 *
 	 * @return ElementorWidgets An instance of the class.
 	 */
-	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
+	public static function instance()
+	{
+		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
@@ -39,7 +42,8 @@ class ElementorWidgets {
 
 	public $widgets = array();
 
-	public function widgets_list() {
+	public function widgets_list()
+	{
 
 		$this->widgets = array(
 			'sample-widget',
@@ -65,12 +69,11 @@ class ElementorWidgets {
 	 * @since 1.0.0
 	 * @access public
 	 */
-	public function widget_styles() {
-
-		// Swiper
+	public function widget_styles()
+	{
 		wp_register_style(
-			'swiper-bundle',
-			'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
+			'swiper-bundle-style',
+			get_stylesheet_directory_uri() . '/assets/css/swiper-bundle.min.css',
 			array(),
 			'11',
 			'all'
@@ -151,7 +154,7 @@ class ElementorWidgets {
 		wp_register_style(
 			'oup-sugar-calendar-event-style',
 			get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/style.css',
-			array('swiper-bundle'),
+			array('swiper-bundle-style'),
 			OUP_THEME_VER,
 			'all'
 		);
@@ -165,12 +168,12 @@ class ElementorWidgets {
 	 * @since 1.0.0
 	 * @access public
 	 */
-	 public function widget_scripts() {
-
+	public function widget_scripts()
+	{
 		// Swiper
 		wp_register_script(
-			'swiper-bundle',
-			'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+			'swiper-bundle-script',
+			get_stylesheet_directory_uri() . '/assets/js/swiper-bundle.min.js',
 			array(),
 			'11',
 			true
@@ -235,7 +238,7 @@ class ElementorWidgets {
 		wp_register_script(
 			'oup-sugar-calendar-event-script',
 			get_stylesheet_directory_uri() . '/elementor/widgets/sugar-calendar-event/script.js',
-			array('jquery', 'swiper-bundle'),
+			array('jquery', 'swiper-bundle-script'),
 			OUP_THEME_VER,
 			true
 		);
@@ -249,16 +252,16 @@ class ElementorWidgets {
 	 * @since 1.0.0
 	 * @access private
 	 */
-	private function include_widgets_files() {
+	private function include_widgets_files()
+	{
 
-		foreach( $this->widgets_list() as $widget ) {
-			require_once( get_stylesheet_directory() . '/elementor/widgets/'. $widget .'/widget.php' );
+		foreach ($this->widgets_list() as $widget) {
+			require_once(get_stylesheet_directory() . '/elementor/widgets/' . $widget . '/widget.php');
 
-			foreach( glob( get_stylesheet_directory() . '/elementor/widgets/'. $widget .'/skins/*.php') as $filepath ) {
+			foreach (glob(get_stylesheet_directory() . '/elementor/widgets/' . $widget . '/skins/*.php') as $filepath) {
 				include $filepath;
 			}
 		}
-
 	}
 
 	/**
@@ -269,15 +272,15 @@ class ElementorWidgets {
 	 * @since 1.0.0
 	 * @access public
 	 */
-	public function register_categories( $elements_manager ) {
+	public function register_categories($elements_manager)
+	{
 
 		$elements_manager->add_category(
 			'oup',
 			[
-				'title' => esc_html__( 'Onwards & Upwards Psychology', 'oup' )
+				'title' => esc_html__('Onwards & Upwards Psychology', 'oup')
 			]
 		);
-
 	}
 
 	/**
@@ -288,7 +291,8 @@ class ElementorWidgets {
 	 * @since 1.0.0
 	 * @access public
 	 */
-	public function register_widgets() {
+	public function register_widgets()
+	{
 		// Its is now safe to include Widgets files
 		$this->include_widgets_files();
 
@@ -313,20 +317,20 @@ class ElementorWidgets {
 	 * @since 1.0.0
 	 * @access public
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		// Register widget styles
-		add_action( 'elementor/frontend/after_register_styles', [ $this, 'widget_styles' ] );
+		add_action('elementor/frontend/after_register_styles', [$this, 'widget_styles']);
 
 		// Register widget scripts
-		add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
+		add_action('elementor/frontend/after_register_scripts', [$this, 'widget_scripts']);
 
 		// Register categories
-		add_action( 'elementor/elements/categories_registered', [ $this, 'register_categories' ] );
+		add_action('elementor/elements/categories_registered', [$this, 'register_categories']);
 
 		// Register widgets
-		add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );
+		add_action('elementor/widgets/widgets_registered', [$this, 'register_widgets']);
 	}
-
 }
 
 // Instantiate ElementorWidgets Class
