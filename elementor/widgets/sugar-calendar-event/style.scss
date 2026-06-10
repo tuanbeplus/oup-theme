@@ -61,7 +61,7 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
     font-family: $font-body;
     color: $color-text;
     display: flex;
-    flex-direction: column; // enables spacer + bottom-aligned footer
+    flex-direction: column;
     box-shadow: $shadow-card;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 
@@ -84,8 +84,6 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         border-radius: 24px;
     }
 
-
-    // Image: fixed 430×243 aspect ratio, crops via object-fit
     .sce-image {
         width: 100%;
         aspect-ratio: 430 / 243;
@@ -106,7 +104,6 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
             border-radius: $radius-image;
         }
     }
-
 
     // Title
     .sce-title {
@@ -163,7 +160,6 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
         }
     }
 
-    // Spacer: grows to fill remaining space, pushing pricing + button down
     .sce-spacer {
         flex-grow: 1;
         min-height: 20px;
@@ -273,7 +269,6 @@ $shadow-card-hover: 4px 16px 24px 0px #0000002A;
             display: none;
         }
     }
-
 
     // Button
     .sce-button {

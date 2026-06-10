@@ -110,14 +110,21 @@
     // Copy Link button
     $(document).on('click', '.oup-copy-link', function (e) {
         e.preventDefault();
-        var $btn = $(this);
-        var url = window.location.origin + window.location.pathname;
 
+        var $btn = $(this);
         if ($btn.data('copying')) return;
         $btn.data('copying', true);
 
+        var url = window.location.origin + window.location.pathname;
         var $label = $btn.find('.elementor-button-text');
         var originalText = $label.length ? $label.text() : $btn.text();
+
+        function fallbackCopy() {
+            var $temp = $('<input>').val(url).appendTo('body');
+            $temp.select();
+            document.execCommand('copy');
+            $temp.remove();
+        }
 
         function doSuccess() {
             $btn.addClass('oup-copy-link--copied');
@@ -132,19 +139,11 @@
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(url).then(doSuccess).catch(function () {
-                var $temp = $('<input>');
-                $('body').append($temp);
-                $temp.val(url).select();
-                document.execCommand('copy');
-                $temp.remove();
+                fallbackCopy();
                 doSuccess();
             });
         } else {
-            var $temp = $('<input>');
-            $('body').append($temp);
-            $temp.val(url).select();
-            document.execCommand('copy');
-            $temp.remove();
+            fallbackCopy();
             doSuccess();
         }
     });

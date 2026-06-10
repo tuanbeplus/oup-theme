@@ -3,6 +3,7 @@ if (! defined('ABSPATH')) exit;
 
 // OUP_Event_Meta_Shortcode
 if (! class_exists('OUP_Event_Meta_Shortcode')) :
+
     class OUP_Event_Meta_Shortcode
     {
         public static function register(): void
@@ -10,7 +11,6 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
             add_shortcode('oup_event_meta', [self::class, 'render']);
         }
 
-        // Shortcode entry point
         public static function render(array $atts): string
         {
             $atts     = shortcode_atts(['event_id' => 0], $atts, 'oup_event_meta');
@@ -29,7 +29,6 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
             return ob_get_clean();
         }
 
-        // Build event data array
         private static function build_event(int $event_id): ?array
         {
             $rows = self::get_sc_event_rows($event_id);
@@ -39,7 +38,7 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
             $start_ts     = self::resolve_ts($row->start);
             $end_ts       = self::resolve_ts($row->end);
             $recurrence   = trim((string) ($row->recurrence ?? ''));
-            $is_recurring = ! empty($recurrence) && $recurrence !== 'never';
+            $is_recurring = $recurrence !== '' && $recurrence !== 'never';
 
             $event = [
                 'id'             => $event_id,
@@ -79,22 +78,16 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
             return $event;
         }
 
-        // Render HTML
         private static function render_meta_block(array $event): void
         {
             $notice   = trim((string) get_field('follow_up_event', $event['id']));
             $location = $event['location'];
-
-            $has_date = $event['is_recurring']
-                ? ! empty($event['occurrences'])
-                : ! empty($event['duration_lines']);
+            $has_date = $event['is_recurring'] ? ! empty($event['occurrences']) : ! empty($event['duration_lines']);
 
             if (! $has_date && ! $notice && ! $location) return;
 ?>
             <ul class="sce-meta">
-
                 <?php self::render_date_items($event); ?>
-
                 <?php if ($notice) : ?>
                     <li class="sce-meta-item sce-meta-notice">
                         <span class="sce-meta-icon"><?php echo self::svg_note(); ?></span>
@@ -108,40 +101,40 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
                         <span><?php echo esc_html($location); ?></span>
                     </li>
                 <?php endif; ?>
-
             </ul>
-            <?php
+        <?php
         }
 
         private static function render_date_items(array $event): void
         {
             if ($event['is_recurring'] && ! empty($event['occurrences'])) {
                 foreach ($event['occurrences'] as $occurrence) {
-                    foreach ($occurrence['lines'] as $line) { ?>
-                        <li class="sce-meta-item sce-meta-date">
-                            <span class="sce-meta-icon"><?php echo self::svg_calendar(); ?></span>
-                            <div class="sce-meta-lines">
-                                <span class="sce-meta-line"><?php echo esc_html($line); ?></span>
-                            </div>
-                        </li>
-                <?php }
+                    foreach ($occurrence['lines'] as $line) {
+                        self::render_date_item($line);
+                    }
                 }
                 return;
             }
 
-            if (! empty($event['duration_lines'])) { ?>
-                <li class="sce-meta-item sce-meta-date">
-                    <span class="sce-meta-icon"><?php echo self::svg_calendar(); ?></span>
-                    <div class="sce-meta-lines">
-                        <?php foreach ($event['duration_lines'] as $line) : ?>
-                            <span class="sce-meta-line"><?php echo esc_html($line); ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                </li>
-            <?php }
+            if (empty($event['duration_lines'])) return;
+
+            echo '<li class="sce-meta-item sce-meta-date">';
+            echo '<span class="sce-meta-icon">' . self::svg_calendar() . '</span>';
+            echo '<div class="sce-meta-lines">';
+            foreach ($event['duration_lines'] as $line) {
+                echo '<span class="sce-meta-line">' . esc_html($line) . '</span>';
+            }
+            echo '</div></li>';
         }
 
-        // Database helpers
+        private static function render_date_item(string $line): void
+        {
+            echo '<li class="sce-meta-item sce-meta-date">';
+            echo '<span class="sce-meta-icon">' . self::svg_calendar() . '</span>';
+            echo '<div class="sce-meta-lines"><span class="sce-meta-line">' . esc_html($line) . '</span></div>';
+            echo '</li>';
+        }
+
         private static function get_sc_event_rows(int $post_id): array
         {
             global $wpdb;
@@ -151,13 +144,13 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
             )) ?: [];
         }
 
-        private static function resolve_ts($value): int
+        private static function resolve_ts(mixed $value): int
         {
             if (empty($value)) return 0;
             if (is_numeric($value)) return (int) $value;
             try {
                 return (new \DateTime($value, new \DateTimeZone('UTC')))->getTimestamp();
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 return 0;
             }
         }
@@ -186,15 +179,24 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
             $name    = trim($venue_post->post_title);
             $address = trim((string) get_post_meta($venue_id, 'sugarcalendar_venue_address_1', true));
 
-            return $cache[$sc_event_row_id] = ($address !== '' ? $name . ', ' . $address : $name);
+            return $cache[$sc_event_row_id] = $address !== '' ? "{$name}, {$address}" : $name;
         }
 
-        // Recurrence helpers
+        private static function build_occurrence(int $ts, int $duration): array
+        {
+            $end_ts = $ts + $duration;
+            return [
+                'start_ts' => $ts,
+                'end_ts'   => $end_ts,
+                'lines'    => self::format_duration($ts, $end_ts),
+            ];
+        }
+
         private static function calculate_occurrences(
             array  $members,
             string $rule,
-            int    $interval = 1,
-            string $recurrence_end = '',
+            int    $interval            = 1,
+            string $recurrence_end      = '',
             int    $recurrence_end_count = 0
         ): array {
             if (empty($members)) return [];
@@ -202,38 +204,37 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
             $first_start = $members[0]['start_ts'];
             $duration    = max(0, $members[0]['end_ts'] - $first_start);
 
-            $build = function (int $ts) use ($duration): array {
-                $end_ts = $ts + $duration;
-                return ['start_ts' => $ts, 'end_ts' => $end_ts, 'lines' => self::format_duration($ts, $end_ts)];
-            };
-
+            // Case 1: After X times
             if ($recurrence_end_count > 0) {
                 $occurrences = [];
-                $ts = $first_start;
+                $ts          = $first_start;
                 for ($i = 0; $i < $recurrence_end_count; $i++) {
-                    $occurrences[] = $build($ts);
+                    $occurrences[] = self::build_occurrence($ts, $duration);
                     $ts += self::get_step_seconds($rule, $interval, $ts);
                 }
                 return $occurrences;
             }
 
+            // Case 2: Until date
             $end_boundary = (! empty($recurrence_end) && $recurrence_end !== '0000-00-00 00:00:00')
-                ? self::resolve_ts($recurrence_end) : 0;
+                ? self::resolve_ts($recurrence_end)
+                : 0;
 
             if ($end_boundary > 0) {
                 $occurrences = [];
-                $ts = $first_start;
+                $ts          = $first_start;
                 while ($ts <= $end_boundary) {
-                    $occurrences[] = $build($ts);
+                    $occurrences[] = self::build_occurrence($ts, $duration);
                     $ts += self::get_step_seconds($rule, $interval, $ts);
                 }
                 return $occurrences;
             }
 
+            // Case 3: Fallback — post count
             $occurrences = [];
-            $ts = $first_start;
-            for ($i = 0, $count = count($members); $i < $count; $i++) {
-                $occurrences[] = $build($ts);
+            $ts          = $first_start;
+            foreach ($members as $_) {
+                $occurrences[] = self::build_occurrence($ts, $duration);
                 $ts += self::get_step_seconds($rule, $interval, $ts);
             }
             return $occurrences;
@@ -242,13 +243,15 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
         private static function get_step_seconds(string $rule, int $interval, int $from_ts): int
         {
             $rule = strtolower(trim($rule));
-            if ($rule === 'daily')  return DAY_IN_SECONDS * $interval;
+
+            if ($rule === 'daily')  return DAY_IN_SECONDS  * $interval;
             if ($rule === 'weekly') return WEEK_IN_SECONDS * $interval;
+
             try {
                 $dt = (new \DateTime('@' . $from_ts))->setTimezone(new \DateTimeZone('UTC'));
                 $dt->modify($rule === 'yearly' ? "+{$interval} year" : "+{$interval} month");
                 return max(DAY_IN_SECONDS, $dt->getTimestamp() - $from_ts);
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 return ($rule === 'yearly' ? 365 : 30) * DAY_IN_SECONDS * $interval;
             }
         }
@@ -258,8 +261,7 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
             if (! $start_ts) return [];
 
             $tz       = wp_timezone();
-            $dt       = (new \DateTime('@' . $start_ts))->setTimezone($tz);
-            $tz_label = ' ' . $dt->format('T');
+            $tz_label = ' ' . (new \DateTime('@' . $start_ts))->setTimezone($tz)->format('T');
             $time_str = date_i18n('g:iA', $start_ts);
             $same_day = $end_ts && date_i18n('Ymd', $start_ts) === date_i18n('Ymd', $end_ts);
 
@@ -274,40 +276,39 @@ if (! class_exists('OUP_Event_Meta_Shortcode')) :
             return $lines;
         }
 
-        // SVG icons
+        // SVG Icons 
         private static function svg_calendar(): string
         {
             return '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>';
+			<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+			<line x1="8" y1="2" x2="8" y2="6"/>
+			<line x1="16" y1="2" x2="16" y2="6"/>
+			<line x1="3" y1="10" x2="21" y2="10"/>
+		</svg>';
         }
 
         private static function svg_note(): string
         {
             return '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5.15 15.125H16.85"/>
-                <path d="M5.15 12.2H16.85"/>
-                <path d="M5.15 9.275H16.85"/>
-                <path d="M3.8 19.4C3.305 19.4 2.88125 19.2237 2.52875 18.8712C2.17625 18.5187 2 18.095 2 17.6V6.8C2 6.305 2.17625 5.88125 2.52875 5.52875C2.88125 5.17625 3.305 5 3.8 5H18.2C18.695 5 19.1187 5.17625 19.4712 5.52875C19.8237 5.88125 20 6.305 20 6.8V23L16.4 19.4H3.8Z"/>
-            </svg>';
+			<path d="M5.15 15.125H16.85"/>
+			<path d="M5.15 12.2H16.85"/>
+			<path d="M5.15 9.275H16.85"/>
+			<path d="M3.8 19.4C3.305 19.4 2.88125 19.2237 2.52875 18.8712C2.17625 18.5187 2 18.095 2 17.6V6.8C2 6.305 2.17625 5.88125 2.52875 5.52875C2.88125 5.17625 3.305 5 3.8 5H18.2C18.695 5 19.1187 5.17625 19.4712 5.52875C19.8237 5.88125 20 6.305 20 6.8V23L16.4 19.4H3.8Z"/>
+		</svg>';
         }
 
         private static function svg_location(): string
         {
             return '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 10C21 17 12 23 12 23S3 17 3 10A9 9 0 0 1 21 10Z"/>
-                <circle cx="12" cy="10" r="3"/>
-            </svg>';
+			<path d="M21 10C21 17 12 23 12 23S3 17 3 10A9 9 0 0 1 21 10Z"/>
+			<circle cx="12" cy="10" r="3"/>
+		</svg>';
         }
     }
 
     OUP_Event_Meta_Shortcode::register();
 
 endif;
-
 
 // OUP_Event_Pricing_Shortcode
 if (! class_exists('OUP_Event_Pricing_Shortcode')) :
@@ -319,7 +320,6 @@ if (! class_exists('OUP_Event_Pricing_Shortcode')) :
             add_shortcode('oup_event_pricing', [self::class, 'render']);
         }
 
-        // Shortcode entry point
         public static function render(array $atts): string
         {
             $atts     = shortcode_atts(['event_id' => 0], $atts, 'oup_event_pricing');
@@ -340,22 +340,21 @@ if (! class_exists('OUP_Event_Pricing_Shortcode')) :
             return ob_get_clean();
         }
 
-        // Render HTML
         private static function render_pricing_block(array $pricing): void
         {
-            ?>
+        ?>
             <div class="sce-pricing-wrap">
                 <?php foreach ($pricing as $ticket) :
-                    $ticket_name  = trim((string) ($ticket['ticket_name'] ?? ''));
-                    $ticket_price = trim((string) ($ticket['price'] ?? ''));
-                    if (! $ticket_name && ! $ticket_price) continue;
+                    $name  = trim((string) ($ticket['ticket_name'] ?? ''));
+                    $price = trim((string) ($ticket['price'] ?? ''));
+                    if (! $name && ! $price) continue;
                 ?>
                     <div class="sce-price-item">
                         <div class="sce-price-amount-wrap">
-                            <span class="sce-price-amount">$<?php echo esc_html($ticket_price); ?></span>
+                            <span class="sce-price-amount">$<?php echo esc_html($price); ?></span>
                             <span class="sce-price-suffix"><?php esc_html_e('inc. GST', 'oup'); ?></span>
                         </div>
-                        <span class="sce-price-label"><?php echo esc_html($ticket_name); ?></span>
+                        <span class="sce-price-label"><?php echo esc_html($name); ?></span>
                     </div>
                 <?php endforeach; ?>
             </div>

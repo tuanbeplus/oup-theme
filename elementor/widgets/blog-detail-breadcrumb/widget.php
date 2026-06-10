@@ -12,26 +12,23 @@ if (! defined('ABSPATH')) {
 
 class Widget_BlogDetailBreadcrumb extends Widget_Base
 {
+
     public function get_name()
     {
         return 'blog-detail-breadcrumb';
     }
-
     public function get_title()
     {
         return __('Blog Detail Breadcrumb', 'oup');
     }
-
     public function get_icon()
     {
         return 'eicon-navigation-horizontal';
     }
-
     public function get_categories()
     {
         return ['oup'];
     }
-
     public function get_style_depends()
     {
         return ['oup-blog-detail-breadcrumb-style'];
@@ -39,7 +36,7 @@ class Widget_BlogDetailBreadcrumb extends Widget_Base
 
     protected function register_controls()
     {
-        // Content 
+
         $this->start_controls_section('section_settings', [
             'label' => __('Settings', 'oup'),
         ]);
@@ -71,16 +68,8 @@ class Widget_BlogDetailBreadcrumb extends Widget_Base
             'description' => __('Taxonomy whose first term slug drives the pill background color. Must match the slugs in the CSS tag map.', 'oup'),
         ]);
 
-        $this->add_control('title_max_words', [
-            'label'   => __('Post Title Max Words', 'oup'),
-            'type'    => Controls_Manager::NUMBER,
-            'default' => 6,
-            'min'     => 1,
-        ]);
-
         $this->end_controls_section();
 
-        // Style
         $this->start_controls_section('style_section', [
             'label' => __('Breadcrumb', 'oup'),
             'tab'   => Controls_Manager::TAB_STYLE,
@@ -132,11 +121,11 @@ class Widget_BlogDetailBreadcrumb extends Widget_Base
             'type'       => Controls_Manager::DIMENSIONS,
             'size_units' => ['px', 'em', 'rem'],
             'default'    => [
-                'top'    => '5',
-                'right'  => '18',
-                'bottom' => '5',
-                'left'   => '18',
-                'unit'   => 'px',
+                'top'      => '5',
+                'right'    => '18',
+                'bottom'   => '5',
+                'left'     => '18',
+                'unit'     => 'px',
                 'isLinked' => false,
             ],
             'selectors' => [
@@ -157,80 +146,68 @@ class Widget_BlogDetailBreadcrumb extends Widget_Base
 
     protected function render()
     {
-        $settings      = $this->get_settings_for_display();
-        $post_id       = get_the_ID();
-        $taxonomy      = sanitize_key($settings['taxonomy']      ?? 'category');
-        $tag_taxonomy  = sanitize_key($settings['tag_taxonomy']  ?? 'post_tag');
-        $max_words     = max(1, (int) ($settings['title_max_words'] ?? 6));
-        $blog_label    = esc_html($settings['blog_label'] ?: __('Blog', 'oup'));
-        $blog_url      = esc_url($settings['blog_url']['url'] ?? home_url('/blog/'));
-        $separator     = esc_html($settings['separator_char'] ?: '>');
+        $settings     = $this->get_settings_for_display();
+        $post_id      = get_the_ID();
+        $taxonomy     = sanitize_key($settings['taxonomy']     ?? 'category');
+        $tag_taxonomy = sanitize_key($settings['tag_taxonomy'] ?? 'post_tag');
+        $blog_label   = esc_html($settings['blog_label'] ?: __('Blog', 'oup'));
+        $blog_url     = esc_url($settings['blog_url']['url'] ?? home_url('/blog/'));
+        $separator    = esc_html($settings['separator_char'] ?: '>');
+        $post_title   = get_the_title($post_id);
 
-        // Post title — show full title (no PHP truncation)
-        $post_title = get_the_title($post_id);
+        $categories = get_the_terms($post_id, $taxonomy);
+        $category   = (! is_wp_error($categories) && ! empty($categories)) ? $categories[0] : null;
+        $cat_name   = $category ? $category->name : '';
+        $cat_url    = $blog_url;
 
-        // Category (middle crumb)
-        $categories  = get_the_terms($post_id, $taxonomy);
-        $category    = (!is_wp_error($categories) && !empty($categories))
-            ? $categories[0]
-            : null;
-        $cat_name    = $category ? $category->name       : '';
-        $cat_url     = $blog_url;
-
-        // Tag → pill color 
         $tags = get_the_terms($post_id, $tag_taxonomy);
-        if (!is_wp_error($tags) && !empty($tags)) {
+        if (! is_wp_error($tags) && ! empty($tags)) {
             usort($tags, fn($a, $b) => $a->term_id - $b->term_id);
-            $first_tag = $tags[0];
+            $tag_slug = sanitize_html_class($tags[0]->slug);
         } else {
-            $first_tag = null;
+            $tag_slug = '';
         }
-        $tag_slug = $first_tag ? sanitize_html_class($first_tag->slug) : '';
-
-        // Render
 ?>
-        <nav class="bdb-breadcrumb-wrapper" aria-label="<?= esc_attr__('Breadcrumb', 'oup') ?>">
+        <nav class="bdb-breadcrumb-wrapper" aria-label="<?php esc_attr_e('Breadcrumb', 'oup'); ?>">
             <ol class="bdb-breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+
                 <li class="bdb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                     <span class="bdb-crumb">
-                        <a href="<?= $blog_url ?>" itemprop="item">
-                            <span itemprop="name"><?= $blog_label ?></span>
+                        <a href="<?php echo $blog_url; ?>" itemprop="item">
+                            <span itemprop="name"><?php echo $blog_label; ?></span>
                         </a>
                     </span>
                     <meta itemprop="position" content="1">
                 </li>
 
                 <li class="bdb-item bdb-item--sep" aria-hidden="true">
-                    <span class="bdb-separator"><?= $separator ?></span>
+                    <span class="bdb-separator"><?php echo $separator; ?></span>
                 </li>
 
                 <?php if ($cat_name) : ?>
                     <li class="bdb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                         <span class="bdb-crumb">
-                            <?php if (!is_wp_error($cat_url) && $cat_url) : ?>
-                                <a href="<?= esc_url($cat_url) ?>" itemprop="item">
-                                    <span itemprop="name"><?= esc_html($cat_name) ?></span>
-                                </a>
-                            <?php else : ?>
-                                <span itemprop="name"><?= esc_html($cat_name) ?></span>
-                            <?php endif; ?>
+                            <a href="<?php echo $cat_url; ?>" itemprop="item">
+                                <span itemprop="name"><?php echo esc_html($cat_name); ?></span>
+                            </a>
                         </span>
                         <meta itemprop="position" content="2">
                     </li>
 
                     <li class="bdb-item bdb-item--sep" aria-hidden="true">
-                        <span class="bdb-separator"><?= $separator ?></span>
+                        <span class="bdb-separator"><?php echo $separator; ?></span>
                     </li>
                 <?php endif; ?>
 
                 <li class="bdb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
                     <span
-                        class="bdb-crumb bdb-pill<?= $tag_slug ? ' ' . $tag_slug : '' ?>"
+                        class="bdb-crumb bdb-pill<?php echo $tag_slug ? ' ' . $tag_slug : ''; ?>"
                         itemprop="name"
                         aria-current="page"
-                        title="<?= esc_attr($post_title) ?>"><?= esc_html($post_title) ?></span>
-                    <meta itemprop="position" content="<?= $cat_name ? 3 : 2 ?>">
+                        title="<?php echo esc_attr($post_title); ?>"><?php echo esc_html($post_title); ?></span>
+                    <meta itemprop="position" content="<?php echo $cat_name ? 3 : 2; ?>">
                 </li>
+
             </ol>
         </nav>
 <?php
