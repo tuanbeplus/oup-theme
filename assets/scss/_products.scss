@@ -5,7 +5,8 @@
 				display: flex;
 				gap: 8px;
 				justify-content: center;
-    			margin-bottom: 8px;
+				margin-bottom: 8px;
+
 				.product-tag {
 					padding: 7px 10px;
 					color: var(--Black, #231F20);
@@ -16,15 +17,19 @@
 					font-weight: 500;
 					background-color: var(--e-global-color-f62bd18, #C6EFFE);
 					border-radius: 20px;
+
 					&.newly-updated {
 						background-color: var(--e-global-color-97eba3e, #FDEEB7);
 					}
+
 					&.short-version {
 						background-color: var(--e-global-color-2aff9a9, #DCD1F2);
 					}
+
 					&.long-version {
 						background-color: var(--e-global-color-e0250d0, #D8EAC7);
 					}
+
 					&.new-arrival {
 						background-color: var(--e-global-color-5e87840, #FCCDE5);
 					}
@@ -39,6 +44,7 @@ body.single-product {
 	.summary.entry-summary {
 		width: 100% !important;
 	}
+
 	main.site-main {
 		max-width: 1280px !important;
 		margin: 0 auto;
@@ -72,7 +78,7 @@ body.single-product {
 		}
 
 		// ── Product Layout (gallery + summary) ───────────────
-		> .product {
+		>.product {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 			gap: 60px;
@@ -282,7 +288,7 @@ body.single-product {
 					padding-top: 20px;
 				}
 
-				> span {
+				>span {
 					display: block;
 					margin-bottom: 6px;
 
@@ -292,12 +298,12 @@ body.single-product {
 				}
 
 				a {
-					color: #005375;
+					color: var(--e-global-color-primary);
 					text-decoration: none;
 					transition: color 0.25s ease;
 
 					&:hover {
-						color: #0091B3;
+						color: var(--e-global-color-secondary);
 						text-decoration: underline;
 						text-underline-offset: 3px;
 					}
@@ -314,7 +320,7 @@ body.single-product {
 				padding-top: 40px;
 			}
 
-			> h2 {
+			>h2 {
 				font-family: var(--e-global-typography-secondary-font-family, "League Spartan", sans-serif);
 				font-size: clamp(2rem, 4vw, 2.5rem);
 				font-weight: 700;
@@ -329,10 +335,12 @@ body.single-product {
 			}
 
 			ul.products {
+
 				&::before,
 				&::after {
 					display: none !important;
 				}
+
 				display: grid;
 				grid-template-columns: repeat(3, 1fr);
 				gap: 50px;
@@ -352,9 +360,10 @@ body.single-product {
 				li.product {
 					width: 100%;
 					text-align: center;
-					background-color: #fff;
+					background-color: var(--e-global-color-ed9b819);
 					border-radius: 27px;
 					padding: 40px;
+
 					display: flex;
 					flex-direction: column;
 					margin: 0;
@@ -438,7 +447,7 @@ body.single-product {
 							border: none;
 							border-left: 1px solid #ddd;
 							border-right: 1px solid #ddd;
-							background-color: #fff;
+							background-color: var(--e-global-color-ed9b819);
 							-webkit-appearance: none;
 							-moz-appearance: textfield;
 							padding: 0;
@@ -485,9 +494,9 @@ body.single-product {
 						font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
 						font-size: 1.125rem;
 						font-weight: 600;
+						color: var(--e-global-color-ed9b819);
+						background-color: var(--e-global-color-primary);
 						line-height: 1.5;
-						color: #fff;
-						background-color: #005375;
 						border: none;
 						border-radius: 32px;
 						cursor: pointer;
@@ -497,7 +506,7 @@ body.single-product {
 						box-sizing: border-box;
 
 						&:hover {
-							background-color: #0091B3;
+							background-color: var(--e-global-color-secondary);
 							box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 						}
 					}
@@ -507,6 +516,7 @@ body.single-product {
 
 		// ── WooCommerce Notices ──────────────────────────────
 		.woocommerce-notices-wrapper {
+
 			.woocommerce-message,
 			.woocommerce-error,
 			.woocommerce-info {
@@ -530,7 +540,7 @@ body.single-product {
 			font-size: 0.75rem;
 			font-weight: 700;
 			background-color: var(--e-global-color-5e87840, #FCCDE5);
-			color: #231F20;
+			color: var(--e-global-color-text);
 			border-radius: 20px;
 			padding: 6px 14px;
 			line-height: 1;

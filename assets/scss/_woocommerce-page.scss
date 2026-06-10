@@ -1,6 +1,7 @@
 body.woocommerce-page {
     main.site-main {
         max-width: 100%;
+
         @media (max-width:767px) {
             padding-inline-end: 0;
             padding-inline-start: 0;
@@ -43,6 +44,7 @@ body.woocommerce-page {
             margin: auto;
             padding: 80px 40px;
             font-family: var(--e-global-typography-text-font-family);
+
             @media (max-width:767px) {
                 padding: 50px 20px;
             }
