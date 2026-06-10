@@ -26,9 +26,9 @@
 .entry-content h4,
 .entry-content h5,
 .entry-content h6 {
-  font-family: "League Spartan", sans-serif;
+  font-family: var(--e-global-typography-secondary-font-family);
   line-height: 1.25;
-  color: #231F20;
+  color: var(--e-global-color-text);
   margin-top: 2.25rem;
   margin-bottom: 0.85rem;
   font-weight: 700;
@@ -120,10 +120,10 @@
 .elementor-widget-theme-post-content p,
 .elementor-text-editor p,
 .entry-content p {
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: var(--e-global-typography-primary-font-family);
   font-size: 1.125rem;
   line-height: 1.65;
-  color: #231F20;
+  color: var(--e-global-color-text);
   margin: 0 0 1.5rem 0;
 }
 @media (max-width: 768px) {
@@ -137,7 +137,7 @@
 .elementor-widget-theme-post-content a,
 .elementor-text-editor a,
 .entry-content a {
-  color: #005375;
+  color: var(--e-global-color-accent);
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1.5px;
@@ -146,8 +146,8 @@
 .elementor-widget-theme-post-content a:hover,
 .elementor-text-editor a:hover,
 .entry-content a:hover {
-  color: #0091B3;
-  text-decoration-color: #0091B3;
+  color: var(--e-global-color-secondary);
+  text-decoration-color: var(--e-global-color-secondary);
 }
 .elementor-widget-theme-post-content ul,
 .elementor-text-editor ul,
@@ -177,10 +177,10 @@
 .entry-content ul li {
   position: relative;
   margin-bottom: 0.75rem;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: var(--e-global-typography-primary-font-family);
   font-size: 1.125rem;
   line-height: 1.6;
-  color: #231F20;
+  color: var(--e-global-color-text);
   padding-left: 1.5rem;
 }
 @media (max-width: 768px) {
@@ -201,7 +201,7 @@
   top: 0.6em;
   width: 6px;
   height: 6px;
-  background-color: #0091B3;
+  background-color: var(--e-global-color-secondary);
   border-radius: 50%;
 }
 .elementor-widget-theme-post-content ol,
@@ -223,10 +223,10 @@
 .elementor-text-editor ol li,
 .entry-content ol li {
   margin-bottom: 0.75rem;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: var(--e-global-typography-primary-font-family);
   font-size: 1.125rem;
   line-height: 1.6;
-  color: #231F20;
+  color: var(--e-global-color-text);
   padding-left: 0.5rem;
 }
 @media (max-width: 768px) {
@@ -243,12 +243,12 @@
 .entry-content blockquote {
   margin: 2.5rem 0;
   padding: 1.75rem 2.25rem;
-  border-left: 4px solid #005375;
+  border-left: 4px solid var(--e-global-color-primary);
   background: rgba(0, 83, 117, 0.04);
   font-size: 1.25rem;
   line-height: 1.7;
   font-style: italic;
-  color: #005375;
+  color: var(--e-global-color-primary);
   border-radius: 0 12px 12px 0;
 }
 @media (max-width: 768px) {
@@ -327,7 +327,8 @@
   text-align: left;
   border-bottom: 2px solid #E2E8F0;
 }
-.elementor-widget-theme-post-content table th, .elementor-widget-theme-post-content table td,
+.elementor-widget-theme-post-content table th,
+.elementor-widget-theme-post-content table td,
 .elementor-text-editor table th,
 .elementor-text-editor table td,
 .entry-content table th,
@@ -338,7 +339,8 @@
   border-right: 1px solid #E2E8F0;
   border-bottom: 1px solid #E2E8F0;
 }
-.elementor-widget-theme-post-content table th:last-child, .elementor-widget-theme-post-content table td:last-child,
+.elementor-widget-theme-post-content table th:last-child,
+.elementor-widget-theme-post-content table td:last-child,
 .elementor-text-editor table th:last-child,
 .elementor-text-editor table td:last-child,
 .entry-content table th:last-child,
@@ -346,7 +348,8 @@
   border-right: none;
 }
 @media (max-width: 768px) {
-  .elementor-widget-theme-post-content table th, .elementor-widget-theme-post-content table td,
+  .elementor-widget-theme-post-content table th,
+  .elementor-widget-theme-post-content table td,
   .elementor-text-editor table th,
   .elementor-text-editor table td,
   .entry-content table th,
@@ -669,11 +672,11 @@ body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer {
   margin-top: 30px !important;
 }
 body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer input[type=submit] {
-  background-color: #005375;
+  background-color: var(--e-global-color-primary);
   margin-bottom: 0;
 }
 body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer input[type=submit]:hover {
-  background-color: #0091B3;
+  background-color: var(--e-global-color-secondary);
 }
 body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer input[type=submit]:active {
   transform: scale(0.98);
@@ -1162,7 +1165,7 @@ body.single-product main.site-main .onsale {
   font-size: 0.75rem;
   font-weight: 700;
   background-color: var(--e-global-color-5e87840, #FCCDE5);
-  color: #231F20;
+  color: var(--e-global-color-text);
   border-radius: 20px;
   padding: 6px 14px;
   line-height: 1;
@@ -1435,11 +1438,13 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   cursor: not-allowed;
   opacity: 0.7;
 }
-body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__actions .checkout-order-summary-block-fill .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__label, body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__actions .checkout-order-summary-block-fill .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
+body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__actions .checkout-order-summary-block-fill .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__label,
+body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__actions .checkout-order-summary-block-fill .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
   font-weight: 600;
 }
 @media (max-width: 767px) {
-  body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__actions .checkout-order-summary-block-fill .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__label, body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__actions .checkout-order-summary-block-fill .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
+  body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__actions .checkout-order-summary-block-fill .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__label,
+  body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__actions .checkout-order-summary-block-fill .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
     font-size: 1.125rem;
   }
 }
@@ -1530,7 +1535,8 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   cursor: not-allowed;
   opacity: 0.7;
 }
-body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-sidebar .wp-block-woocommerce-checkout-order-summary-block .wc-block-components-checkout-order-summary__content .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__label, body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-sidebar .wp-block-woocommerce-checkout-order-summary-block .wc-block-components-checkout-order-summary__content .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
+body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-sidebar .wp-block-woocommerce-checkout-order-summary-block .wc-block-components-checkout-order-summary__content .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__label,
+body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-sidebar .wp-block-woocommerce-checkout-order-summary-block .wc-block-components-checkout-order-summary__content .wc-block-components-totals-wrapper .wc-block-components-totals-item.wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
   font-weight: 600;
 }
 
@@ -1635,7 +1641,7 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   align-items: center;
   gap: 10px;
   font-size: 1.125rem;
-  color: #005375;
+  color: var(--e-global-color-primary);
   transition: color 0.2s ease;
 }
 @media (max-width: 767px) {
@@ -1749,7 +1755,8 @@ body.woocommerce-page main.site-main .page-content {
   border-collapse: collapse;
   margin-bottom: 40px;
 }
-.woocommerce-order table.shop_table th, .woocommerce-order table.shop_table td {
+.woocommerce-order table.shop_table th,
+.woocommerce-order table.shop_table td {
   padding: 15px;
   border-bottom: 1px solid #eee;
   text-align: left;
@@ -1758,7 +1765,8 @@ body.woocommerce-page main.site-main .page-content {
   font-weight: 600;
   color: var(--e-global-color-primary);
 }
-.woocommerce-order table.shop_table tfoot th, .woocommerce-order table.shop_table tfoot td {
+.woocommerce-order table.shop_table tfoot th,
+.woocommerce-order table.shop_table tfoot td {
   border-top: 2px solid #eee;
   font-weight: 600;
 }
@@ -1789,8 +1797,9 @@ body.woocommerce-account:not(.logged-in) .woocommerce h2 {
   margin-bottom: 25px;
   text-align: center;
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login, body.woocommerce-account:not(.logged-in) .woocommerce form.register {
-  background: #fff;
+body.woocommerce-account:not(.logged-in) .woocommerce form.login,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register {
+  background: var(--e-global-color-ed9b819);
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
@@ -1798,20 +1807,24 @@ body.woocommerce-account:not(.logged-in) .woocommerce form.login, body.woocommer
   margin: 0;
 }
 @media (max-width: 767px) {
-  body.woocommerce-account:not(.logged-in) .woocommerce form.login, body.woocommerce-account:not(.logged-in) .woocommerce form.register {
+  body.woocommerce-account:not(.logged-in) .woocommerce form.login,
+  body.woocommerce-account:not(.logged-in) .woocommerce form.register {
     padding: 20px;
   }
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login .form-row, body.woocommerce-account:not(.logged-in) .woocommerce form.register .form-row {
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .form-row,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .form-row {
   margin-bottom: 20px;
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login .form-row label, body.woocommerce-account:not(.logged-in) .woocommerce form.register .form-row label {
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .form-row label,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .form-row label {
   display: block;
   font-weight: 500;
   margin-bottom: 8px;
   color: var(--e-global-color-text);
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login .form-row input.input-text, body.woocommerce-account:not(.logged-in) .woocommerce form.register .form-row input.input-text {
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .form-row input.input-text,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .form-row input.input-text {
   width: 100%;
   padding: 12px 15px;
   border: 1px solid #ddd;
@@ -1819,14 +1832,16 @@ body.woocommerce-account:not(.logged-in) .woocommerce form.login .form-row input
   transition: all 0.3s ease;
   box-sizing: border-box;
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login .form-row input.input-text:focus, body.woocommerce-account:not(.logged-in) .woocommerce form.register .form-row input.input-text:focus {
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .form-row input.input-text:focus,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .form-row input.input-text:focus {
   border-color: var(--e-global-color-primary);
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-button, body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-button {
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-button,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-button {
   background-color: var(--e-global-color-secondary);
-  color: #fff;
+  color: var(--e-global-color-ed9b819);
   border: none;
   padding: 12px 30px;
   border-radius: 30px;
@@ -1835,18 +1850,22 @@ body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-bu
   width: 100%;
   transition: background-color 0.3s ease;
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-button:hover, body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-button:hover {
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-button:hover,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-button:hover {
   background-color: var(--e-global-color-primary);
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-LostPassword, body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-LostPassword {
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-LostPassword,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-LostPassword {
   margin-top: 15px;
   text-align: center;
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-LostPassword a, body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-LostPassword a {
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-LostPassword a,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-LostPassword a {
   color: var(--e-global-color-primary);
   text-decoration: none;
 }
-body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-LostPassword a:hover, body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-LostPassword a:hover {
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-LostPassword a:hover,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-LostPassword a:hover {
   color: var(--e-global-color-accent);
 }
 
@@ -1888,15 +1907,15 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-navigatio
 }
 body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-navigation ul li a:hover {
   background: var(--e-global-color-primary);
-  color: #fff;
+  color: var(--e-global-color-ed9b819);
 }
 body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-navigation ul li.is-active a {
   background: var(--e-global-color-primary);
-  color: #fff;
+  color: var(--e-global-color-ed9b819);
 }
 body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content {
   width: calc(75% - 30px);
-  background: #fff;
+  background: var(--e-global-color-ed9b819);
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -1929,7 +1948,8 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content t
   margin-bottom: 20px;
   border: none;
 }
-body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content table.shop_table th, body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content table.shop_table td {
+body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content table.shop_table th,
+body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content table.shop_table td {
   padding: 15px;
   border-bottom: 1px solid #eee;
   text-align: left;
@@ -1944,7 +1964,7 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content t
 }
 body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content table.shop_table .woocommerce-button {
   background: var(--e-global-color-primary);
-  color: #fff;
+  color: var(--e-global-color-ed9b819);
   padding: 8px 15px;
   border-radius: 20px;
   font-size: 0.875rem;
@@ -1962,20 +1982,22 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content f
   margin-bottom: 8px;
   font-weight: 500;
 }
-body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content form .form-row input.input-text, body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content form .form-row textarea {
+body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content form .form-row input.input-text,
+body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content form .form-row textarea {
   width: 100%;
   padding: 12px 15px;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-sizing: border-box;
 }
-body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content form .form-row input.input-text:focus, body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content form .form-row textarea:focus {
+body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content form .form-row input.input-text:focus,
+body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content form .form-row textarea:focus {
   border-color: var(--e-global-color-primary);
   outline: none;
 }
 body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content form button.button {
   background: var(--e-global-color-secondary);
-  color: #fff;
+  color: var(--e-global-color-ed9b819);
   border: none;
   margin-top: 20px;
   padding: 12px 30px;
@@ -2003,8 +2025,8 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content f
   gap: 10px;
   font-size: 0.938rem;
   line-height: 1.6;
-  color: #231F20;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  color: var(--e-global-color-text);
+  font-family: var(--e-global-typography-primary-font-family);
 }
 @media (max-width: 767px) {
   .sce-meta-item {
@@ -2057,11 +2079,11 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content f
 }
 
 .sce-price-amount {
-  font-family: "League Spartan", sans-serif;
+  font-family: var(--e-global-typography-secondary-font-family);
   font-size: 1.875rem;
   font-weight: 600;
   line-height: 1.1;
-  color: #231F20;
+  color: var(--e-global-color-text);
   letter-spacing: -0.01em;
 }
 @media (max-width: 1024px) {
@@ -2077,14 +2099,14 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content f
 
 .sce-price-suffix {
   font-size: 0.938rem;
-  color: #231F20;
+  color: var(--e-global-color-text);
   font-weight: 400;
   line-height: 1;
 }
 
 .sce-price-label {
   font-size: 0.938rem;
-  color: #231F20;
+  color: var(--e-global-color-text);
   font-weight: 600;
   line-height: 1.6;
 }

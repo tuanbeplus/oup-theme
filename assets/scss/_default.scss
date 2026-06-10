@@ -15,9 +15,9 @@
     h4,
     h5,
     h6 {
-        font-family: "League Spartan", sans-serif;
+        font-family: var(--e-global-typography-secondary-font-family);
         line-height: 1.25;
-        color: #231F20;
+        color: var(--e-global-color-text);
         margin-top: 2.25rem;
         margin-bottom: 0.85rem;
         font-weight: 700;
@@ -73,10 +73,10 @@
 
 
     p {
-        font-family: "Plus Jakarta Sans", sans-serif;
+        font-family: var(--e-global-typography-primary-font-family);
         font-size: 1.125rem;
         line-height: 1.65;
-        color: #231F20;
+        color: var(--e-global-color-text);
         margin: 0 0 1.5rem 0;
 
         @media (max-width: 768px) {
@@ -87,15 +87,15 @@
 
 
     a {
-        color: #005375;
+        color: var(--e-global-color-accent);
         text-decoration: underline;
         text-underline-offset: 3px;
         text-decoration-thickness: 1.5px;
         transition: color 0.25s ease, text-decoration-color 0.25s ease;
 
         &:hover {
-            color: #0091B3;
-            text-decoration-color: #0091B3;
+            color: var(--e-global-color-secondary);
+            text-decoration-color: var(--e-global-color-secondary);
         }
     }
 
@@ -118,10 +118,10 @@
         li {
             position: relative;
             margin-bottom: 0.75rem;
-            font-family: "Plus Jakarta Sans", sans-serif;
+            font-family: var(--e-global-typography-primary-font-family);
             font-size: 1.125rem;
             line-height: 1.6;
-            color: #231F20;
+            color: var(--e-global-color-text);
             padding-left: 1.5rem;
 
             @media (max-width: 768px) {
@@ -130,7 +130,7 @@
                 padding-left: 1.25rem;
             }
 
-        
+
             &::before {
                 content: "";
                 position: absolute;
@@ -138,7 +138,7 @@
                 top: 0.6em;
                 width: 6px;
                 height: 6px;
-                background-color: #0091B3;
+                background-color: var(--e-global-color-secondary);
                 border-radius: 50%;
             }
         }
@@ -156,10 +156,10 @@
 
         li {
             margin-bottom: 0.75rem;
-            font-family: "Plus Jakarta Sans", sans-serif;
+            font-family: var(--e-global-typography-primary-font-family);
             font-size: 1.125rem;
             line-height: 1.6;
-            color: #231F20;
+            color: var(--e-global-color-text);
             padding-left: 0.5rem;
 
             @media (max-width: 768px) {
@@ -174,12 +174,12 @@
     blockquote {
         margin: 2.5rem 0;
         padding: 1.75rem 2.25rem;
-        border-left: 4px solid #005375;
-        background: rgba(0, 83, 117, 0.04); 
+        border-left: 4px solid var(--e-global-color-primary);
+        background: rgba(0, 83, 117, 0.04);
         font-size: 1.25rem;
         line-height: 1.7;
         font-style: italic;
-        color: #005375;
+        color: var(--e-global-color-primary);
         border-radius: 0 12px 12px 0;
 
         @media (max-width: 768px) {
@@ -197,7 +197,7 @@
     }
 
 
-    img{
+    img {
         display: block;
         height: auto;
         border-radius: 20px !important;
@@ -245,7 +245,8 @@
             border-bottom: 2px solid #E2E8F0;
         }
 
-        th, td {
+        th,
+        td {
             padding: 1rem 1.25rem;
             font-size: 1rem;
             line-height: 1.6;
@@ -267,7 +268,7 @@
         }
     }
 
-   
+
     hr {
         border: none;
         height: 1px;

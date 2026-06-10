@@ -4,7 +4,6 @@ body.woocommerce-account {
     }
 }
 
-
 body.woocommerce-account:not(.logged-in) .woocommerce {
     max-width: 500px;
     margin: 0 auto;
@@ -18,11 +17,12 @@ body.woocommerce-account:not(.logged-in) .woocommerce {
         text-align: center;
     }
 
-    form.login, form.register {
-        background: #fff;
+    form.login,
+    form.register {
+        background: var(--e-global-color-ed9b819);
         padding: 40px;
         border-radius: 12px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         border: none;
         margin: 0;
 
@@ -51,14 +51,14 @@ body.woocommerce-account:not(.logged-in) .woocommerce {
                 &:focus {
                     border-color: var(--e-global-color-primary);
                     outline: none;
-                    box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+                    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
                 }
             }
         }
 
         .woocommerce-button {
             background-color: var(--e-global-color-secondary);
-            color: #fff;
+            color: var(--e-global-color-ed9b819);
             border: none;
             padding: 12px 30px;
             border-radius: 30px;
@@ -71,28 +71,28 @@ body.woocommerce-account:not(.logged-in) .woocommerce {
                 background-color: var(--e-global-color-primary);
             }
         }
-        
+
         .woocommerce-LostPassword {
             margin-top: 15px;
             text-align: center;
+
             a {
                 color: var(--e-global-color-primary);
                 text-decoration: none;
+
                 &:hover {
                     color: var(--e-global-color-accent);
                 }
             }
         }
     }
-
-  
 }
-
 
 body.woocommerce-account.logged-in .woocommerce {
     display: flex;
     flex-wrap: wrap;
-    > .woocommerce-notices-wrapper {
+
+    >.woocommerce-notices-wrapper {
         width: 100%;
     }
 
@@ -100,7 +100,6 @@ body.woocommerce-account.logged-in .woocommerce {
         width: 20%;
         margin-right: 30px;
 
-        
         @media (max-width: 767px) {
             width: 100%;
             margin-right: 0;
@@ -127,13 +126,13 @@ body.woocommerce-account.logged-in .woocommerce {
 
                     &:hover {
                         background: var(--e-global-color-primary);
-                        color: #fff;
+                        color: var(--e-global-color-ed9b819);
                     }
                 }
 
                 &.is-active a {
                     background: var(--e-global-color-primary);
-                    color: #fff;
+                    color: var(--e-global-color-ed9b819);
                 }
             }
         }
@@ -141,10 +140,10 @@ body.woocommerce-account.logged-in .woocommerce {
 
     .woocommerce-MyAccount-content {
         width: calc(75% - 30px);
-        background: #fff;
+        background: var(--e-global-color-ed9b819);
         padding: 30px;
         border-radius: 12px;
-        box-shadow: 0 5px 20px rgba(0,0,0,10%);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 10%);
         box-sizing: border-box;
 
         @media (max-width: 767px) {
@@ -170,13 +169,15 @@ body.woocommerce-account.logged-in .woocommerce {
             color: var(--e-global-color-primary);
             margin-top: 0;
         }
+
         table.shop_table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
             border: none;
 
-            th, td {
+            th,
+            td {
                 padding: 15px;
                 border-bottom: 1px solid #eee;
                 text-align: left;
@@ -193,7 +194,7 @@ body.woocommerce-account.logged-in .woocommerce {
 
             .woocommerce-button {
                 background: var(--e-global-color-primary);
-                color: #fff;
+                color: var(--e-global-color-ed9b819);
                 padding: 8px 15px;
                 border-radius: 20px;
                 font-size: 0.875rem;
@@ -205,34 +206,36 @@ body.woocommerce-account.logged-in .woocommerce {
                 }
             }
         }
-        
-    
+
+
         form {
             .form-row {
                 margin-bottom: 20px;
-                
+
                 label {
                     display: block;
                     margin-bottom: 8px;
                     font-weight: 500;
                 }
-                
-                input.input-text, textarea {
+
+                input.input-text,
+                textarea {
                     width: 100%;
                     padding: 12px 15px;
                     border: 1px solid #ddd;
                     border-radius: 8px;
                     box-sizing: border-box;
+
                     &:focus {
                         border-color: var(--e-global-color-primary);
                         outline: none;
                     }
                 }
             }
-            
+
             button.button {
                 background: var(--e-global-color-secondary);
-                color: #fff;
+                color: var(--e-global-color-ed9b819);
                 border: none;
                 margin-top: 20px;
                 padding: 12px 30px;

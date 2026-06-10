@@ -5,6 +5,8 @@
  * @package Onwards-Upwards-Psychology-Theme
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $lessons_list  = $args['lessons_list'] ?? [];
 $default_state = $args['default_state'] ?? 'first_expanded';
 $max_items     = $args['max_items'] ?? 'one';
