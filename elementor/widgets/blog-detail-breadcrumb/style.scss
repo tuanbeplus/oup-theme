@@ -2,17 +2,13 @@ $font-body: "Plus Jakarta Sans", sans-serif;
 $color-text: #231F20;
 $color-accent: #0091B3;
 
-// Tag colour map — keep in sync with apf-card__tag rules
 $tag-default: #C6EFFE;
-
-// Named slugs
 $tag-map: (
     "product-feature": #FDEEB7,
     "real-talk": #D8EAC7,
     "milestone": #FCCDE5,
 );
 
-// Widget
 .bdb-breadcrumb-wrapper {
     display: block;
 }
@@ -27,10 +23,9 @@ $tag-map: (
     gap: 10px;
 }
 
-// Individual crumb
 .bdb-crumb {
-    font-size: 0.938rem;
     font-family: $font-body;
+    font-size: 0.938rem;
     line-height: 1.6;
     color: $color-text;
 
@@ -45,22 +40,20 @@ $tag-map: (
     }
 }
 
-// Separator
 .bdb-separator {
-    font-size: 1.125rem;
     font-family: $font-body;
+    font-size: 1.125rem;
     line-height: 1.6;
     color: #6DCFF6;
     user-select: none;
 }
 
-// Title pill
 .bdb-pill {
     display: inline-block;
     padding: 5px 18px;
     border-radius: 30px;
-    font-size: 0.938rem;
     font-family: $font-body;
+    font-size: 0.938rem;
     line-height: 1.6;
     color: $color-text;
     background: $tag-default;

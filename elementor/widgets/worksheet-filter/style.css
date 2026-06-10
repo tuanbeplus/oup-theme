@@ -222,14 +222,6 @@
   font-weight: 400;
   line-height: 1.6;
 }
-@keyframes shimmer {
-  0% {
-    background-position: -468px 0;
-  }
-  100% {
-    background-position: 468px 0;
-  }
-}
 .worksheet-filter-wrapper .worksheet-card-skeleton {
   height: 386px;
   background: #fff;
@@ -279,6 +271,15 @@
   border-radius: 30px;
   margin-top: auto;
   flex-shrink: 0;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
 }
 
 /*# sourceMappingURL=style.css.map*/

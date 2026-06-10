@@ -83,7 +83,7 @@
                 line-height: 1.6;
                 color: #231F20;
 
-             
+
                 @media (max-width: 767px) {
                     font-size: 16px;
                 }
@@ -205,6 +205,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             flex-shrink: 0;
+
             @media (max-width: 767px) {
                 font-size: 1.5rem;
             }
@@ -229,16 +230,6 @@
         }
     }
 
- 
-    @keyframes shimmer {
-        0% {
-            background-position: -468px 0;
-        }
-        100% {
-            background-position: 468px 0;
-        }
-    }
-
     .worksheet-card-skeleton {
         height: 386px;
         background: #fff;
@@ -248,8 +239,8 @@
         display: flex;
         flex-direction: column;
 
-        .skeleton-image, 
-        .skeleton-title, 
+        .skeleton-image,
+        .skeleton-title,
         .skeleton-badge {
             background: #f6f7f8;
             background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
@@ -281,7 +272,7 @@
             width: 80%;
             border-radius: 4px;
             flex-shrink: 0;
-            
+
             &.short {
                 width: 50%;
             }
@@ -294,5 +285,15 @@
             margin-top: auto;
             flex-shrink: 0;
         }
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -468px 0;  
+    }
+
+    100% {
+        background-position: 468px 0;
     }
 }

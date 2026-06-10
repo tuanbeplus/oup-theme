@@ -3,6 +3,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+// Search Hook
 add_action('pre_get_posts', 'oup_exclude_search_post_types');
 function oup_exclude_search_post_types(WP_Query $query)
 {

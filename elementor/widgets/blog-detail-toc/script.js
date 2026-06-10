@@ -13,7 +13,6 @@
                 elementorFrontend.isEditMode()
             );
 
-            // Skip re-init on frontend; always re-render in editor
             if (!isEditor) {
                 if ($toc.data('toc-initialized')) return;
                 $toc.data('toc-initialized', true);
@@ -21,12 +20,10 @@
 
             var tocId = $toc.attr('id');
 
-            // Remove previous scroll listener before rebuilding
             $(window).off('scroll.tocall-' + tocId);
 
-            // Read settings from data attributes
-            var includeTags = ($toc.attr('data-toc-tags') || 'h2').split(',').map(Function.prototype.call, String.prototype.trim).filter(Boolean);
-            var excludeTags = ($toc.attr('data-toc-exclude') || '').split(',').map(Function.prototype.call, String.prototype.trim).filter(Boolean);
+            var includeTags = ($toc.attr('data-toc-tags') || 'h2').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+            var excludeTags = ($toc.attr('data-toc-exclude') || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
             var containerSel = ($toc.attr('data-toc-container') || '').trim();
             var marker = ($toc.attr('data-toc-marker') || 'bullets').trim();
             var iconClass = ($toc.attr('data-toc-icon') || '').trim();
@@ -34,7 +31,6 @@
 
             var $list = $toc.find('.table-of-content-all__list');
 
-            // Determine search root (body or custom container)
             var $root = $('body');
             if (containerSel) {
                 var $container = $(containerSel).first();
@@ -45,7 +41,6 @@
                 }
             }
 
-            // Build active tag list (include minus exclude)
             var activeTags = includeTags.filter(function (tag) {
                 return excludeTags.indexOf(tag) === -1;
             });
@@ -55,14 +50,11 @@
                 return;
             }
 
-            // Collect headings & auto-assign IDs
             var headings = [];
             var idCounter = {};
 
             $root.find(activeTags.join(',')).each(function () {
                 var $h = $(this);
-
-                // Skip headings inside the TOC widget itself
                 if ($h.closest('.table-of-content-all').length) return;
 
                 var text = $h.text().trim();
@@ -92,7 +84,6 @@
                 headings.push({ id: id, text: text, $el: $h });
             });
 
-            // Remove duplicate IDs
             headings = headings.filter(function (h, idx, arr) {
                 return arr.findIndex(function (x) { return x.id === h.id; }) === idx;
             });
@@ -102,7 +93,6 @@
                 return;
             }
 
-            // Render TOC list
             var html = '';
             headings.forEach(function (h, i) {
                 html += '<li class="table-of-content-all__item" data-toc-id="' + h.id + '">';
@@ -120,7 +110,6 @@
 
             $list.html(html);
 
-            // Editor only needs the list rendered, no scroll interactions
             if (isEditor) return;
 
             var $items = $list.find('.table-of-content-all__item');
@@ -137,10 +126,6 @@
             function setActiveById(id) {
                 $items.removeClass('active');
                 $items.filter('[data-toc-id="' + id + '"]').addClass('active');
-            }
-
-            function applyActiveScroll(id) {
-                setActiveById(id);
             }
 
             function scrollToHeading(id, pushState) {
@@ -171,13 +156,11 @@
                 }
             }
 
-            // Click: scroll + push URL hash
             $links.on('click', function (e) {
                 e.preventDefault();
                 scrollToHeading($(this).attr('href').replace('#', ''), true);
             });
 
-            // On page load: scroll to hash or auto-active first
             var initialHash = window.location.hash.replace('#', '');
             if (initialHash) {
                 setTimeout(function () {
@@ -190,7 +173,6 @@
                 }, 100);
             }
 
-            // Browser back/forward
             $(window).off('popstate.tocall-' + tocId).on('popstate.tocall-' + tocId, function () {
                 var hash = window.location.hash.replace('#', '');
                 if (hash) {
@@ -201,7 +183,6 @@
                 }
             });
 
-            // Scroll listener (RAF-throttled), never touches URL
             function updateActiveOnScroll() {
                 if (isScrollingFromClick) return;
 
@@ -212,20 +193,20 @@
                 var lastBottom = lastEl.getBoundingClientRect().bottom + window.pageYOffset;
                 if (window.pageYOffset > lastBottom) return;
 
+                var activeId = $items.filter('.active').attr('data-toc-id');
                 var found = false;
+
                 for (var i = headings.length - 1; i >= 0; i--) {
                     var top = headings[i].$el[0].getBoundingClientRect().top + window.pageYOffset;
                     if (top <= scrollPos) {
-                        var currentId = $items.filter('.active').attr('data-toc-id');
-                        if (currentId !== headings[i].id) applyActiveScroll(headings[i].id);
+                        if (activeId !== headings[i].id) setActiveById(headings[i].id);
                         found = true;
                         break;
                     }
                 }
 
-                if (!found) {
-                    var currentId = $items.filter('.active').attr('data-toc-id');
-                    if (currentId !== headings[0].id) applyActiveScroll(headings[0].id);
+                if (!found && activeId !== headings[0].id) {
+                    setActiveById(headings[0].id);
                 }
             }
 
@@ -243,7 +224,6 @@
         });
     }
 
-    // Elementor hooks
     $(window).on('elementor/frontend/init', function () {
         elementorFrontend.hooks.addAction(
             'frontend/element_ready/blog-detail-toc.default',
@@ -251,7 +231,6 @@
         );
     });
 
-    // Fallback: init on DOM ready (non-Elementor pages / plain WP)
     $(document).ready(function () {
         if (typeof elementorFrontend === 'undefined') {
             initBlogDetailToc(null);

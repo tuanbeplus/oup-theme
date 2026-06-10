@@ -6,35 +6,31 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 
-if (!defined('ABSPATH')) exit;
+if (! defined('ABSPATH')) exit;
 
 class Widget_BlogDetailToc extends Widget_Base
 {
+
     public function get_name()
     {
         return 'blog-detail-toc';
     }
-
     public function get_title()
     {
         return __('Blog Detail TOC', 'oup');
     }
-
     public function get_icon()
     {
         return 'eicon-table-of-contents';
     }
-
     public function get_categories()
     {
         return ['oup'];
     }
-
     public function get_style_depends()
     {
         return ['oup-blog-detail-toc-style'];
     }
-
     public function get_script_depends()
     {
         return ['oup-blog-detail-toc-script'];
@@ -42,7 +38,7 @@ class Widget_BlogDetailToc extends Widget_Base
 
     protected function register_controls()
     {
-        // Content
+
         $this->start_controls_section('section_content', [
             'label' => __('Content', 'oup'),
         ]);
@@ -127,7 +123,6 @@ class Widget_BlogDetailToc extends Widget_Base
 
         $this->end_controls_section();
 
-        // Style: Typography
         $this->start_controls_section('section_style_typography', [
             'label' => __('Typography', 'oup'),
             'tab'   => Controls_Manager::TAB_STYLE,
@@ -140,7 +135,6 @@ class Widget_BlogDetailToc extends Widget_Base
 
         $this->end_controls_section();
 
-        // Style: Link States
         $this->start_controls_section('section_style_states', [
             'label' => __('Link States', 'oup'),
             'tab'   => Controls_Manager::TAB_STYLE,
@@ -148,7 +142,6 @@ class Widget_BlogDetailToc extends Widget_Base
 
         $this->start_controls_tabs('tabs_heading_states');
 
-        // Normal
         $this->start_controls_tab('tab_normal', ['label' => __('Normal', 'oup')]);
 
         $this->add_control('heading_color', [
@@ -165,7 +158,6 @@ class Widget_BlogDetailToc extends Widget_Base
 
         $this->end_controls_tab();
 
-        // Hover
         $this->start_controls_tab('tab_hover', ['label' => __('Hover', 'oup')]);
 
         $this->add_control('heading_color_hover', [
@@ -194,7 +186,6 @@ class Widget_BlogDetailToc extends Widget_Base
 
         $this->end_controls_tab();
 
-        // Active
         $this->start_controls_tab('tab_active', ['label' => __('Active', 'oup')]);
 
         $this->add_control('heading_color_active', [
@@ -223,7 +214,6 @@ class Widget_BlogDetailToc extends Widget_Base
         $this->end_controls_tabs();
         $this->end_controls_section();
 
-        // Style: Spacing
         $this->start_controls_section('section_style_spacing', [
             'label' => __('Spacing', 'oup'),
             'tab'   => Controls_Manager::TAB_STYLE,
@@ -252,9 +242,9 @@ class Widget_BlogDetailToc extends Widget_Base
 
     protected function render()
     {
-        $settings = $this->get_settings_for_display();
-
-        $tag             = $settings['html_tag'] ?: 'div';
+        $settings        = $this->get_settings_for_display();
+        $allowed_tags    = ['div', 'nav', 'aside'];
+        $tag             = in_array($settings['html_tag'], $allowed_tags, true) ? $settings['html_tag'] : 'div';
         $anchors         = $settings['anchors_by_tags'] ?: ['h2'];
         $exclude_tags    = $settings['exclude_tags'] ?: [];
         $container       = $settings['container'] ?: '';
@@ -262,22 +252,15 @@ class Widget_BlogDetailToc extends Widget_Base
         $show_icon       = $settings['show_icon'] === 'yes';
         $icon            = $settings['icon'] ?? null;
         $toc_title       = $settings['toc_title'] ?: __('Table of Contents', 'oup');
-        $no_headings_msg = $settings['no_headings_message'];
+        $no_headings_msg = $settings['no_headings_message'] ?: __('No headings were found on this page.', 'oup');
         $word_wrap       = $settings['word_wrap'] === 'yes';
 
-        $toc_id       = 'toc-' . uniqid();
+        $toc_id       = 'toc-' . $this->get_id();
         $list_classes = 'table-of-content-all__list' . ($word_wrap ? ' table-of-content-all__wrap' : '');
 
         printf(
-            '<%1$s class="table-of-content-all all" id="%2$s"
-                data-toc-tags="%3$s"
-                data-toc-exclude="%4$s"
-                %5$s
-                data-toc-marker="%6$s"
-                data-toc-icon="%7$s"
-                data-toc-noheadings="%8$s"
-            >',
-            esc_attr($tag),
+            '<%s class="table-of-content-all all" id="%s" data-toc-tags="%s" data-toc-exclude="%s" %s data-toc-marker="%s" data-toc-icon="%s" data-toc-noheadings="%s">',
+            $tag,
             esc_attr($toc_id),
             esc_attr(implode(',', $anchors)),
             esc_attr(implode(',', $exclude_tags)),
@@ -290,7 +273,8 @@ class Widget_BlogDetailToc extends Widget_Base
         if ($toc_title) {
             echo '<p class="table-of-content-all__title">' . esc_html($toc_title) . '</p>';
         }
+
         echo '<ul class="' . esc_attr($list_classes) . '"></ul>';
-        echo '</' . esc_attr($tag) . '>';
+        echo '</' . $tag . '>';
     }
 }
