@@ -11,7 +11,7 @@
 
     // Set header height for --header-height CSS variable
     function setHeaderHeight() {
-        if (siteHeader.length) {    
+        if (siteHeader.length) {
             var h = siteHeader.outerHeight();
             document.documentElement.style.setProperty('--header-height', h + 'px');
         }
@@ -28,31 +28,12 @@
         }
     }
 
-    function initLogoSlider() {
-        $('.oup-logo-swiper').each(function () {
-            var $slider = $(this);
-            var settings = $slider.data('swiper-settings');
-
-            if (typeof elementorFrontend !== 'undefined' && elementorFrontend.utils && elementorFrontend.utils.swiper) {
-                new elementorFrontend.utils.swiper(this, settings).then(function (swiperInstance) {
-                    if (settings.autoplay && swiperInstance.autoplay) {
-                        swiperInstance.autoplay.start();
-                    }
-                });
-            } else if (typeof Swiper !== 'undefined') {
-                new Swiper(this, settings);
-            }
-        });
-    }
-
     $(function () {
         setHeaderHeight();
         handleStickyHeader();
 
         $(window).on('resize', setHeaderHeight);
         $(window).on('scroll', handleStickyHeader);
-        
-        initLogoSlider();
     });
 
     $(document).on('click', '.carousel-btn-pre', function (e) {
@@ -71,25 +52,25 @@
         e.preventDefault();
         const currentBtn = $(this);
         const productId = currentBtn.attr('id');
-        const btnATCajax = $('.add_to_cart_button[data-product_id='+productId+']');
+        const btnATCajax = $('.add_to_cart_button[data-product_id=' + productId + ']');
         const textBtn = currentBtn.find('.elementor-button-text').length ? currentBtn.find('.elementor-button-text') : currentBtn;
 
         currentBtn.addClass('loading');
         btnATCajax.click();
 
         // Track if the btnATCajax has added class "added"
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
+        const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
                 if (mutation.attributeName === 'class' && btnATCajax.hasClass('added')) {
                     currentBtn.removeClass('loading');
                     textBtn.text('Added');
-                    
+
                     // Change text back after 3 seconds
-                    setTimeout(function() {
+                    setTimeout(function () {
                         textBtn.text('Add to cart');
                         btnATCajax.removeClass('added'); // Reset for future clicks
                     }, 5000);
-                    
+
                     observer.disconnect();
                 }
             });
@@ -99,8 +80,8 @@
             observer.observe(btnATCajax[0], { attributes: true });
         }
     });
-	
-	$(document).on('click', '.elementor-nav-menu .menu-item-has-children > a', function (e) {
+
+    $(document).on('click', '.elementor-nav-menu .menu-item-has-children > a', function (e) {
         // If the user clicks on the chevron (sub-arrow), prevent the default link navigation
         if ($(e.target).closest('.sub-arrow').length) {
             e.preventDefault();
@@ -194,6 +175,60 @@
         if (e.key === 'Enter' || e.keyCode === 13) {
             e.preventDefault();
             doSearchRedirect($(this));
+        }
+    });
+
+    // Scroll to section
+    $('.post-type-archive-product a[href^="#"]').on('click', function (e) {
+        const targetId = this.hash || $(this).attr('href');
+        // Ignore empty anchors
+        if (!targetId || targetId === '#') return;
+
+        const target = document.querySelector(targetId);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const header = document.querySelector('header.elementor-location-header');
+        const headerHeight = header ? header.offsetHeight : 0;
+        const offset = headerHeight + 30;
+        const targetPosition =
+            target.getBoundingClientRect().top +
+            window.scrollY -
+            offset;
+
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+
+    });
+
+    // Add qty minus and plus buttons
+    $('.post-type-archive-product .product .quantity').each(function () {
+        $(this).prepend('<button type="button" class="qty-minus">−</button>');
+        $(this).append('<button type="button" class="qty-plus">+</button>');
+    });
+
+    // Qty plus button
+    $(document).on('click', '.product .qty-plus', function () {
+        const $input = $(this).siblings('input[type="number"]');
+        let value = parseInt($input.val()) || 0;
+        const max = parseInt($input.attr('max'));
+
+        if (!max || value < max) {
+            $input.val(value + 1).trigger('change');
+        }
+    });
+
+    // Qty minus button
+    $(document).on('click', '.product .qty-minus', function () {
+        const $input = $(this).siblings('input[type="number"]');
+        let value = parseInt($input.val()) || 0;
+        const min = parseInt($input.attr('min')) || 1;
+
+        if (value > min) {
+            $input.val(value - 1).trigger('change');
         }
     });
 
