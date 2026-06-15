@@ -1169,7 +1169,6 @@ body.single-product main.site-main .onsale {
 .zoom-products li.product.zoom-in {
   animation: zoomInProducts 0.6s ease-in-out;
 }
-
 @keyframes zoomInProducts {
   0% {
     opacity: 0;
@@ -1180,6 +1179,7 @@ body.single-product main.site-main .onsale {
     transform: scale(1);
   }
 }
+
 body.woocommerce-cart main.site-main:has(.wp-block-woocommerce-empty-cart-block) {
   min-height: 50vh;
 }
