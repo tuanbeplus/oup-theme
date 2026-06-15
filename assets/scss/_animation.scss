@@ -23,7 +23,7 @@
         &.reveal-image img,
         &.reveal-image .elementor-widget-container {
             will-change: clip-path;
-            animation: clipRevealTopToBottom 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: clipRevealTopToBottom 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.3s;
         }
     }
