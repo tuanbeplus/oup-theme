@@ -14,7 +14,7 @@ body.woocommerce-checkout {
                         //payment method
                         .wc-block-checkout__payment-method {
                             .wc-stripe-payment-method-instruction a {
-                                color: var(--e-global-color-primary);
+                                color: var(--e-global-color-primary) !important;
                             }
                         }
 
