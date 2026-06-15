@@ -178,6 +178,24 @@
         }
     });
 
+    // Product cards zoom in on scroll
+    function initProductZoomIn() {
+        const products = document.querySelectorAll('.zoom-products li.product');
+        if (!products.length) return;
+        const delay = performance.now() < 1000 ? 500 : 0;
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(({ target, isIntersecting }) => {
+                if (!isIntersecting) return;
+                setTimeout(() => target.classList.add('zoom-in'), delay);
+                observer.unobserve(target);
+            });
+        }, { threshold: 0.15 });
+        products.forEach(product => observer.observe(product));
+    }
+    $(function () { 
+        initProductZoomIn(); 
+    });
+
     // Scroll to section
     $('.post-type-archive-product a[href^="#"]').on('click', function (e) {
         const targetId = this.hash || $(this).attr('href');
