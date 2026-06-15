@@ -554,7 +554,7 @@ body.single-product {
 .zoom-products {
 	li.product {
 		opacity: 0;
-		transform: scale(0.8);
+		transform: scale(0);
 		transition: opacity .6s ease, transform .6s ease;
 	}
 
