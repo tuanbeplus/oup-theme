@@ -1167,15 +1167,15 @@ body.single-product main.site-main .onsale {
   opacity: 0;
 }
 .zoom-products li.product.zoom-in {
-  animation: zoomIn 0.4s ease-out forwards;
+  animation: zoomInProducts 0.6s ease-in-out;
 }
 
-@keyframes zoomIn {
-  from {
+@keyframes zoomInProducts {
+  0% {
     opacity: 0;
     transform: scale(0);
   }
-  to {
+  100% {
     opacity: 1;
     transform: scale(1);
   }
