@@ -1163,6 +1163,16 @@ body.single-product main.site-main .onsale {
   z-index: 2;
 }
 
+.zoom-products li.product {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.zoom-products li.product.zoom-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
 body.woocommerce-cart main.site-main:has(.wp-block-woocommerce-empty-cart-block) {
   min-height: 50vh;
 }
