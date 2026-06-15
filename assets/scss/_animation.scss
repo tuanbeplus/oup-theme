@@ -1,34 +1,94 @@
 // Hero Animations
 .hero-reveal {
 
+    // 1. Reveal Heading (Original)
     &.reveal-heading .elementor-heading-title,
     &.reveal-heading > * {
         clip-path: inset(0 100% 0 0);
     }
     
+    // 2. Reveal Image (Original)
     &.reveal-image img,
     &.reveal-image .elementor-widget-container {
         clip-path: inset(0 0 100% 0);
     }
 
+    // 3. Image Parallax Mask Reveal (New)
+    &.reveal-image-parallax {
+        overflow: hidden;
 
+        img,
+        .elementor-widget-container img {
+            transform: scale(1.15) translateY(20px);
+            transform-origin: bottom center;
+            transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: 0.3s;
+            will-change: transform;
+        }
+
+        .elementor-widget-container {
+            clip-path: inset(100% 0 0 0);
+            overflow: hidden;
+        }
+    }
+
+    // 4. Split Text Reveal (New)
+    &.split-text-reveal {
+        .split-word-mask {
+            display: inline-flex;
+            overflow: hidden;
+            vertical-align: bottom;
+            margin-right: 0.25em;
+        }
+        
+        .split-word {
+            display: inline-block;
+            transform: translateY(115%);
+            will-change: transform;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    }
+
+    // Active state triggered by JavaScript on scroll
     &.is-revealed {
         &.reveal-heading .elementor-heading-title,
         &.reveal-heading > * {
             will-change: clip-path;
-            animation: clipRevealLeftToRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: clipRevealLeftToRight 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.2s;
         }
 
         &.reveal-image img,
         &.reveal-image .elementor-widget-container {
             will-change: clip-path;
-            animation: clipRevealTopToBottom 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: clipRevealTopToBottom 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.3s;
+        }
+
+        // Active state for Image Parallax
+        &.reveal-image-parallax {
+            .elementor-widget-container {
+                will-change: clip-path;
+                animation: clipRevealBottomToTop 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                animation-delay: 0.3s;
+            }
+
+            img,
+            .elementor-widget-container img {
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        // Active state for Split Text
+        &.split-text-reveal {
+            .split-word {
+                transform: translateY(0);
+            }
         }
     }
 }
 
+// Keyframes
 @keyframes clipRevealLeftToRight {
     0% {
         clip-path: inset(0 100% 0 0);
@@ -47,6 +107,15 @@
     }
 }
 
+@keyframes clipRevealBottomToTop {
+    0% {
+        clip-path: inset(100% 0 0 0);
+    }
+    100% {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
 // Show elements by default inside the Elementor editor (editor mode)
 .elementor-editor-active,
 .elementor-edit-mode {
@@ -54,8 +123,14 @@
         &.reveal-heading .elementor-heading-title,
         &.reveal-heading > *,
         &.reveal-image img,
-        &.reveal-image .elementor-widget-container {
+        &.reveal-image .elementor-widget-container,
+        &.reveal-image-parallax img,
+        &.reveal-image-parallax .elementor-widget-container,
+        &.reveal-image-parallax .elementor-widget-container img {
             clip-path: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+            animation: none !important;
         }
     }
 }

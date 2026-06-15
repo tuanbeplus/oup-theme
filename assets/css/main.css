@@ -2124,15 +2124,54 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content f
 .hero-reveal.reveal-image img, .hero-reveal.reveal-image .elementor-widget-container {
   clip-path: inset(0 0 100% 0);
 }
+.hero-reveal.reveal-image-parallax {
+  overflow: hidden;
+}
+.hero-reveal.reveal-image-parallax img,
+.hero-reveal.reveal-image-parallax .elementor-widget-container img {
+  transform: scale(1.15) translateY(20px);
+  transform-origin: bottom center;
+  transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.3s;
+  will-change: transform;
+}
+.hero-reveal.reveal-image-parallax .elementor-widget-container {
+  clip-path: inset(100% 0 0 0);
+  overflow: hidden;
+}
+.hero-reveal.split-text-reveal .split-word-mask {
+  display: inline-flex;
+  overflow: hidden;
+  vertical-align: bottom;
+  margin-right: 0.25em;
+}
+.hero-reveal.split-text-reveal .split-word {
+  display: inline-block;
+  transform: translateY(115%);
+  will-change: transform;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
 .hero-reveal.is-revealed.reveal-heading .elementor-heading-title, .hero-reveal.is-revealed.reveal-heading > * {
   will-change: clip-path;
-  animation: clipRevealLeftToRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: clipRevealLeftToRight 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   animation-delay: 0.2s;
 }
 .hero-reveal.is-revealed.reveal-image img, .hero-reveal.is-revealed.reveal-image .elementor-widget-container {
   will-change: clip-path;
-  animation: clipRevealTopToBottom 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: clipRevealTopToBottom 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   animation-delay: 0.3s;
+}
+.hero-reveal.is-revealed.reveal-image-parallax .elementor-widget-container {
+  will-change: clip-path;
+  animation: clipRevealBottomToTop 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.3s;
+}
+.hero-reveal.is-revealed.reveal-image-parallax img,
+.hero-reveal.is-revealed.reveal-image-parallax .elementor-widget-container img {
+  transform: scale(1) translateY(0);
+}
+.hero-reveal.is-revealed.split-text-reveal .split-word {
+  transform: translateY(0);
 }
 
 @keyframes clipRevealLeftToRight {
@@ -2151,12 +2190,26 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content f
     clip-path: inset(0 0 0 0);
   }
 }
-.elementor-editor-active .hero-reveal.reveal-heading .elementor-heading-title, .elementor-editor-active .hero-reveal.reveal-heading > *, .elementor-editor-active .hero-reveal.reveal-image img, .elementor-editor-active .hero-reveal.reveal-image .elementor-widget-container,
+@keyframes clipRevealBottomToTop {
+  0% {
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.elementor-editor-active .hero-reveal.reveal-heading .elementor-heading-title, .elementor-editor-active .hero-reveal.reveal-heading > *, .elementor-editor-active .hero-reveal.reveal-image img, .elementor-editor-active .hero-reveal.reveal-image .elementor-widget-container, .elementor-editor-active .hero-reveal.reveal-image-parallax img, .elementor-editor-active .hero-reveal.reveal-image-parallax .elementor-widget-container, .elementor-editor-active .hero-reveal.reveal-image-parallax .elementor-widget-container img,
 .elementor-edit-mode .hero-reveal.reveal-heading .elementor-heading-title,
 .elementor-edit-mode .hero-reveal.reveal-heading > *,
 .elementor-edit-mode .hero-reveal.reveal-image img,
-.elementor-edit-mode .hero-reveal.reveal-image .elementor-widget-container {
+.elementor-edit-mode .hero-reveal.reveal-image .elementor-widget-container,
+.elementor-edit-mode .hero-reveal.reveal-image-parallax img,
+.elementor-edit-mode .hero-reveal.reveal-image-parallax .elementor-widget-container,
+.elementor-edit-mode .hero-reveal.reveal-image-parallax .elementor-widget-container img {
   clip-path: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  animation: none !important;
 }
 
 /*# sourceMappingURL=main.css.map*/
