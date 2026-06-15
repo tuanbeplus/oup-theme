@@ -12,8 +12,8 @@ body.woocommerce-checkout {
                     .wc-block-components-form {
 
                         //payment method
-                        .wc-block-checkout__payment-method {
-                            .wc-stripe-payment-method-instruction a {
+                        .wc-block-components-radio-control-accordion-content {
+                            p.content a {
                                 color: var(--e-global-color-primary) !important;
                             }
                         }

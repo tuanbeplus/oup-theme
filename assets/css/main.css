@@ -1370,7 +1370,7 @@ body.woocommerce-checkout main.site-main .page-content .wp-block-woocommerce-che
   margin-inline: 0 !important;
   padding-top: 0;
 }
-body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__payment-method .wc-stripe-payment-method-instruction a {
+body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-components-radio-control-accordion-content p.content a {
   color: var(--e-global-color-primary) !important;
 }
 body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-components-radio-control-accordion-option {
