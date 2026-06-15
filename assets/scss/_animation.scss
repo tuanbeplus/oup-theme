@@ -1,48 +1,48 @@
 // Hero Animations
 .hero-reveal {
-    .reveal-heading {
-        overflow: hidden; 
-        display: inline-block; 
 
-        .elementor-heading-title, 
-        & > * {
-            display: inline-block;
-            transform: translateX(-105%); 
-            will-change: transform;
-            animation: revealLeftToRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0.2s;
-        }
+    &.reveal-heading .elementor-heading-title,
+    &.reveal-heading > * {
+        clip-path: inset(0 100% 0 0);
+    }
+    
+    &.reveal-image img,
+    &.reveal-image .elementor-widget-container {
+        clip-path: inset(0 0 100% 0);
     }
 
-    // 2. Image Reveal (Top to Bottom)
-    .reveal-image {
-        overflow: hidden; 
-        display: inline-block; 
 
-        img,
-        .elementor-widget-container {
-            transform: translateY(-105%); 
-            will-change: transform;
-            animation: revealTopToBottom 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    &.is-revealed {
+        &.reveal-heading .elementor-heading-title,
+        &.reveal-heading > * {
+            will-change: clip-path;
+            animation: clipRevealLeftToRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+        }
+
+        &.reveal-image img,
+        &.reveal-image .elementor-widget-container {
+            will-change: clip-path;
+            animation: clipRevealTopToBottom 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.3s;
         }
     }
 }
 
-@keyframes revealLeftToRight {
+@keyframes clipRevealLeftToRight {
     0% {
-        transform: translateX(-105%);
+        clip-path: inset(0 100% 0 0);
     }
     100% {
-        transform: translateX(0);
+        clip-path: inset(0 0 0 0);
     }
 }
 
-@keyframes revealTopToBottom {
+@keyframes clipRevealTopToBottom {
     0% {
-        transform: translateY(-105%);
+        clip-path: inset(0 0 100% 0);
     }
     100% {
-        transform: translateY(0);
+        clip-path: inset(0 0 0 0);
     }
 }

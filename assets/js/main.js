@@ -192,8 +192,26 @@
         }, { threshold: 0 });
         products.forEach(product => observer.observe(product));
     }
+
+    // Reveal animations on scroll
+    function initHeroReveal() {
+        const revealElements = document.querySelectorAll('.hero-reveal');
+        if (!revealElements.length) return;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(({ target, isIntersecting }) => {
+                if (!isIntersecting) return;
+                target.classList.add('is-revealed');
+                observer.unobserve(target);
+            });
+        }, { threshold: 0.1 });
+        
+        revealElements.forEach(el => observer.observe(el));
+    }
+
     $(function () { 
         initProductZoomIn(); 
+        initHeroReveal();
     });
 
     // Scroll to section
