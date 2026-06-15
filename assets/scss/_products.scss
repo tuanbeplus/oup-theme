@@ -552,24 +552,14 @@ body.single-product {
 }
 
 .zoom-products {
-	li.product {
-		opacity: 0;
-	}
+    li.product {
+        opacity: 0;
+        transform: scale(0.6);
+        transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
 
-	li.product.zoom-in {
-		animation: zoomInProducts 0.6s ease-in-out;
-	}
-
-	@keyframes zoomInProducts {
-		0% {
-			opacity: 0;
-			transform: scale(0);
-		}
-
-		100% {
-			opacity: 1;
-			transform: scale(1);
-		}
-	}
+    li.product.zoom-in {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
-

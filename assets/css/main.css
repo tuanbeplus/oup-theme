@@ -1165,19 +1165,12 @@ body.single-product main.site-main .onsale {
 
 .zoom-products li.product {
   opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
 }
 .zoom-products li.product.zoom-in {
-  animation: zoomInProducts 0.6s ease-in-out;
-}
-@keyframes zoomInProducts {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+  opacity: 1;
+  transform: scale(1);
 }
 
 body.woocommerce-cart main.site-main:has(.wp-block-woocommerce-empty-cart-block) {
