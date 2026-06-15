@@ -46,3 +46,16 @@
         clip-path: inset(0 0 0 0);
     }
 }
+
+// Show elements by default inside the Elementor editor (editor mode)
+.elementor-editor-active,
+.elementor-edit-mode {
+    .hero-reveal {
+        &.reveal-heading .elementor-heading-title,
+        &.reveal-heading > *,
+        &.reveal-image img,
+        &.reveal-image .elementor-widget-container {
+            clip-path: none !important;
+        }
+    }
+}
