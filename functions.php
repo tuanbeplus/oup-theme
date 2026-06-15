@@ -21,9 +21,27 @@ if (!function_exists('enqueue_oup_styles_and_scripts')) {
     {
         wp_enqueue_style('oup-main-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array(), OUP_THEME_VER);
         wp_enqueue_script('oup-main-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery'), OUP_THEME_VER, true);
-        wp_enqueue_script('stripe-js', 'https://js.stripe.com/v3/', array(), null, false);
+        if ( oup_should_load_stripe_js() ) {
+            wp_enqueue_script('stripe-js', 'https://js.stripe.com/v3/', array(), null, false);
+        }
         wp_localize_script('oup-main-script', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
+}
+/**
+ * Helper function to determine if Stripe JS should be loaded
+ */
+function oup_should_load_stripe_js() {
+    global $post;
+    if ( is_singular( 'sfwd-courses' ) || is_post_type_archive( 'sfwd-courses' ) ) {
+        return true;
+    }
+    if ( is_a( $post, 'WP_Post' ) ) {
+        $elementor_data = get_post_meta( $post->ID, '_elementor_data', true );
+        if ( ! empty( $elementor_data ) && strpos( $elementor_data, 'course-filter' ) !== false ) {
+            return true;
+        }
+    }
+    return false;
 }
 /**
  * Turn off the default LearnDash interface on the course detail page.

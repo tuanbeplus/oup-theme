@@ -1367,6 +1367,9 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   box-shadow: none;
   border: 1px solid var(--e-global-color-9500430);
 }
+body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-components-address-card__edit:hover {
+  background-color: var(--e-global-color-primary);
+}
 body.woocommerce-checkout main.site-main .page-content .wc-block-components-sidebar-layout .wc-block-components-main .wc-block-components-form .wc-block-checkout__actions .wc-block-components-checkout-step__heading {
   font-weight: 600;
   font-size: 1.5rem;
