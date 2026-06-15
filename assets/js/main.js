@@ -189,7 +189,7 @@
                 setTimeout(() => target.classList.add('zoom-in'), delay);
                 observer.unobserve(target);
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0 });
         products.forEach(product => observer.observe(product));
     }
     $(function () { 
