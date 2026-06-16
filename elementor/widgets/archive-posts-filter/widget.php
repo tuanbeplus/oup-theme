@@ -123,8 +123,9 @@ class Widget_ArchivePostsFilter extends Widget_Base
         $this->end_controls_section();
     }
 
+    // Single-term only — no multi-term AND logic needed
     private function build_query_args(
-        array  $term_ids,
+        ?int   $term_id,
         string $post_type,
         string $taxonomy,
         int    $per_page,
@@ -141,26 +142,13 @@ class Widget_ArchivePostsFilter extends Widget_Base
             'order'          => $order,
         ];
 
-        if (! empty($term_ids)) {
-            if (count($term_ids) === 1) {
-                $args['tax_query'] = [[
-                    'taxonomy' => $taxonomy,
-                    'field'    => 'term_id',
-                    'terms'    => [$term_ids[0]],
-                    'operator' => 'IN',
-                ]];
-            } else {
-                $clauses = ['relation' => 'AND'];
-                foreach ($term_ids as $tid) {
-                    $clauses[] = [
-                        'taxonomy' => $taxonomy,
-                        'field'    => 'term_id',
-                        'terms'    => [$tid],
-                        'operator' => 'IN',
-                    ];
-                }
-                $args['tax_query'] = $clauses;
-            }
+        if ($term_id !== null) {
+            $args['tax_query'] = [[
+                'taxonomy' => $taxonomy,
+                'field'    => 'term_id',
+                'terms'    => [$term_id],
+                'operator' => 'IN',
+            ]];
         }
 
         return $args;
@@ -185,8 +173,9 @@ class Widget_ArchivePostsFilter extends Widget_Base
 
         $preloaded = [];
         $max_pages = [];
-        $all_query  = new \WP_Query($this->build_query_args([], $post_type, $taxonomy, $per_page, $orderby, $order, 1));
-        $found_all  = $all_query->found_posts; // total matching posts
+
+        // Preload "all" tab
+        $all_query = new \WP_Query($this->build_query_args(null, $post_type, $taxonomy, $per_page, $orderby, $order, 1));
         ob_start();
         if ($all_query->have_posts()) {
             while ($all_query->have_posts()) {
@@ -196,17 +185,17 @@ class Widget_ArchivePostsFilter extends Widget_Base
             wp_reset_postdata();
         }
         $all_html = ob_get_clean();
-        $preloaded['all'] = $found_all > 0
+        $preloaded['all'] = $all_query->found_posts > 0
             ? $all_html
             : '<div class="apf-empty">' . esc_html__('No posts found.', 'oup') . '</div>';
         $max_pages['all'] = max(1, (int) $all_query->max_num_pages);
 
+        // Preload each single term tab
         foreach ($raw_terms as $term) {
             $tid   = (string) $term->term_id;
             $query = new \WP_Query(
-                $this->build_query_args([(int) $tid], $post_type, $taxonomy, $per_page, $orderby, $order, 1)
+                $this->build_query_args((int) $tid, $post_type, $taxonomy, $per_page, $orderby, $order, 1)
             );
-            $found = $query->found_posts;
 
             ob_start();
             if ($query->have_posts()) {
@@ -218,7 +207,7 @@ class Widget_ArchivePostsFilter extends Widget_Base
             }
             $term_html = ob_get_clean();
 
-            $preloaded[$tid] = $found > 0
+            $preloaded[$tid] = $query->found_posts > 0
                 ? $term_html
                 : '<div class="apf-empty">' . esc_html__('No posts found.', 'oup') . '</div>';
             $max_pages[$tid] = max(1, (int) $query->max_num_pages);
