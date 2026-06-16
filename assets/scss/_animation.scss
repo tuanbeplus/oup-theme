@@ -1,19 +1,21 @@
 // Hero Animations
 .hero-reveal {
 
-    // 1. Reveal Heading (Original)
+    // 1. Reveal Heading
     &.reveal-heading .elementor-heading-title,
     &.reveal-heading > * {
-        clip-path: inset(0 100% 0 0);
+        -webkit-clip-path: inset(0% 100% 0% 0%);
+        clip-path: inset(0% 100% 0% 0%);
     }
     
-    // 2. Reveal Image (Original)
+    // 2. Reveal Image
     &.reveal-image img,
     &.reveal-image .elementor-widget-container {
-        clip-path: inset(0 0 100% 0);
+        -webkit-clip-path: inset(0% 0% 100% 0%);
+        clip-path: inset(0% 0% 100% 0%);
     }
 
-    // 3. Image Parallax Mask Reveal (New)
+    // 3. Image Parallax Mask Reveal
     &.reveal-image-parallax {
         overflow: hidden;
 
@@ -27,12 +29,13 @@
         }
 
         .elementor-widget-container {
-            clip-path: inset(100% 0 0 0);
+            -webkit-clip-path: inset(100% 0% 0% 0%);
+            clip-path: inset(100% 0% 0% 0%);
             overflow: hidden;
         }
     }
 
-    // 4. Split Text Reveal (New)
+    // 4. Split Text Reveal
     &.split-text-reveal {
         .split-word-mask {
             display: inline-flex;
@@ -49,11 +52,12 @@
         }
     }
 
-    // Active state triggered by JavaScript on scroll
+
     &.is-revealed {
         &.reveal-heading .elementor-heading-title,
         &.reveal-heading > * {
             will-change: clip-path;
+            -webkit-animation: clipRevealLeftToRight 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation: clipRevealLeftToRight 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.2s;
         }
@@ -61,14 +65,16 @@
         &.reveal-image img,
         &.reveal-image .elementor-widget-container {
             will-change: clip-path;
+            -webkit-animation: clipRevealTopToBottom 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation: clipRevealTopToBottom 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.3s;
         }
 
-        // Active state for Image Parallax
+
         &.reveal-image-parallax {
             .elementor-widget-container {
                 will-change: clip-path;
+                -webkit-animation: clipRevealBottomToTop 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
                 animation: clipRevealBottomToTop 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
                 animation-delay: 0.3s;
             }
@@ -79,7 +85,7 @@
             }
         }
 
-        // Active state for Split Text
+
         &.split-text-reveal {
             .split-word {
                 transform: translateY(0);
@@ -89,30 +95,66 @@
 }
 
 // Keyframes
+@-webkit-keyframes clipRevealLeftToRight {
+    0% {
+        -webkit-clip-path: inset(0% 100% 0% 0%);
+        clip-path: inset(0% 100% 0% 0%);
+    }
+    100% {
+        -webkit-clip-path: inset(0% 0% 0% 0%);
+        clip-path: inset(0% 0% 0% 0%);
+    }
+}
 @keyframes clipRevealLeftToRight {
     0% {
-        clip-path: inset(0 100% 0 0);
+        -webkit-clip-path: inset(0% 100% 0% 0%);
+        clip-path: inset(0% 100% 0% 0%);
     }
     100% {
-        clip-path: inset(0 0 0 0);
+        -webkit-clip-path: inset(0% 0% 0% 0%);
+        clip-path: inset(0% 0% 0% 0%);
     }
 }
 
+@-webkit-keyframes clipRevealTopToBottom {
+    0% {
+        -webkit-clip-path: inset(0% 0% 100% 0%);
+        clip-path: inset(0% 0% 100% 0%);
+    }
+    100% {
+        -webkit-clip-path: inset(0% 0% 0% 0%);
+        clip-path: inset(0% 0% 0% 0%);
+    }
+}
 @keyframes clipRevealTopToBottom {
     0% {
-        clip-path: inset(0 0 100% 0);
+        -webkit-clip-path: inset(0% 0% 100% 0%);
+        clip-path: inset(0% 0% 100% 0%);
     }
     100% {
-        clip-path: inset(0 0 0 0);
+        -webkit-clip-path: inset(0% 0% 0% 0%);
+        clip-path: inset(0% 0% 0% 0%);
     }
 }
 
-@keyframes clipRevealBottomToTop {
+@-webkit-keyframes clipRevealBottomToTop {
     0% {
-        clip-path: inset(100% 0 0 0);
+        -webkit-clip-path: inset(100% 0% 0% 0%);
+        clip-path: inset(100% 0% 0% 0%);
     }
     100% {
-        clip-path: inset(0 0 0 0);
+        -webkit-clip-path: inset(0% 0% 0% 0%);
+        clip-path: inset(0% 0% 0% 0%);
+    }
+}
+@keyframes clipRevealBottomToTop {
+    0% {
+        -webkit-clip-path: inset(100% 0% 0% 0%);
+        clip-path: inset(100% 0% 0% 0%);
+    }
+    100% {
+        -webkit-clip-path: inset(0% 0% 0% 0%);
+        clip-path: inset(0% 0% 0% 0%);
     }
 }
 
@@ -127,9 +169,11 @@
         &.reveal-image-parallax img,
         &.reveal-image-parallax .elementor-widget-container,
         &.reveal-image-parallax .elementor-widget-container img {
+            -webkit-clip-path: none !important;
             clip-path: none !important;
             transform: none !important;
             opacity: 1 !important;
+            -webkit-animation: none !important;
             animation: none !important;
         }
     }

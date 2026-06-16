@@ -2119,10 +2119,10 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content f
 }
 
 .hero-reveal.reveal-heading .elementor-heading-title, .hero-reveal.reveal-heading > * {
-  clip-path: inset(0 100% 0 0);
+  clip-path: inset(0% 100% 0% 0%);
 }
 .hero-reveal.reveal-image img, .hero-reveal.reveal-image .elementor-widget-container {
-  clip-path: inset(0 0 100% 0);
+  clip-path: inset(0% 0% 100% 0%);
 }
 .hero-reveal.reveal-image-parallax {
   overflow: hidden;
@@ -2136,7 +2136,7 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content f
   will-change: transform;
 }
 .hero-reveal.reveal-image-parallax .elementor-widget-container {
-  clip-path: inset(100% 0 0 0);
+  clip-path: inset(100% 0% 0% 0%);
   overflow: hidden;
 }
 .hero-reveal.split-text-reveal .split-word-mask {
@@ -2173,29 +2173,28 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content f
 .hero-reveal.is-revealed.split-text-reveal .split-word {
   transform: translateY(0);
 }
-
 @keyframes clipRevealLeftToRight {
   0% {
-    clip-path: inset(0 100% 0 0);
+    clip-path: inset(0% 100% 0% 0%);
   }
   100% {
-    clip-path: inset(0 0 0 0);
+    clip-path: inset(0% 0% 0% 0%);
   }
 }
 @keyframes clipRevealTopToBottom {
   0% {
-    clip-path: inset(0 0 100% 0);
+    clip-path: inset(0% 0% 100% 0%);
   }
   100% {
-    clip-path: inset(0 0 0 0);
+    clip-path: inset(0% 0% 0% 0%);
   }
 }
 @keyframes clipRevealBottomToTop {
   0% {
-    clip-path: inset(100% 0 0 0);
+    clip-path: inset(100% 0% 0% 0%);
   }
   100% {
-    clip-path: inset(0 0 0 0);
+    clip-path: inset(0% 0% 0% 0%);
   }
 }
 .elementor-editor-active .hero-reveal.reveal-heading .elementor-heading-title, .elementor-editor-active .hero-reveal.reveal-heading > *, .elementor-editor-active .hero-reveal.reveal-image img, .elementor-editor-active .hero-reveal.reveal-image .elementor-widget-container, .elementor-editor-active .hero-reveal.reveal-image-parallax img, .elementor-editor-active .hero-reveal.reveal-image-parallax .elementor-widget-container, .elementor-editor-active .hero-reveal.reveal-image-parallax .elementor-widget-container img,
