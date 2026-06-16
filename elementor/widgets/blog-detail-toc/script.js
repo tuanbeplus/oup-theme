@@ -46,7 +46,8 @@
             });
 
             if (!activeTags.length) {
-                $list.html('<li class="table-of-content-all__no-headings">' + $('<span>').text(noHeadingsMsg).html() + '</li>');
+                $list.html('');
+                $toc.closest('.toc-container').hide();
                 return;
             }
 
@@ -89,7 +90,8 @@
             });
 
             if (!headings.length) {
-                $list.html('<li class="table-of-content-all__no-headings">' + $('<span>').text(noHeadingsMsg).html() + '</li>');
+                $list.html('');
+                $toc.closest('.toc-container').hide();
                 return;
             }
 
