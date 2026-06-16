@@ -193,6 +193,62 @@
         products.forEach(product => observer.observe(product));
     }
 
+    // Split text into words/spans for split-text-reveal animation
+    function initSplitTextReveal() {
+        if (document.body.classList.contains('elementor-editor-active')) return;
+        
+        const splitTextElements = document.querySelectorAll('.split-text-reveal');
+        if (!splitTextElements.length) return;
+
+        splitTextElements.forEach(el => {
+            let targetEl = el.querySelector('.elementor-heading-title, h1, h2, h3, h4, h5, h6, p, .elementor-widget-container');
+            if (!targetEl) targetEl = el;
+
+            let wordIndex = 0;
+            
+            function splitTextNodes(node) {
+                const childNodes = Array.from(node.childNodes);
+                
+                childNodes.forEach(child => {
+                    if (child.nodeType === Node.TEXT_NODE) {
+                        const text = child.nodeValue;
+                        if (!text.trim()) return;
+
+                        // Split by whitespace but keep spaces
+                        const words = text.split(/(\s+)/);
+                        const fragment = document.createDocumentFragment();
+
+                        words.forEach(word => {
+                            if (word.trim() === '') {
+                                fragment.appendChild(document.createTextNode(word));
+                            } else {
+                                const mask = document.createElement('span');
+                                mask.className = 'split-word-mask';
+                                
+                                const wordSpan = document.createElement('span');
+                                wordSpan.className = 'split-word';
+                                wordSpan.textContent = word;
+                                wordSpan.style.transitionDelay = `${wordIndex * 0.05}s`;
+                                wordIndex++;
+                                
+                                mask.appendChild(wordSpan);
+                                fragment.appendChild(mask);
+                            }
+                        });
+
+                        child.parentNode.replaceChild(fragment, child);
+                    } else if (child.nodeType === Node.ELEMENT_NODE) {
+                        if (!child.classList.contains('split-word-mask')) {
+                            splitTextNodes(child);
+                        }
+                    }
+                });
+            }
+
+            splitTextNodes(targetEl);
+        });
+    }
+
     // Reveal animations on scroll
     function initHeroReveal() {
         const revealElements = document.querySelectorAll('.hero-reveal');
@@ -211,6 +267,7 @@
 
     $(function () { 
         initProductZoomIn(); 
+        initSplitTextReveal();
         initHeroReveal();
     });
 

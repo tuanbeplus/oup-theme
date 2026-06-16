@@ -8,10 +8,10 @@
         if ($widget.data('bs-init')) return;
         $widget.data('bs-init', true);
 
-        const $input   = $widget.find('.bs-input');
-        const $wrap    = $widget.find('.bs-wrap');
+        const $input = $widget.find('.bs-input');
+        const $wrap = $widget.find('.bs-wrap');
         const debounce = parseInt($widget.data('debounce')) || 400;
-        let   timer    = null;
+        let timer = null;
 
         const $clear = $(`
             <button class="bs-clear" type="button" aria-label="Clear search" tabindex="-1">
@@ -51,35 +51,37 @@
         if ($widget.data('apf-init')) return;
         $widget.data('apf-init', true);
 
-        const ajaxUrl  = (typeof ajax_object !== 'undefined') ? ajax_object.ajaxurl : '/wp-admin/admin-ajax.php';
+        const ajaxUrl = (typeof ajax_object !== 'undefined') ? ajax_object.ajaxurl : '/wp-admin/admin-ajax.php';
         const postType = String($widget.data('post-type') || 'post');
         const taxonomy = String($widget.data('taxonomy') || 'category');
-        const perPage  = parseInt($widget.data('per-page')) || 6;
-        const orderby  = String($widget.data('orderby') || 'date');
-        const order    = String($widget.data('order') || 'DESC');
+        const perPage = parseInt($widget.data('per-page')) || 6;
+        const orderby = String($widget.data('orderby') || 'date');
+        const order = String($widget.data('order') || 'DESC');
 
-        const $grid       = $widget.find('.apf-grid');
-        const $sentinel   = $widget.find('.apf-sentinel');
+        const $grid = $widget.find('.apf-grid');
+        const $sentinel = $widget.find('.apf-sentinel');
         const maxPagesMap = $widget.data('max-pages') || {};
 
         let preloaded = {};
         try { preloaded = JSON.parse($widget.find('.apf-preloaded-data').html() || '{}'); } catch (_) { }
 
+        // pageState key is now a single string ('all' or a term_id string)
         const pageState = {};
         Object.keys(preloaded).forEach(key => {
             pageState[key] = { page: 2, maxPages: parseInt(maxPagesMap[key]) || 1 };
         });
 
-        let activeTerms   = new Set(['all']);
+        // Single active term — replaces the previous multi-select Set
+        let activeTerm = 'all';
         let currentSearch = '';
-        let currentXhr    = null;
-        let observer      = null;
-        let isLoading     = false;
+        let currentXhr = null;
+        let observer = null;
+        let isLoading = false;
 
+        // Cache key is just the active term string (null in search mode)
         function getCacheKey() {
-            if (currentSearch) return null; // search mode — no cache
-            if (activeTerms.has('all')) return 'all';
-            return [...activeTerms].map(Number).sort((a, b) => a - b).join(',');
+            if (currentSearch) return null;
+            return activeTerm;
         }
 
         function buildSkeletonCards(count) {
@@ -107,8 +109,8 @@
 
         function updateTabUI() {
             $widget.find('.apf-tab').each(function () {
-                const term     = String($(this).data('term'));
-                const isActive = activeTerms.has(term);
+                const term = String($(this).data('term'));
+                const isActive = term === activeTerm;
                 $(this).toggleClass('active', isActive).attr('aria-selected', String(isActive));
             });
         }
@@ -146,18 +148,10 @@
             observer.observe($sentinel[0]);
         }
 
-        function toggleTerm(term) {
-            if (term === 'all') {
-                activeTerms = new Set(['all']);
-            } else {
-                activeTerms.delete('all');
-                if (activeTerms.has(term)) {
-                    activeTerms.delete(term);
-                    if (activeTerms.size === 0) activeTerms = new Set(['all']);
-                } else {
-                    activeTerms.add(term);
-                }
-            }
+        // Select a single term — clicking the active tab does nothing
+        function selectTerm(term) {
+            if (term === activeTerm) return;
+            activeTerm = term;
             updateTabUI();
             renderCurrentSelection();
         }
@@ -202,22 +196,23 @@
             }
         }
 
+        // terms param is now a single term string, not a comma-separated list
         function fetchPage(paged, keySnapshot, onSuccess) {
             const termsParam = keySnapshot !== null ? keySnapshot : 'all';
 
             currentXhr = $.ajax({
-                url:  ajaxUrl,
+                url: ajaxUrl,
                 type: 'POST',
                 data: {
-                    action:    'oup_load_archive_posts',
+                    action: 'oup_load_archive_posts',
                     paged,
-                    per_page:  perPage,
-                    terms:     termsParam,
+                    per_page: perPage,
+                    terms: termsParam,
                     post_type: postType,
                     taxonomy,
                     orderby,
                     order,
-                    search:    currentSearch,
+                    search: currentSearch,
                 },
                 success(response) {
                     if (keySnapshot !== null && getCacheKey() !== keySnapshot) return;
@@ -234,8 +229,8 @@
         }
 
         function loadNextPage() {
-            const key         = getCacheKey();
-            const state       = pageState[key];
+            const key = getCacheKey();
+            const state = pageState[key];
             const keySnapshot = key;
             isLoading = true;
             abortXhr();
@@ -253,14 +248,15 @@
             });
         }
 
+        // Single-choice: selectTerm replaces the old multi-select toggleTerm
         $widget.on('click', '.apf-tab', function () {
-            toggleTerm(String($(this).data('term')));
+            selectTerm(String($(this).data('term')));
         });
 
         $(document).on('apf:search', function (e, query) {
             currentSearch = query;
             if (query) {
-                activeTerms = new Set(['all']);
+                activeTerm = 'all'; // reset tab to All when searching
                 updateTabUI();
             }
             renderCurrentSelection();
@@ -287,7 +283,7 @@
 
     $(document).ready(init);
     $(window).on('elementor/frontend/init', function () {
-        elementorFrontend.hooks.addAction('frontend/element_ready/blog-search.default',          () => initBlogSearch());
+        elementorFrontend.hooks.addAction('frontend/element_ready/blog-search.default', () => initBlogSearch());
         elementorFrontend.hooks.addAction('frontend/element_ready/archive-posts-filter.default', () => initArchivePostsFilter());
     });
 

@@ -32,27 +32,16 @@ function oup_ajax_load_archive_posts()
         $args['s'] = $search;
     }
 
+    // Single-term filter only — take the first valid term_id
     if ($search === '' && $terms_raw !== 'all') {
-        $term_ids = array_values(array_filter(
-            array_map('intval', explode(',', $terms_raw)),
-            fn($id) => $id > 0
-        ));
-
-        if (! empty($term_ids)) {
-            if (count($term_ids) === 1) {
-                $args['tax_query'] = [[
-                    'taxonomy' => $taxonomy,
-                    'field' => 'term_id',
-                    'terms' => [$term_ids[0]],
-                    'operator' => 'IN',
-                ]];
-            } else {
-                $clauses = ['relation' => 'AND'];
-                foreach ($term_ids as $tid) {
-                    $clauses[] = ['taxonomy' => $taxonomy, 'field' => 'term_id', 'terms' => [$tid], 'operator' => 'IN'];
-                }
-                $args['tax_query'] = $clauses;
-            }
+        $term_id = (int) $terms_raw;
+        if ($term_id > 0) {
+            $args['tax_query'] = [[
+                'taxonomy' => $taxonomy,
+                'field'    => 'term_id',
+                'terms'    => [$term_id],
+                'operator' => 'IN',
+            ]];
         }
     }
 

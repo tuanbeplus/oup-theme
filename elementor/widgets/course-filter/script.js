@@ -91,6 +91,7 @@
                 success: function (response) {
                     $resultsContainer.html(response);
                     $resultsContainer.removeClass('loading');
+                    initCardReveal();
                 },
                 error: function (error) {
                     console.error('AJAX Error:', error);
@@ -98,6 +99,28 @@
                 }
             });
         }
+
+        // Function to observe individual cards
+        function initCardReveal() {
+            var cards = $resultsContainer[0].querySelectorAll('.course-card-item');
+            if (!cards.length) return;
+            
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(function(card) {
+                observer.observe(card);
+            });
+        }
+        
+
+        initCardReveal();
 
     
 
