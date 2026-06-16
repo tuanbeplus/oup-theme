@@ -102,7 +102,7 @@
 
         // Function to observe individual cards
         function initCardReveal() {
-            var cards = $resultsContainer[0].querySelectorAll('.course-card');
+            var cards = $resultsContainer[0].querySelectorAll('.course-card-item');
             if (!cards.length) return;
             
             var observer = new IntersectionObserver(function(entries) {
