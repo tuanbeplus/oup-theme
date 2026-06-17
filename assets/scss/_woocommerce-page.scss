@@ -1,4 +1,6 @@
-body.woocommerce-page {
+body.woocommerce-page,
+body:has(.learndash-wrapper),
+body.page-registration-success {
     main.site-main {
         max-width: 100%;
 

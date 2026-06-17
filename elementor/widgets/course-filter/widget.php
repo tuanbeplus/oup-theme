@@ -673,46 +673,78 @@ class Widget_CourseFilter extends Widget_Base
 
                 <div class="course-card-action">
                     <?php 
-                    $payment_buttons = '';
-                    $course_price_type = function_exists('learndash_get_setting') ? learndash_get_setting( $post_id, 'course_price_type' ) : '';
-
-                    if ( function_exists('learndash_payment_buttons') && in_array($course_price_type, ['paynow', 'subscribe', 'free']) ) { 
-                        global $post;
-                        $original_post = clone $post;
-                        
-                        $registration_page_id = class_exists('LearnDash_Settings_Section') 
-                            ? (int) \LearnDash_Settings_Section::get_section_setting('LearnDash_Settings_Section_Registration_Pages', 'registration')
-                            : 0;
-                            
-                        if ($registration_page_id) {
-                            $post = get_post($registration_page_id);
-                            if ( $post ) setup_postdata($post);
-                        }
-
-                        $button_label_filter = function($label) use ($price_text) {
-                            return 'Enrol Now ' . $price_text;
-                        };
-                        add_filter('learndash_payment_button_label', $button_label_filter, 99);
-                        
-                        $payment_buttons = learndash_payment_buttons( $post_id );
-                        
-                        remove_filter('learndash_payment_button_label', $button_label_filter, 99);
-                        
-                  
-                        if ($registration_page_id) {
-                            $post = clone $original_post;
-                            if ( $post ) wp_reset_postdata();
-                        }
+                    $is_enrolled = false;
+                    if ( is_user_logged_in() && function_exists('sfwd_lms_has_access') ) {
+                        $is_enrolled = sfwd_lms_has_access( $post_id, get_current_user_id() );
                     }
 
-                    if ( !empty($payment_buttons) ) {
-                        echo '<div class="custom-ld-payment-btn">';
-                        echo $payment_buttons;
-                        echo '</div>';
-                    } else {
+                    $course_price_type = function_exists('learndash_get_setting') ? learndash_get_setting( $post_id, 'course_price_type' ) : '';
+
+                    if ( $is_enrolled ) {
                         ?>
-                        <a href="<?php echo esc_url($button_link); ?>" class="course-btn">Enrol Now for <?php echo $price_text; ?></a>
+                        <a href="<?php echo esc_url($permalink); ?>" class="course-btn">Start Learning</a>
                         <?php
+                    } elseif ( $course_price_type === 'closed' ) {
+                        ?>
+                        <a href="#" class="course-btn" style="opacity: 0.6; pointer-events: none;">Closed</a>
+                        <?php
+                    } else {
+                        $payment_buttons = '';
+
+                        if ( function_exists('learndash_payment_buttons') && in_array($course_price_type, ['paynow', 'subscribe', 'free']) ) { 
+                            global $post;
+                            $original_post = clone $post;
+                            
+                            $registration_page_id = class_exists('LearnDash_Settings_Section') 
+                                ? (int) \LearnDash_Settings_Section::get_section_setting('LearnDash_Settings_Section_Registration_Pages', 'registration')
+                                : 0;
+                                
+                            if ($registration_page_id) {
+                                $post = get_post($registration_page_id);
+                                if ( $post ) setup_postdata($post);
+                            }
+
+                            $button_label_filter = function($label) use ($price_text) {
+                                return 'Enrol Now ' . $price_text;
+                            };
+                            add_filter('learndash_payment_button_label', $button_label_filter, 99);
+                            
+                            $payment_buttons = learndash_payment_buttons( $post_id );
+                            
+                            remove_filter('learndash_payment_button_label', $button_label_filter, 99);
+                            
+                            if ($registration_page_id) {
+                                $post = clone $original_post;
+                                if ( $post ) wp_reset_postdata();
+                            }
+
+                           // FIX: Prevent duplicate Stripe JS
+                            if ( strpos($payment_buttons, '<script') !== false ) {
+                                if ( ! isset( $GLOBALS['oup_stripe_script_extracted'] ) ) {
+                                    preg_match('/<script\b[^>]*>([\s\S]*?)<\/script>/i', $payment_buttons, $matches);
+                                    if ( !empty($matches[0]) ) {
+                                        $GLOBALS['oup_stripe_script_extracted'] = $matches[0];
+                                        if ( ! wp_doing_ajax() ) {
+                                            add_action('wp_footer', function() {
+                                                echo $GLOBALS['oup_stripe_script_extracted'];
+                                            }, 999);
+                                        }
+                                    }
+                                }
+
+                                $payment_buttons = preg_replace('/<script\b[^>]*>([\s\S]*?)<\/script>/i', '', $payment_buttons);
+                            }
+                        }
+
+                        if ( !empty($payment_buttons) ) {
+                            echo '<div class="custom-ld-payment-btn">';
+                            echo $payment_buttons;
+                            echo '</div>';
+                        } else {
+                            ?>
+                            <a href="<?php echo esc_url($button_link); ?>" class="course-btn">Enrol Now<?php echo $price_text; ?></a>
+                            <?php
+                        }
                     }
                     ?>
                 </div>

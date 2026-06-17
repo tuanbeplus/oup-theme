@@ -1678,16 +1678,212 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   color: var(--e-global-color-secondary);
 }
 
-body.woocommerce-page main.site-main {
+.learndash-wrapper .ld-registration__wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #f8fbfd;
+  border-radius: 20px;
+  padding: 40px;
+}
+@media (max-width: 767px) {
+  .learndash-wrapper .ld-registration__wrapper {
+    padding: 25px;
+  }
+}
+.learndash-wrapper .ld-registration__heading {
+  color: var(--e-global-color-primary);
+  font-family: var(--e-global-typography-primary-font-family);
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.learndash-wrapper .ld-registration__p {
+  color: var(--e-global-color-text);
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+.learndash-wrapper .ld-registration__p a {
+  color: var(--e-global-color-secondary);
+  font-weight: 600;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+.learndash-wrapper .ld-registration__p a:hover {
+  color: var(--e-global-color-accent);
+}
+.learndash-wrapper .ld-form label {
+  display: block;
+  color: var(--e-global-color-primary);
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+.learndash-wrapper .ld-form label .required {
+  color: #e2401c;
+  font-size: 0.8em;
+  margin-left: 5px;
+  font-weight: 400;
+}
+.learndash-wrapper .ld-form .ld-form__field,
+.learndash-wrapper .ld-form input[type=text],
+.learndash-wrapper .ld-form input[type=email],
+.learndash-wrapper .ld-form input[type=password] {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0 15px;
+  color: var(--e-global-color-text);
+  background-color: #fff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+.learndash-wrapper .ld-form .ld-form__field:focus,
+.learndash-wrapper .ld-form input[type=text]:focus,
+.learndash-wrapper .ld-form input[type=email]:focus,
+.learndash-wrapper .ld-form input[type=password]:focus {
+  border-color: var(--e-global-color-secondary);
+  outline: none;
+  box-shadow: 0 0 0 1px var(--e-global-color-secondary);
+}
+.learndash-wrapper .ld-form .ld-form__field-outer-wrapper,
+.learndash-wrapper .ld-form .login-username,
+.learndash-wrapper .ld-form .login-password {
+  margin-bottom: 25px;
+}
+.learndash-wrapper .ld-form .login-remember {
+  margin-bottom: 25px;
+}
+.learndash-wrapper .ld-form .login-remember label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+  cursor: pointer;
+}
+.learndash-wrapper .ld-form .login-remember label input[type=checkbox] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.learndash-wrapper .ld-form .ld-form__field-password-wrapper {
+  position: relative;
+}
+.learndash-wrapper .ld-form .ld-form__field-password-wrapper .ld-button__password-visibility-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--e-global-color-text);
+  min-width: 65px !important;
+}
+.learndash-wrapper .ld-form .ld-form__field-password-wrapper .ld-button__password-visibility-toggle:hover {
+  background: #f0f0f0;
+}
+.learndash-wrapper .ld-form input[type=password]::-ms-reveal,
+.learndash-wrapper .ld-form input[type=password]::-ms-clear {
+  display: none;
+}
+.learndash-wrapper .ld-form .ld-password-strength__hint {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: -15px;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+.learndash-wrapper .ld-form input[type=submit] {
+  width: 100%;
+  height: 50px;
+  background-color: var(--e-global-color-secondary);
+  color: #fff;
+  border: none;
+  border-radius: 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+.learndash-wrapper .ld-form input[type=submit]:hover {
+  background-color: var(--e-global-color-accent);
+}
+
+.oup-success-message {
+  text-align: center;
+  max-width: 500px;
+  margin: 40px auto;
+}
+.oup-success-message .success-icon {
+  color: var(--e-global-color-secondary);
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+}
+.oup-success-message .success-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.oup-success-message h2 {
+  color: var(--e-global-color-primary);
+  font-family: var(--e-global-typography-primary-font-family);
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.oup-success-message p {
+  color: var(--e-global-color-text);
+  margin-bottom: 30px;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+.oup-success-message .button {
+  display: inline-block;
+  background-color: var(--e-global-color-secondary);
+  color: #fff;
+  padding: 15px 40px;
+  border-radius: 32px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.oup-success-message .button:hover {
+  background-color: var(--e-global-color-accent);
+  transform: translateY(-2px);
+}
+
+.learndash-wrapper .ld-progress .ld-progress-heading .ld-progress-stats .ld-progress-percentage.ld-secondary-color {
+  color: var(--e-global-color-primary);
+}
+.learndash-wrapper .ld-progress .ld-progress-heading .ld-progress-stats .ld-progress-steps {
+  color: var(--e-global-color-secondary);
+}
+.learndash-wrapper .ld-progress .ld-progress-bar .ld-progress-bar-percentage.ld-secondary-background {
+  background-color: var(--e-global-color-secondary) !important;
+}
+
+body.woocommerce-page main.site-main,
+body:has(.learndash-wrapper) main.site-main,
+body.page-registration-success main.site-main {
   max-width: 100%;
 }
 @media (max-width: 767px) {
-  body.woocommerce-page main.site-main {
+  body.woocommerce-page main.site-main,
+  body:has(.learndash-wrapper) main.site-main,
+  body.page-registration-success main.site-main {
     padding-inline-end: 0;
     padding-inline-start: 0;
   }
 }
-body.woocommerce-page main.site-main .page-header {
+body.woocommerce-page main.site-main .page-header,
+body:has(.learndash-wrapper) main.site-main .page-header,
+body.page-registration-success main.site-main .page-header {
   width: 100%;
   padding: 80px 0;
   margin: auto;
@@ -1697,11 +1893,15 @@ body.woocommerce-page main.site-main .page-header {
   background-size: cover;
 }
 @media (max-width: 767px) {
-  body.woocommerce-page main.site-main .page-header {
+  body.woocommerce-page main.site-main .page-header,
+  body:has(.learndash-wrapper) main.site-main .page-header,
+  body.page-registration-success main.site-main .page-header {
     padding: 50px 0;
   }
 }
-body.woocommerce-page main.site-main .page-header .entry-title {
+body.woocommerce-page main.site-main .page-header .entry-title,
+body:has(.learndash-wrapper) main.site-main .page-header .entry-title,
+body.page-registration-success main.site-main .page-header .entry-title {
   max-width: 100%;
   font-family: var(--e-global-typography-secondary-font-family, "League Spartan", Sans-serif);
   font-size: clamp(2.25rem, 4vw, 3rem);
@@ -1714,11 +1914,15 @@ body.woocommerce-page main.site-main .page-header .entry-title {
   margin: 0;
 }
 @media (max-width: 767px) {
-  body.woocommerce-page main.site-main .page-header .entry-title {
+  body.woocommerce-page main.site-main .page-header .entry-title,
+  body:has(.learndash-wrapper) main.site-main .page-header .entry-title,
+  body.page-registration-success main.site-main .page-header .entry-title {
     padding: 0 20px;
   }
 }
-body.woocommerce-page main.site-main .page-content {
+body.woocommerce-page main.site-main .page-content,
+body:has(.learndash-wrapper) main.site-main .page-content,
+body.page-registration-success main.site-main .page-content {
   width: 100%;
   max-width: 1280px;
   margin: auto;
@@ -1726,7 +1930,9 @@ body.woocommerce-page main.site-main .page-content {
   font-family: var(--e-global-typography-text-font-family);
 }
 @media (max-width: 767px) {
-  body.woocommerce-page main.site-main .page-content {
+  body.woocommerce-page main.site-main .page-content,
+  body:has(.learndash-wrapper) main.site-main .page-content,
+  body.page-registration-success main.site-main .page-content {
     padding: 50px 20px;
   }
 }

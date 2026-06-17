@@ -12,14 +12,26 @@ if ( ! function_exists( 'get_custom_ld_register_link' ) ) {
             return '#';
         }
 
-        // 1. Check custom button URL first
+
+        if ( is_user_logged_in() && function_exists('sfwd_lms_has_access') ) {
+            if ( sfwd_lms_has_access( $course_id, get_current_user_id() ) ) {
+                return '#start-learning';
+            }
+        }
+
+        // 1. Check if course is closed
+        $course_price_type = function_exists('learndash_get_setting') ? learndash_get_setting($course_id, 'course_price_type') : '';
+        if ( $course_price_type === 'closed' ) {
+            return '#ld-closed';
+        }
+
+        // 2. Check custom button URL
         $course_meta = get_post_meta($course_id, '_sfwd-courses', true);
         if (is_array($course_meta) && !empty($course_meta['sfwd-courses_custom_button_url'])) {
             return esc_url($course_meta['sfwd-courses_custom_button_url']);
         }
 
-        // 2. Try to get payment buttons HTML
-        $course_price_type = function_exists('learndash_get_setting') ? learndash_get_setting($course_id, 'course_price_type') : '';
+        // 3. Try to get payment buttons HTML
         if (function_exists('learndash_payment_buttons') && in_array($course_price_type, ['paynow', 'subscribe', 'free'])) {
             global $post;
             $original_post = $post ? clone $post : null;
@@ -85,17 +97,52 @@ if ( ! function_exists( 'get_custom_ld_register_link' ) ) {
 if ( ! function_exists( 'oup_ld_register_link_footer_script' ) ) {
     function oup_ld_register_link_footer_script() {
         $checkout_forms = isset($GLOBALS['ld_checkout_forms']) ? $GLOBALS['ld_checkout_forms'] : [];
-        if ( empty( $checkout_forms ) ) {
-            return;
-        }
         ?>
+        <?php if ( ! empty( $checkout_forms ) ) : ?>
         <div class="ld-hidden-checkout-forms" style="display:none !important;" aria-hidden="true">
             <?php foreach ($checkout_forms as $id => $html) : ?>
                 <div id="ld-checkout-form-<?php echo esc_attr($id); ?>"><?php echo $html; ?></div>
             <?php endforeach; ?>
         </div>
+        <?php endif; ?>
         <script type="text/javascript">
         jQuery(document).ready(function($) {
+            var $enrolledBtn = $('a[href*="#start-learning"]');
+            if ($enrolledBtn.length) {
+                var $btnText = $enrolledBtn.find('.elementor-button-text');
+                if ($btnText.length) {
+                    $btnText.text('Start Learning');
+                } else {
+                    $enrolledBtn.text('Start Learning');
+                }
+                $enrolledBtn.on('click', function(e) {
+                    e.preventDefault();
+                    var $target = $('#learndash-course-content, .ld-item-list-items');
+                    if ($target.length) {
+                        $('html, body').animate({ scrollTop: $target.offset().top - 100 }, 500);
+                    } else {
+                        $('html, body').animate({ scrollTop: $(window).scrollTop() + 500 }, 500);
+                    }
+                });
+            }
+
+            $('.ld-price-enrolled').closest('.elementor-widget').hide();
+            $('.ld-price-closed').closest('.elementor-widget').hide();
+
+            var $closedBtn = $('a[href*="#ld-closed"]');
+            if ($closedBtn.length) {
+                var $cBtnText = $closedBtn.find('.elementor-button-text');
+                if ($cBtnText.length) {
+                    $cBtnText.text('Closed');
+                } else {
+                    $closedBtn.text('Closed');
+                }
+                $closedBtn.css({
+                    opacity: 0.6,
+                    pointerEvents: 'none'
+                });
+            }
+
             $(document).on('click', 'a[href^="#ld-checkout-"]', function(e) {
                 e.preventDefault();
                 var href = $(this).attr('href');

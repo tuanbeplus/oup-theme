@@ -21,27 +21,8 @@ if (!function_exists('enqueue_oup_styles_and_scripts')) {
     {
         wp_enqueue_style('oup-main-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array(), OUP_THEME_VER);
         wp_enqueue_script('oup-main-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery'), OUP_THEME_VER, true);
-        if ( oup_should_load_stripe_js() ) {
-            wp_enqueue_script('stripe-js', 'https://js.stripe.com/v3/', array(), null, false);
-        }
         wp_localize_script('oup-main-script', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
-}
-/**
- * Helper function to determine if Stripe JS should be loaded
- */
-function oup_should_load_stripe_js() {
-    global $post;
-    if ( is_singular( 'sfwd-courses' ) || is_post_type_archive( 'sfwd-courses' ) ) {
-        return true;
-    }
-    if ( is_a( $post, 'WP_Post' ) ) {
-        $elementor_data = get_post_meta( $post->ID, '_elementor_data', true );
-        if ( ! empty( $elementor_data ) && strpos( $elementor_data, 'course-filter' ) !== false ) {
-            return true;
-        }
-    }
-    return false;
 }
 /**
  * Turn off the default LearnDash interface on the course detail page.
@@ -164,6 +145,56 @@ if (!function_exists('oup_author_role_shortcode')) {
     }
     add_shortcode('oup_author_role', 'oup_author_role_shortcode');
 }
+
+//hook redirect to course after purchase
+add_filter( 'learndash_payment_option_url_success', 'oup_redirect_to_course_after_purchase', 99, 3 );
+function oup_redirect_to_course_after_purchase( $url, $gateway_name, $products ) {
+    if ( ! empty( $products ) && is_array( $products ) && count( $products ) === 1 ) {
+        $product = $products[0];
+        if ( method_exists( $product, 'get_post' ) ) {
+            $post = $product->get_post();
+            if ( $post && $post->post_type === 'sfwd-courses' ) {
+                $course_url = get_permalink( $post->ID );
+                if ( $course_url ) {
+                    return $course_url;
+                }
+            }
+        }
+    }
+    return $url;
+}
+//clean stripe url parameters
+add_action('wp_footer', 'oup_clean_stripe_url_parameters');
+function oup_clean_stripe_url_parameters() {
+    if ( isset($_GET['ld_stripe_connect']) && $_GET['ld_stripe_connect'] === 'success' ) {
+        ?>
+        <script>
+            if (window.history && window.history.replaceState) {
+                var clean_url = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                window.history.replaceState({}, document.title, clean_url);
+            }
+        </script>
+        <?php
+    }
+}
+//add class to success page
+add_filter('body_class', 'oup_add_custom_class_to_success_page');
+function oup_add_custom_class_to_success_page($classes) {
+    if (is_page('registration-success')) {
+        $classes[] = 'page-registration-success'; 
+    }
+    return $classes;
+}
+
+// Redirect logged in users away from registration page
+// add_action('template_redirect', 'oup_redirect_logged_in_from_registration');
+// function oup_redirect_logged_in_from_registration() {
+//     if ( is_user_logged_in() && is_page('registration') ) {
+//         wp_redirect( home_url() );
+//         exit;
+//     }
+// }
+
 /* Course Button Link */
 $button_file = get_stylesheet_directory() . '/elementor/shortcode/course-button-link.php';
 if (file_exists($button_file)) {
