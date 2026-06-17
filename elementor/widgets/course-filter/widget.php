@@ -718,6 +718,22 @@ class Widget_CourseFilter extends Widget_Base
                                 if ( $post ) wp_reset_postdata();
                             }
 
+                           // FIX: Prevent duplicate Stripe JS
+                            if ( strpos($payment_buttons, '<script') !== false ) {
+                                if ( ! isset( $GLOBALS['oup_stripe_script_extracted'] ) ) {
+                                    preg_match('/<script\b[^>]*>([\s\S]*?)<\/script>/i', $payment_buttons, $matches);
+                                    if ( !empty($matches[0]) ) {
+                                        $GLOBALS['oup_stripe_script_extracted'] = $matches[0];
+                                        if ( ! wp_doing_ajax() ) {
+                                            add_action('wp_footer', function() {
+                                                echo $GLOBALS['oup_stripe_script_extracted'];
+                                            }, 999);
+                                        }
+                                    }
+                                }
+
+                                $payment_buttons = preg_replace('/<script\b[^>]*>([\s\S]*?)<\/script>/i', '', $payment_buttons);
+                            }
                         }
 
                         if ( !empty($payment_buttons) ) {

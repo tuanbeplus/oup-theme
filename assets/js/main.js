@@ -152,7 +152,7 @@
         var $wrapper = $header.closest('.oup-course-accordion-container');
         var $content = $header.next('.course-accordion-content');
         var maxItems = $wrapper.data('max-items') || 'one';
-        var animDuration = parseInt($wrapper.data('anim-duration'), 10) || 400;
+        var animDuration = parseInt($wrapper.data('anim-duration'), 10) || 400; 
         var isActive = $header.hasClass('active');
 
         if (maxItems === 'one' && !isActive) {
