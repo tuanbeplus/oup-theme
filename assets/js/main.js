@@ -129,6 +129,22 @@
         }
     });
 
+    // Icon facebook share
+    $(document).on('click', '.oup-share-facebook', function (e) {
+        e.preventDefault();
+
+        var shareUrl =
+            window.location.origin +
+            window.location.pathname;
+
+        window.open(
+            'https://www.facebook.com/sharer/sharer.php?u=' +
+            encodeURIComponent(shareUrl),
+            '_blank',
+            'width=600,height=500'
+        );
+    });
+
     // Course Accordion Shortcode Toggle
     $(document).on('click', '.oup-course-accordion-container .course-accordion-header', function (e) {
         e.preventDefault();
