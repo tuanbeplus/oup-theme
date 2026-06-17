@@ -65,20 +65,17 @@
         let preloaded = {};
         try { preloaded = JSON.parse($widget.find('.apf-preloaded-data').html() || '{}'); } catch (_) { }
 
-        // pageState key is now a single string ('all' or a term_id string)
         const pageState = {};
         Object.keys(preloaded).forEach(key => {
             pageState[key] = { page: 2, maxPages: parseInt(maxPagesMap[key]) || 1 };
         });
 
-        // Single active term — replaces the previous multi-select Set
         let activeTerm = 'all';
         let currentSearch = '';
         let currentXhr = null;
         let observer = null;
         let isLoading = false;
 
-        // Cache key is just the active term string (null in search mode)
         function getCacheKey() {
             if (currentSearch) return null;
             return activeTerm;
@@ -136,19 +133,33 @@
             if (observer) { observer.disconnect(); observer = null; }
         }
 
+        function checkSentinelVisibility() {
+            if (!$sentinel[0] || currentSearch) return;
+            const key = getCacheKey();
+            if (!key) return;
+            const state = pageState[key];
+            if (!state || state.page > state.maxPages) return;
+            if (isLoading) return;
+
+            const rect = $sentinel[0].getBoundingClientRect();
+            const inView = rect.top < window.innerHeight + 400;
+            if (inView) {
+                loadNextPage();
+            }
+        }
+
         function startObserver() {
             stopObserver();
-            if (currentSearch) return; // no infinite scroll in search mode
+            if (currentSearch) return;
             observer = new IntersectionObserver(entries => {
                 if (!entries[0].isIntersecting) return;
                 if (isLoading) return;
                 const state = pageState[getCacheKey()];
                 if (state && state.page <= state.maxPages) loadNextPage();
-            }, { rootMargin: '200px', threshold: 0 });
+            }, { rootMargin: '400px', threshold: 0 });
             observer.observe($sentinel[0]);
         }
 
-        // Select a single term — clicking the active tab does nothing
         function selectTerm(term) {
             if (term === activeTerm) return;
             activeTerm = term;
@@ -196,7 +207,6 @@
             }
         }
 
-        // terms param is now a single term string, not a comma-separated list
         function fetchPage(paged, keySnapshot, onSuccess) {
             const termsParam = keySnapshot !== null ? keySnapshot : 'all';
 
@@ -244,11 +254,13 @@
                 preloaded[key] = getCleanGridHTML();
                 state.page++;
                 state.maxPages = maxPages;
-                requestAnimationFrame(() => { isLoading = false; });
+                requestAnimationFrame(() => {
+                    isLoading = false;
+                    checkSentinelVisibility();
+                });
             });
         }
 
-        // Single-choice: selectTerm replaces the old multi-select toggleTerm
         $widget.on('click', '.apf-tab', function () {
             selectTerm(String($(this).data('term')));
         });
@@ -256,7 +268,7 @@
         $(document).on('apf:search', function (e, query) {
             currentSearch = query;
             if (query) {
-                activeTerm = 'all'; // reset tab to All when searching
+                activeTerm = 'all';
                 updateTabUI();
             }
             renderCurrentSelection();
