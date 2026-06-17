@@ -146,6 +146,12 @@ if (!function_exists('oup_author_role_shortcode')) {
     add_shortcode('oup_author_role', 'oup_author_role_shortcode');
 }
 
+
+add_action( 'wp_enqueue_scripts', 'oup_enqueue_stripe_js' );
+function oup_enqueue_stripe_js() {
+    wp_enqueue_script( 'stripe-js', 'https://js.stripe.com/v3/', array(), null, true );
+}
+
 //hook redirect to course after purchase
 add_filter( 'learndash_payment_option_url_success', 'oup_redirect_to_course_after_purchase', 99, 3 );
 function oup_redirect_to_course_after_purchase( $url, $gateway_name, $products ) {

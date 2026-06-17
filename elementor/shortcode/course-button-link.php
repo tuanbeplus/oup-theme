@@ -15,6 +15,33 @@ if ( ! function_exists( 'get_custom_ld_register_link' ) ) {
 
         if ( is_user_logged_in() && function_exists('sfwd_lms_has_access') ) {
             if ( sfwd_lms_has_access( $course_id, get_current_user_id() ) ) {
+                $user_id = get_current_user_id();
+                $resume_url = '';
+                
+                // 1. Try to find the first incomplete step
+                if (function_exists('learndash_user_progress_get_first_incomplete_step')) {
+                    $incomplete_step_id = learndash_user_progress_get_first_incomplete_step($user_id, $course_id);
+                    if (!empty($incomplete_step_id)) {
+                        if (function_exists('learndash_get_step_permalink')) {
+                            $resume_url = learndash_get_step_permalink($incomplete_step_id, $course_id);
+                        } else {
+                            $resume_url = get_permalink($incomplete_step_id);
+                        }
+                    }
+                }
+
+                // 2. If course is completed or no progress, get the first lesson
+                if (empty($resume_url) && function_exists('learndash_course_get_steps_by_type')) {
+                    $lessons = learndash_course_get_steps_by_type($course_id, 'sfwd-lessons');
+                    if (!empty($lessons) && is_array($lessons)) {
+                        $resume_url = get_permalink($lessons[0]);
+                    }
+                }
+                
+                if (!empty($resume_url)) {
+                    return esc_url($resume_url) . '#start-learning';
+                }
+
                 return '#start-learning';
             }
         }
@@ -115,15 +142,6 @@ if ( ! function_exists( 'oup_ld_register_link_footer_script' ) ) {
                 } else {
                     $enrolledBtn.text('Start Learning');
                 }
-                $enrolledBtn.on('click', function(e) {
-                    e.preventDefault();
-                    var $target = $('#learndash-course-content, .ld-item-list-items');
-                    if ($target.length) {
-                        $('html, body').animate({ scrollTop: $target.offset().top - 100 }, 500);
-                    } else {
-                        $('html, body').animate({ scrollTop: $(window).scrollTop() + 500 }, 500);
-                    }
-                });
             }
 
             $('.ld-price-enrolled').closest('.elementor-widget').hide();
