@@ -146,25 +146,6 @@ if (!function_exists('oup_author_role_shortcode')) {
     add_shortcode('oup_author_role', 'oup_author_role_shortcode');
 }
 
-
-//add class to success page
-add_filter('body_class', 'oup_add_custom_class_to_success_page');
-function oup_add_custom_class_to_success_page($classes) {
-    if (is_page('registration-success')) {
-        $classes[] = 'page-registration-success'; 
-    }
-    return $classes;
-}
-
-// Redirect logged in users away from registration page
-// add_action('template_redirect', 'oup_redirect_logged_in_from_registration');
-// function oup_redirect_logged_in_from_registration() {
-//     if ( is_user_logged_in() && is_page('registration') ) {
-//         wp_redirect( home_url() );
-//         exit;
-//     }
-// }
-
 /* Course Button Link */
 $button_file = get_stylesheet_directory() . '/elementor/shortcode/course-button-link.php';
 if (file_exists($button_file)) {

@@ -33,3 +33,20 @@ function oup_exclude_search_post_types(WP_Query $query)
 
     $query->set('post_type', $post_types);
 }
+
+add_action( 'plugins_loaded', 'oup_bypass_learndash_stripe_403', 1 );
+function oup_bypass_learndash_stripe_403() {
+    if ( isset( $_GET['ld_stripe_connect'] ) && $_GET['ld_stripe_connect'] === 'success' ) {
+        unset( $_GET['ld_stripe_connect'] );
+
+        unset( $_GET['session_id'] );
+    }
+}
+
+add_filter('body_class', 'oup_add_custom_class_to_success_page');
+function oup_add_custom_class_to_success_page($classes) {
+    if (is_page('registration-success')) {
+        $classes[] = 'page-registration-success'; 
+    }
+    return $classes;
+}
