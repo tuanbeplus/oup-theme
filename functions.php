@@ -146,37 +146,7 @@ if (!function_exists('oup_author_role_shortcode')) {
     add_shortcode('oup_author_role', 'oup_author_role_shortcode');
 }
 
-// //hook redirect to course after purchase
-// add_filter( 'learndash_payment_option_url_success', 'oup_redirect_to_course_after_purchase', 99, 3 );
-// function oup_redirect_to_course_after_purchase( $url, $gateway_name, $products ) {
-//     if ( ! empty( $products ) && is_array( $products ) && count( $products ) === 1 ) {
-//         $product = $products[0];
-//         if ( method_exists( $product, 'get_post' ) ) {
-//             $post = $product->get_post();
-//             if ( $post && $post->post_type === 'sfwd-courses' ) {
-//                 $course_url = get_permalink( $post->ID );
-//                 if ( $course_url ) {
-//                     return $course_url;
-//                 }
-//             }
-//         }
-//     }
-//     return $url;
-// }
-// //clean stripe url parameters
-// add_action('wp_footer', 'oup_clean_stripe_url_parameters');
-// function oup_clean_stripe_url_parameters() {
-//     if ( isset($_GET['ld_stripe_connect']) && $_GET['ld_stripe_connect'] === 'success' ) {
-//         ?>
-//         <script>
-//             if (window.history && window.history.replaceState) {
-//                 var clean_url = window.location.protocol + "//" + window.location.host + window.location.pathname;
-//                 window.history.replaceState({}, document.title, clean_url);
-//             }
-//         </script>
-//         <?php
-//     }
-// }
+
 //add class to success page
 add_filter('body_class', 'oup_add_custom_class_to_success_page');
 function oup_add_custom_class_to_success_page($classes) {
