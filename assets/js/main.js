@@ -152,7 +152,7 @@
         var $wrapper = $header.closest('.oup-course-accordion-container');
         var $content = $header.next('.course-accordion-content');
         var maxItems = $wrapper.data('max-items') || 'one';
-        var animDuration = parseInt($wrapper.data('anim-duration'), 10) || 400; 
+        var animDuration = parseInt($wrapper.data('anim-duration'), 10) || 400;
         var isActive = $header.hasClass('active');
 
         if (maxItems === 'one' && !isActive) {
@@ -212,7 +212,7 @@
     // Split text into words/spans for split-text-reveal animation
     function initSplitTextReveal() {
         if (document.body.classList.contains('elementor-editor-active')) return;
-        
+
         const splitTextElements = document.querySelectorAll('.split-text-reveal');
         if (!splitTextElements.length) return;
 
@@ -221,10 +221,10 @@
             if (!targetEl) targetEl = el;
 
             let wordIndex = 0;
-            
+
             function splitTextNodes(node) {
                 const childNodes = Array.from(node.childNodes);
-                
+
                 childNodes.forEach(child => {
                     if (child.nodeType === Node.TEXT_NODE) {
                         const text = child.nodeValue;
@@ -240,13 +240,13 @@
                             } else {
                                 const mask = document.createElement('span');
                                 mask.className = 'split-word-mask';
-                                
+
                                 const wordSpan = document.createElement('span');
                                 wordSpan.className = 'split-word';
                                 wordSpan.textContent = word;
                                 wordSpan.style.transitionDelay = `${wordIndex * 0.05}s`;
                                 wordIndex++;
-                                
+
                                 mask.appendChild(wordSpan);
                                 fragment.appendChild(mask);
                             }
@@ -269,7 +269,7 @@
     function initHeroReveal() {
         const revealElements = document.querySelectorAll('.hero-reveal');
         if (!revealElements.length) return;
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(({ target, isIntersecting }) => {
                 if (!isIntersecting) return;
@@ -277,12 +277,12 @@
                 observer.unobserve(target);
             });
         }, { threshold: 0.1 });
-        
+
         revealElements.forEach(el => observer.observe(el));
     }
 
-    $(function () { 
-        initProductZoomIn(); 
+    $(function () {
+        initProductZoomIn();
         initSplitTextReveal();
         initHeroReveal();
     });
@@ -314,8 +314,8 @@
     });
 
     // Add qty minus and plus buttons
-    $('.post-type-archive-product .product .quantity').each(function () {
-        $(this).prepend('<button type="button" class="qty-minus">−</button>');
+    $('.post-type-archive-product .product .quantity, .archive.tax-product_cat .product .quantity, .single-product .product .quantity').each(function () {
+        $(this).prepend('<button type="button" class="qty-minus">-</button>');
         $(this).append('<button type="button" class="qty-plus">+</button>');
     });
 
@@ -340,5 +340,64 @@
             $input.val(value - 1).trigger('change');
         }
     });
+
+    $('.single-product form.cart').on('submit', function (e) {
+        e.preventDefault();
+        const $form = $(this);
+        const $button = $form.find('.single_add_to_cart_button');
+
+        if ($button.hasClass('loading')) {
+            return;
+        }
+
+        $button.addClass('loading');
+
+        let formData = $form.serializeArray();
+        let hasProductId = false;
+
+        $.each(formData, function (i, field) {
+            if (field.name === 'product_id' || field.name === 'add-to-cart') {
+                hasProductId = true;
+            }
+        });
+
+        if (!hasProductId && $button.val()) {
+            formData.push({ name: 'product_id', value: $button.val() });
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: wc_add_to_cart_params.wc_ajax_url.replace('%%endpoint%%', 'add_to_cart'),
+            data: $.param(formData),
+            success: function (response) {
+
+                if (response.error && response.product_url) {
+                    window.location = response.product_url;
+                    return;
+                }
+
+                $(document.body).trigger('added_to_cart', [
+                    response.fragments,
+                    response.cart_hash,
+                    $button
+                ]);
+
+                $(document.body).trigger('wc_fragment_refresh');
+            },
+            complete: function () {
+                $button.removeClass('loading');
+            }
+        });
+
+    });
+
+    $(document.body).on('added_to_cart', function () {
+        const $cart = $('header .elementor-menu-cart__toggle_button');
+        $cart.addClass('cart-added');
+        setTimeout(function () {
+            $cart.removeClass('cart-added');
+        }, 800);
+    });
+
 
 })(jQuery);
