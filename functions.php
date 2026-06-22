@@ -174,3 +174,73 @@ require_once get_stylesheet_directory() . '/elementor/widgets/sugar-calendar-eve
 
 // Hooks
 require_once get_stylesheet_directory() . '/inc/hooks.php';
+
+/**
+ * Shortcode: [oup_worksheet_files]
+ */
+function oup_worksheet_files_shortcode( $atts ) {
+	
+	$atts = shortcode_atts(
+        array(
+            'heading' => 'Worksheet File',
+        ),
+        $atts,
+        'oup_worksheet_files'
+    );
+
+    if ( ! is_singular() ) {
+        return '';
+    }
+
+    $post_id = get_the_ID();
+
+    if ( ! have_rows( 'worksheet_files', $post_id ) ) {
+        return '';
+    }
+
+    ob_start();
+
+    echo '<div class="oup-worksheet-files">';
+	if ( ! empty( $atts['heading'] ) ) {
+        echo '<h2 class="oup-worksheet-files__heading">' . esc_html( $atts['heading'] ) . '</h2>';
+    }
+    echo '<ul class="oup-worksheet-files-list">';
+
+    while ( have_rows( 'worksheet_files', $post_id ) ) {
+        the_row();
+
+        $file      = get_sub_field( 'attachment_file' );
+        $file_name = get_sub_field( 'file_name' );
+
+        if ( empty( $file ) ) {
+            continue;
+        }
+
+        // File field may return array, URL, or ID depending on ACF setting
+        if ( is_array( $file ) ) {
+            $url          = $file['url'] ?? '';
+            $default_name = $file['title'] ?? basename( $url );
+        } elseif ( is_numeric( $file ) ) {
+            $url          = wp_get_attachment_url( $file );
+            $default_name = get_the_title( $file );
+        } else {
+            $url          = $file;
+            $default_name = basename( $url );
+        }
+
+        $label = ! empty( $file_name ) ? $file_name : $default_name;
+
+        echo '<li class="oup-worksheet-file">';
+        echo '<a href="' . esc_url( $url ) . '" target="_blank" rel="noopener">';
+		echo '<div class="oup-worksheet-file__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M288.6 76.8C344.8 20.6 436 20.6 492.2 76.8C548.4 133 548.4 224.2 492.2 280.4L328.2 444.4C293.8 478.8 238.1 478.8 203.7 444.4C169.3 410 169.3 354.3 203.7 319.9L356.5 167.3C369 154.8 389.3 154.8 401.8 167.3C414.3 179.8 414.3 200.1 401.8 212.6L249 365.3C239.6 374.7 239.6 389.9 249 399.2C258.4 408.5 273.6 408.6 282.9 399.2L446.9 235.2C478.1 204 478.1 153.3 446.9 122.1C415.7 90.9 365 90.9 333.8 122.1L169.8 286.1C116.7 339.2 116.7 425.3 169.8 478.4C222.9 531.5 309 531.5 362.1 478.4L492.3 348.3C504.8 335.8 525.1 335.8 537.6 348.3C550.1 360.8 550.1 381.1 537.6 393.6L407.4 523.6C329.3 601.7 202.7 601.7 124.6 523.6C46.5 445.5 46.5 318.9 124.6 240.8L288.6 76.8z"/></svg></div>';
+        echo '<div>' . esc_html( $label ) . '</div>';
+        echo '</a>';
+        echo '</li>';
+    }
+
+    echo '</ul>';
+    echo '</div>';
+
+    return ob_get_clean();
+}
+add_shortcode( 'oup_worksheet_files', 'oup_worksheet_files_shortcode' );
