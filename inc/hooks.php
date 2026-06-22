@@ -42,11 +42,32 @@ function oup_bypass_learndash_stripe_403() {
         unset( $_GET['session_id'] );
     }
 }
-
+//add class to success page
 add_filter('body_class', 'oup_add_custom_class_to_success_page');
 function oup_add_custom_class_to_success_page($classes) {
     if (is_page('registration-success')) {
         $classes[] = 'page-registration-success'; 
     }
     return $classes;
+}
+
+// Add Profile Link to LearnDash Focus Mode User Menu
+add_filter( 'learndash_focus_header_user_dropdown_items', 'oup_add_profile_to_focus_menu', 10, 3 );
+function oup_add_profile_to_focus_menu( $menu_items, $course_id, $user_id ) {
+    $profile_item = array(
+        'profile' => array(
+            'url'   => site_url( '/profile/' ), 
+            'label' => __( 'My Profile', 'learndash' ),
+        )
+    );
+    if ( isset( $menu_items['logout'] ) ) {
+        $logout = $menu_items['logout'];
+        unset( $menu_items['logout'] );
+        $menu_items['profile'] = $profile_item['profile'];
+        $menu_items['logout']  = $logout;
+    } else {
+        $menu_items['profile'] = $profile_item['profile'];
+    }
+
+    return $menu_items;
 }
