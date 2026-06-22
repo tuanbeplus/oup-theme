@@ -221,6 +221,10 @@ body.single-product {
 				line-height: 1.65;
 				color: #231F20;
 				margin-bottom: 24px;
+				
+				a {
+					color: var(--e-global-color-secondary, #0091B3);
+				}
 
 				@media (max-width: 767px) {
 					font-size: 1rem;
@@ -379,6 +383,17 @@ body.single-product {
 		// ── Product Tabs ────────────────────────────────
 		.woocommerce-tabs {
 			grid-column: 1 / -1;
+			.woocommerce-Tabs-panel {
+				table.shop_attributes {
+					border-radius: 0;
+					tr {
+						th, td {
+							padding: 10px;
+						}
+					}
+				}
+			}
+			
 		}
 
 		// ── Related Products ────────────────────────────────
@@ -433,12 +448,11 @@ body.single-product {
 					background-color: var(--e-global-color-ed9b819);
 					border-radius: 27px;
 					padding: 40px;
-
 					display: flex;
 					flex-direction: column;
 					margin: 0;
 					box-shadow: 2px 7px 7px 0px rgba(0, 0, 0, 0.1);
-					border: 1px solid #eee;
+					border: 1px solid #f4f4f4;
 					@media (max-width: 1024px) {
 						padding: 32px;
 					}
@@ -556,7 +570,8 @@ body.single-product {
 
 					// Loop add-to-cart button
 					a.button.add_to_cart_button,
-					button.button.add_to_cart_button {
+					button.button.add_to_cart_button,
+					.button {
 						display: block;
 						width: 100%;
 						margin-top: auto;
