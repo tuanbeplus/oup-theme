@@ -712,6 +712,27 @@ body .gform_wrapper.worksheet-form_wrapper form.worksheet-form .gform_footer inp
   background-color: var(--e-global-color-5e87840, #FCCDE5);
 }
 
+.elementor-menu-cart__toggle_button.cart-added {
+  animation: cartBounce 0.8s ease;
+}
+
+@keyframes cartBounce {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.3);
+  }
+  40% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 body.single-product .summary.entry-summary {
   width: 100% !important;
 }
@@ -727,7 +748,7 @@ body.single-product main.site-main {
   }
 }
 body.single-product main.site-main .woocommerce-breadcrumb {
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.5;
   color: #666;
   padding: 0;
@@ -873,26 +894,66 @@ body.single-product main.site-main .summary.entry-summary form.cart {
 body.single-product main.site-main .summary.entry-summary form.cart .quantity {
   display: flex;
   align-items: center;
+  position: relative;
 }
-body.single-product main.site-main .summary.entry-summary form.cart .quantity input.qty {
-  width: 70px;
+body.single-product main.site-main .summary.entry-summary form.cart .quantity input {
+  width: 100px;
   height: 50px;
   text-align: center;
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-family: inherit;
-  font-weight: 600;
-  color: #231F20;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  background-color: #f9f9f9;
-  transition: border-color 0.25s ease;
+  font-weight: 500;
+  color: var(--e-global-color-text);
+  border: 1px solid var(--e-global-color-text);
+  border-radius: 40px;
+  background-color: #fff;
 }
-body.single-product main.site-main .summary.entry-summary form.cart .quantity input.qty:focus {
+body.single-product main.site-main .summary.entry-summary form.cart .quantity input:focus {
   outline: none;
   border-color: #005375;
 }
-body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button {
+body.single-product main.site-main .summary.entry-summary form.cart .quantity input {
+  -moz-appearance: textfield !important;
+  -webkit-appearance: textfield !important;
+          appearance: textfield !important;
+}
+body.single-product main.site-main .summary.entry-summary form.cart .quantity input::-webkit-outer-spin-button, body.single-product main.site-main .summary.entry-summary form.cart .quantity input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+body.single-product main.site-main .summary.entry-summary form.cart .quantity button.qty-minus,
+body.single-product main.site-main .summary.entry-summary form.cart .quantity button.qty-plus {
+  margin-top: -3px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  content: "-";
+  font-size: 1.125rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 22px 10px;
+  padding-left: 20px;
+  padding-right: 10px;
+  left: 0;
+  cursor: pointer;
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--e-global-color-text);
+}
+body.single-product main.site-main .summary.entry-summary form.cart .quantity button.qty-plus {
+  content: "+";
+  right: 0;
+  left: unset;
+  padding-left: 10px;
+  padding-right: 20px;
+}
+body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button,
+body.single-product main.site-main .summary.entry-summary form.cart .added_to_cart {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 50px;
   font-family: var(--e-global-typography-text-font-family, "Plus Jakarta Sans", sans-serif);
   font-size: 1.125rem;
@@ -907,28 +968,37 @@ body.single-product main.site-main .summary.entry-summary form.cart .single_add_
   text-transform: none;
   letter-spacing: 0;
 }
+body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button:after,
+body.single-product main.site-main .summary.entry-summary form.cart .added_to_cart:after {
+  display: none;
+}
 @media (max-width: 767px) {
-  body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button {
+  body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button,
+  body.single-product main.site-main .summary.entry-summary form.cart .added_to_cart {
     padding: 0 20px;
-    font-size: 0.9375rem;
+    font-size: 1rem;
   }
 }
-body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button:hover {
+body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button:hover,
+body.single-product main.site-main .summary.entry-summary form.cart .added_to_cart:hover {
   background-color: var(--e-global-color-accent, #005375);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
-body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button:active {
+body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button:active,
+body.single-product main.site-main .summary.entry-summary form.cart .added_to_cart:active {
   transform: scale(0.98);
 }
 body.single-product main.site-main .summary.entry-summary .product_meta {
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.6;
   color: #666;
-  padding-top: 24px;
+  padding-top: 32px;
   border-top: 1px solid #E2E8F0;
+  margin-top: 40px;
 }
 @media (max-width: 767px) {
   body.single-product main.site-main .summary.entry-summary .product_meta {
+    margin-top: 24px;
     padding-top: 20px;
   }
 }
@@ -943,11 +1013,15 @@ body.single-product main.site-main .summary.entry-summary .product_meta a {
   color: var(--e-global-color-primary);
   text-decoration: none;
   transition: color 0.25s ease;
+  font-weight: 500;
 }
 body.single-product main.site-main .summary.entry-summary .product_meta a:hover {
   color: var(--e-global-color-secondary);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+body.single-product main.site-main .woocommerce-tabs {
+  grid-column: 1/-1;
 }
 body.single-product main.site-main .related.products {
   grid-column: 1/-1;
@@ -1858,14 +1932,387 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   transform: translateY(-2px);
 }
 
+@keyframes oup-progress-stripes {
+  from {
+    background-position: 1rem 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
 .learndash-wrapper .ld-progress .ld-progress-heading .ld-progress-stats .ld-progress-percentage.ld-secondary-color {
   color: var(--e-global-color-primary);
 }
 .learndash-wrapper .ld-progress .ld-progress-heading .ld-progress-stats .ld-progress-steps {
   color: var(--e-global-color-secondary);
 }
+.learndash-wrapper .ld-progress .ld-progress-bar {
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #e2e8f0;
+  height: 10px;
+}
 .learndash-wrapper .ld-progress .ld-progress-bar .ld-progress-bar-percentage.ld-secondary-background {
   background-color: var(--e-global-color-secondary) !important;
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-size: 1rem 1rem;
+  border-radius: 10px;
+  animation: oup-progress-stripes 1s linear infinite;
+  transition: width 1.5s ease-in-out;
+}
+
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-course-navigation-heading {
+  background-color: var(--e-global-color-primary);
+  padding: 20px;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-course-navigation-heading #ld-focus-mode-course-heading {
+  color: #ffffff;
+  font-family: var(--e-global-typography-primary-font-family);
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: opacity 0.3s;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-course-navigation-heading #ld-focus-mode-course-heading:hover {
+  opacity: 0.9;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-course-navigation-heading .ld-focus-sidebar-trigger .ld-icon.ld-icon-arrow-left,
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-course-navigation-heading .ld-focus-sidebar-trigger .ld-icon.ld-icon-arrow-right {
+  background: var(--e-global-color-9500430);
+  color: #ffffff;
+  border-color: var(--e-global-color-text);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-course-navigation-heading .ld-focus-sidebar-trigger .ld-icon.ld-icon-arrow-left:hover,
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-course-navigation-heading .ld-focus-sidebar-trigger .ld-icon.ld-icon-arrow-right:hover {
+  background: var(--e-global-color-secondary);
+  border-color: var(--e-global-color-f62bd18);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-course-navigation-heading .ld-focus-sidebar-trigger:focus .ld-icon.ld-icon-arrow-left,
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-course-navigation-heading .ld-focus-sidebar-trigger:focus .ld-icon.ld-icon-arrow-right {
+  outline: none;
+  box-shadow: none;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item-section-heading {
+  background-color: #f8fbfd;
+  padding: 12px 20px;
+  border-bottom: 1px solid #eaedf3;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item-section-heading .ld-lesson-section-heading {
+  font-family: var(--e-global-typography-secondary-font-family);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #8892a0;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item {
+  border-bottom: 1px solid #f0f2f5;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-preview {
+  padding: 15px 20px;
+  transition: background-color 0.3s ease;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-preview:hover {
+  background-color: #f8fbfd;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-preview a.ld-lesson-item-preview-heading {
+  font-family: var(--e-global-typography-primary-font-family);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--e-global-color-primary);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-preview a.ld-lesson-item-preview-heading:hover {
+  color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-preview a.ld-lesson-item-preview-heading .ld-lesson-title {
+  color: inherit;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-preview .ld-expand-button {
+  margin-top: 10px;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-preview .ld-expand-button .ld-icon-arrow-down {
+  background-color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-preview .ld-expand-button .ld-expand-text {
+  color: var(--e-global-color-secondary);
+  font-weight: 600;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item.ld-is-current-lesson > .ld-lesson-item-preview {
+  background-color: rgba(87, 114, 130, 0.05);
+  border-left: 4px solid var(--e-global-color-secondary);
+  padding-left: 16px;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item.ld-is-current-lesson > .ld-lesson-item-preview a.ld-lesson-item-preview-heading {
+  color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-expanded {
+  background-color: #fcfcfc;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-expanded .ld-table-list-item {
+  border-bottom: 1px solid #f4f6f9;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-expanded .ld-table-list-item .ld-table-list-item-preview {
+  padding: 12px 20px 12px 45px;
+  font-family: var(--e-global-typography-secondary-font-family);
+  font-size: 0.95rem;
+  color: #666;
+  transition: all 0.2s ease;
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-expanded .ld-table-list-item .ld-table-list-item-preview:hover {
+  background-color: #f0f4f8;
+  color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-expanded .ld-table-list-item .ld-table-list-item-preview.ld-is-current-item {
+  font-weight: 700;
+  color: var(--e-global-color-primary);
+  background-color: #ffffff;
+  box-shadow: inset 4px 0 0 var(--e-global-color-accent);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-status-icon.ld-status-complete {
+  background-color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-status-icon.ld-status-in-progress {
+  border-color: var(--e-global-color-accent);
+}
+body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-status-icon.ld-status-incomplete {
+  border-color: var(--e-global-color-secondary) !important;
+}
+body .learndash-wrapper .ld-focus .ld-focus-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #eaedf3;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-content-actions .ld-content-action .ld-button-transparent {
+  font-family: var(--e-global-typography-primary-font-family);
+  font-weight: 600;
+  color: var(--e-global-color-primary);
+  padding: 8px 20px;
+  border-radius: 20px;
+  background: #f4f6f9;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-content-actions .ld-content-action .ld-button-transparent:hover {
+  background: var(--e-global-color-secondary);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-content-actions .ld-content-action .ld-button-transparent:focus {
+  outline: none;
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-content-actions .ld-content-action .sfwd-mark-complete .learndash_mark_complete_button {
+  outline: none;
+  color: var(--e-global-color-secondary);
+  padding: 12px 20px;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-content-actions .ld-content-action .sfwd-mark-complete .learndash_mark_complete_button:focus {
+  padding: 12px 20px;
+  border-radius: 32px;
+  outline: none;
+  box-shadow: none;
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-content-actions .ld-content-action .sfwd-mark-complete .learndash_mark_complete_button:hover {
+  padding: 12px 20px;
+  outline: none;
+  font-family: var(--e-global-typography-primary-font-family);
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 32px;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: var(--e-global-color-primary) !important;
+  color: #fff;
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu {
+  font-family: var(--e-global-typography-secondary-font-family);
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-welcome-text {
+  font-family: var(--e-global-typography-primary-font-family);
+  font-weight: 600;
+  color: var(--e-global-color-text);
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-profile-avatar {
+  border: 2px solid var(--e-global-color-secondary);
+  transition: transform 0.3s ease;
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-profile-avatar:hover {
+  transform: scale(1.05);
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-menu-items a {
+  background-color: var(--e-global-color-primary);
+}
+
+body .learndash-wrapper.ld-profile {
+  margin-top: 40px;
+}
+body .learndash-wrapper.ld-profile .ld-profile-summary {
+  margin-bottom: 50px;
+}
+body .learndash-wrapper.ld-profile .ld-profile-summary .ld-profile-card .ld-profile-heading {
+  font-family: var(--e-global-typography-primary-font-family);
+  color: var(--e-global-color-primary);
+  font-weight: 700;
+  margin-top: 15px;
+}
+body .learndash-wrapper.ld-profile .ld-profile-summary .ld-profile-card .ld-profile-edit-link {
+  color: var(--e-global-color-secondary);
+  font-weight: 500;
+}
+body .learndash-wrapper.ld-profile .ld-profile-summary .ld-profile-card .ld-profile-edit-link:hover {
+  color: var(--e-global-color-primary);
+  text-decoration: underline;
+}
+body .learndash-wrapper.ld-profile .ld-profile-summary .ld-profile-stats .ld-profile-stat strong {
+  font-family: var(--e-global-typography-primary-font-family);
+  color: var(--e-global-color-primary);
+  font-size: 2.2rem;
+}
+body .learndash-wrapper.ld-profile .ld-profile-summary .ld-profile-stats .ld-profile-stat span {
+  font-family: var(--e-global-typography-secondary-font-family);
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-section-heading h3 {
+  font-family: var(--e-global-typography-primary-font-family);
+  color: var(--e-global-color-primary);
+  font-weight: 700;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-section-heading .ld-item-list-actions .ld-search-prompt {
+  color: var(--e-global-color-primary);
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-section-heading .ld-item-list-actions .ld-search-prompt:hover {
+  color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-section-heading .ld-item-list-actions .ld-expand-button {
+  background-color: var(--e-global-color-secondary);
+  border-radius: 30px;
+  padding: 8px 20px;
+  transition: all 0.3s ease;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-section-heading .ld-item-list-actions .ld-expand-button .ld-icon-arrow-down {
+  background: transparent;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-section-heading .ld-item-list-actions .ld-expand-button:hover {
+  background-color: var(--e-global-color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(var(--e-global-color-secondary), 0.3);
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course {
+  border-radius: 12px;
+  border: 1px solid #eaedf3;
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course:hover {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  border-color: #dbe2ec;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-preview {
+  padding: 20px 25px;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-preview .ld-item-name .ld-course-title {
+  font-family: var(--e-global-typography-primary-font-family);
+  font-weight: 600;
+  color: var(--e-global-color-primary);
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-preview .ld-item-name:hover .ld-course-title {
+  color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-preview .ld-item-name .ld-status-icon.ld-status-in-progress {
+  border-color: var(--e-global-color-secondary);
+  border-width: 3px;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-preview .ld-item-name .ld-status-icon.ld-status-complete {
+  background-color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-preview .ld-item-details .ld-status.ld-status-progress {
+  background-color: #f0f4f8;
+  color: var(--e-global-color-secondary);
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-preview .ld-item-details .ld-expand-button {
+  background-color: transparent;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-preview .ld-item-details .ld-expand-button .ld-icon-arrow-down {
+  background-color: var(--e-global-color-secondary);
+  transition: background-color 0.3s;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-preview .ld-item-details .ld-expand-button:hover .ld-icon-arrow-down {
+  background-color: var(--e-global-color-primary);
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded {
+  background-color: #fbfdff;
+  border-top: 1px solid #f0f4f8;
+  padding: 25px;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-progress .ld-progress-heading .ld-progress-stats .ld-progress-percentage {
+  color: var(--e-global-color-secondary);
+  font-weight: 700;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-progress .ld-progress-bar {
+  background-color: #e2e8f0;
+  border-radius: 10px;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-progress .ld-progress-bar .ld-progress-bar-percentage {
+  background-color: var(--e-global-color-secondary);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-size: 1rem 1rem;
+  border-radius: 10px;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list {
+  margin-top: 25px;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-header {
+  background-color: var(--e-global-color-primary);
+  border-radius: 8px 8px 0 0;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-header .ld-table-list-title,
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-header .ld-table-list-column {
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-items {
+  border: 1px solid #eaedf3;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-items .ld-table-list-item {
+  border-bottom: 1px solid #eaedf3;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-items .ld-table-list-item:last-child {
+  border-bottom: none;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-items .ld-table-list-item:hover {
+  background-color: #f8fafc;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-items .ld-table-list-item .ld-table-list-title a {
+  color: var(--e-global-color-primary);
+  font-weight: 500;
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-items .ld-table-list-item .ld-table-list-title a:hover {
+  color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-items .ld-table-list-item .ld-table-list-title a .ld-status-icon.ld-quiz-incomplete {
+  color: var(--e-global-color-accent);
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-items .ld-table-list-item .ld-table-list-column-stats a {
+  color: var(--e-global-color-secondary);
+}
+body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-items .ld-item-list-item-course .ld-item-list-item-expanded .ld-quiz-list .ld-table-list-items .ld-table-list-item .ld-table-list-column-stats a:hover {
+  text-decoration: underline;
 }
 
 body.woocommerce-page main.site-main,

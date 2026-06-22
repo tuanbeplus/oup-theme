@@ -28,7 +28,7 @@
 }
 .worksheet-filter-wrapper .worksheet-filters .filter-btn {
   background-color: transparent;
-  padding: 10px 20px;
+  padding: 10px 16px;
   border-radius: 24px;
   border: 1.125px solid var(--e-global-color-secondary);
   color: var(--e-global-color-secondary);
@@ -47,8 +47,8 @@
 }
 .worksheet-filter-wrapper .worksheet-search {
   width: 100%;
-  max-width: 375px;
-  flex: 0 0 375px;
+  max-width: 350px;
+  flex: 0 0 350px;
 }
 @media (max-width: 1024px) {
   .worksheet-filter-wrapper .worksheet-search {
@@ -170,7 +170,7 @@
   padding: 40px;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: auto;
   flex-shrink: 0;
   position: relative;
   background: #fff;
@@ -189,14 +189,14 @@
   }
 }
 .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-title {
-  margin: 0;
+  margin: 0 0 20px 0;
   font-family: var(--e-global-typography-secondary-font-family);
   font-size: 1.875rem;
   font-weight: 600;
   color: var(--e-global-color-text);
   line-height: 1.1;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -212,7 +212,13 @@
   flex-shrink: 0;
 }
 .worksheet-filter-wrapper .worksheet-card-item .worksheet-card-footer .worksheet-card-badge {
-  display: inline-block;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: -moz-fit-content;
+  width: fit-content;
   padding: 5px 15px;
   border-radius: 30px;
   background-color: var(--e-global-color-f62bd18);

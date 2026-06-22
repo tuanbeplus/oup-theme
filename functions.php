@@ -22,6 +22,9 @@ if (!function_exists('enqueue_oup_styles_and_scripts')) {
         wp_enqueue_style('oup-main-style', get_stylesheet_directory_uri() . '/assets/css/main.css', array(), OUP_THEME_VER);
         wp_enqueue_script('oup-main-script', get_stylesheet_directory_uri() . '/assets/js/main.js', array('jquery', 'wc-add-to-cart'), OUP_THEME_VER, true);
         wp_localize_script('oup-main-script', 'ajax_object', array('ajaxurl' => admin_url('admin-ajax.php')));
+        
+        // Custom LearnDash scripts
+        wp_enqueue_script('oup-learndash-custom', get_stylesheet_directory_uri() . '/assets/js/learndash-custom.js', array('jquery'), OUP_THEME_VER, true);
     }
 }
 /**
@@ -156,6 +159,7 @@ $currency_file = get_stylesheet_directory() . '/elementor/shortcode/course-curre
 if (file_exists($currency_file)) {
     require_once $currency_file;
 }
+
 /* Widgets Load */
 require_once get_stylesheet_directory() . '/elementor/widgets-load.php';
 

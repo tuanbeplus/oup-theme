@@ -17,11 +17,20 @@ if ( ! function_exists( 'get_custom_ld_register_link' ) ) {
             if ( sfwd_lms_has_access( $course_id, get_current_user_id() ) ) {
                 $user_id = get_current_user_id();
                 $resume_url = '';
-                
-                // 1. Try to find the first incomplete step
+                $is_completed = false;
+                $cert_link = '';
+
+                if (function_exists('learndash_course_completed') && learndash_course_completed($user_id, $course_id)) {
+                    $is_completed = true;
+                    if (function_exists('learndash_get_course_certificate_link')) {
+                        $cert_link = learndash_get_course_certificate_link($course_id, $user_id);
+                    }
+                }
+
                 if (function_exists('learndash_user_progress_get_first_incomplete_step')) {
                     $incomplete_step_id = learndash_user_progress_get_first_incomplete_step($user_id, $course_id);
-                    if (!empty($incomplete_step_id)) {
+                    
+                    if (!empty($incomplete_step_id) && $incomplete_step_id != $course_id) {
                         if (function_exists('learndash_get_step_permalink')) {
                             $resume_url = learndash_get_step_permalink($incomplete_step_id, $course_id);
                         } else {
@@ -29,20 +38,24 @@ if ( ! function_exists( 'get_custom_ld_register_link' ) ) {
                         }
                     }
                 }
-
-                // 2. If course is completed or no progress, get the first lesson
                 if (empty($resume_url) && function_exists('learndash_course_get_steps_by_type')) {
                     $lessons = learndash_course_get_steps_by_type($course_id, 'sfwd-lessons');
                     if (!empty($lessons) && is_array($lessons)) {
                         $resume_url = get_permalink($lessons[0]);
                     }
                 }
-                
-                if (!empty($resume_url)) {
-                    return esc_url($resume_url) . '#start-learning';
+
+                if ($is_completed && !empty($cert_link)) {
+                    return esc_url($cert_link) . '#download-cert';
                 }
 
-                return '#start-learning';
+                $hash_tag = $is_completed ? '#course-completed' : '#start-learning';
+
+                if (!empty($resume_url)) {
+                    return esc_url($resume_url) . $hash_tag; 
+                }
+
+                return get_permalink($course_id) . $hash_tag;
             }
         }
 
@@ -136,12 +149,47 @@ if ( ! function_exists( 'oup_ld_register_link_footer_script' ) ) {
         jQuery(document).ready(function($) {
             var $enrolledBtn = $('a[href*="#start-learning"]');
             if ($enrolledBtn.length) {
+
                 var $btnText = $enrolledBtn.find('.elementor-button-text');
                 if ($btnText.length) {
                     $btnText.text('Start Learning');
                 } else {
                     $enrolledBtn.text('Start Learning');
                 }
+                
+                $enrolledBtn.each(function() {
+                    var cleanHref = $(this).attr('href').replace('#start-learning', '');
+                    $(this).attr('href', cleanHref);
+                });
+            }
+
+            var $completedBtn = $('a[href*="#course-completed"]');
+            if ($completedBtn.length) {
+                var $btnText2 = $completedBtn.find('.elementor-button-text');
+                if ($btnText2.length) {
+                    $btnText2.text('Completed');
+                } else {
+                    $completedBtn.text('Completed');
+                }
+                $completedBtn.each(function() {
+                    var cleanHref = $(this).attr('href').replace('#course-completed', '');
+                    $(this).attr('href', cleanHref);
+                });
+            }
+
+            var $certBtn = $('a[href*="#download-cert"]');
+            if ($certBtn.length) {
+                var $btnText3 = $certBtn.find('.elementor-button-text');
+                if ($btnText3.length) {
+                    $btnText3.text('Download Certificate');
+                } else {
+                    $certBtn.text('Download Certificate');
+                }
+                $certBtn.attr('target', '_blank');
+                $certBtn.each(function() {
+                    var cleanHref = $(this).attr('href').replace('#download-cert', '');
+                    $(this).attr('href', cleanHref);
+                });
             }
 
             $('.ld-price-enrolled').closest('.elementor-widget').hide();

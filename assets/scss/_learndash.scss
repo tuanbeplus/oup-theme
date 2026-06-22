@@ -370,6 +370,11 @@
 }
 
 // Course Progress Bar Styling
+@keyframes oup-progress-stripes {
+    from { background-position: 1rem 0; }
+    to { background-position: 0 0; }
+}
+
 .learndash-wrapper {
     .ld-progress {
         .ld-progress-heading {
@@ -383,10 +388,520 @@
             }
         }
         .ld-progress-bar {
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #e2e8f0;
+            height: 10px;
+            
             .ld-progress-bar-percentage.ld-secondary-background {
                 background-color: var(--e-global-color-secondary) !important;
+                background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
+                background-size: 1rem 1rem;
+                border-radius: 10px;
+                animation: oup-progress-stripes 1s linear infinite;
+                transition: width 1.5s ease-in-out;
             }
         }
     }
 }
 
+// LearnDash Focus Mode Custom Styling (Navigation & Header)
+body .learndash-wrapper .ld-focus {
+    // Sidebar Navigation
+    .ld-focus-sidebar {
+        // Course Heading at the top of Sidebar
+        .ld-course-navigation-heading {
+            background-color: var(--e-global-color-primary);
+            padding: 20px;
+            
+            #ld-focus-mode-course-heading {
+                color: #ffffff;
+                font-family: var(--e-global-typography-primary-font-family);
+                font-weight: 700;
+                font-size: 1.1rem;
+                transition: opacity 0.3s;
+                
+                &:hover {
+                    opacity: 0.9;
+                }
+            }
+            
+            .ld-focus-sidebar-trigger {
+                .ld-icon.ld-icon-arrow-left,
+                .ld-icon.ld-icon-arrow-right {
+                    background: var(--e-global-color-9500430);
+                    color: #ffffff;
+                    border-color: var(--e-global-color-text);
+                  &:hover {
+                    background: var(--e-global-color-secondary);
+                    border-color: var(--e-global-color-f62bd18);
+                  }
+                }
+            }
+            
+            .ld-focus-sidebar-trigger:focus .ld-icon.ld-icon-arrow-left,
+            .ld-focus-sidebar-trigger:focus .ld-icon.ld-icon-arrow-right {
+                outline: none;
+                box-shadow: none;
+            }
+        }
+        
+        // Lesson Section Headings
+        .ld-lesson-item-section-heading {
+            background-color: #f8fbfd;
+            padding: 12px 20px;
+            border-bottom: 1px solid #eaedf3;
+            
+            .ld-lesson-section-heading {
+                font-family: var(--e-global-typography-secondary-font-family);
+                font-size: 0.85rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #8892a0;
+            }
+        }
+
+        // Lesson Items Wrapper
+        .ld-lesson-item {
+            border-bottom: 1px solid #f0f2f5;
+
+            .ld-lesson-item-preview {
+                padding: 15px 20px;
+                transition: background-color 0.3s ease;
+                
+                &:hover {
+                    background-color: #f8fbfd;
+                }
+
+                a.ld-lesson-item-preview-heading {
+                    font-family: var(--e-global-typography-primary-font-family);
+                    font-weight: 600;
+                    font-size: 1.05rem;
+                    color: var(--e-global-color-primary);
+                    
+                    &:hover {
+                        color: var(--e-global-color-secondary);
+                    }
+                    
+                    .ld-lesson-title {
+                        color: inherit;
+                    }
+                }
+                
+                // Collapse/Expand Button
+                .ld-expand-button {
+                    margin-top: 10px;
+                    
+                    .ld-icon-arrow-down {
+                        background-color: var(--e-global-color-secondary);
+                    }
+                    
+                    .ld-expand-text {
+                        color: var(--e-global-color-secondary);
+                        font-weight: 600;
+                    }
+                }
+            }
+            
+            // Current Active Lesson Highlight
+            &.ld-is-current-lesson > .ld-lesson-item-preview {
+                background-color: rgba(87, 114, 130, 0.05);
+                border-left: 4px solid var(--e-global-color-secondary);
+                padding-left: 16px; 
+                
+                a.ld-lesson-item-preview-heading {
+                    color: var(--e-global-color-secondary);
+                }
+            }
+
+            // Topics & Quizzes Nested List
+            .ld-lesson-item-expanded {
+                background-color: #fcfcfc;
+                
+                .ld-table-list-item {
+                    border-bottom: 1px solid #f4f6f9;
+                    
+                    .ld-table-list-item-preview {
+                        padding: 12px 20px 12px 45px;
+                        font-family: var(--e-global-typography-secondary-font-family);
+                        font-size: 0.95rem;
+                        color: #666;
+                        transition: all 0.2s ease;
+                        
+                        &:hover {
+                            background-color: #f0f4f8;
+                            color: var(--e-global-color-secondary);
+                        }
+                        
+                        // Current Active Topic/Quiz Highlight
+                        &.ld-is-current-item {
+                            font-weight: 700;
+                            color: var(--e-global-color-primary);
+                            background-color: #ffffff;
+                            box-shadow: inset 4px 0 0 var(--e-global-color-accent);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Status Icons customization (Checkmarks & Progress Rings)
+        .ld-status-icon {
+            &.ld-status-complete {
+                background-color: var(--e-global-color-secondary);
+            }
+            &.ld-status-in-progress {
+                border-color: var(--e-global-color-accent);
+            }
+            &.ld-status-incomplete {
+                border-color: var(--e-global-color-secondary) !important;
+            }
+            
+        }
+    }
+
+    // Top Header (Focus Mode Bar)
+    .ld-focus-header {
+        background-color: #ffffff;
+        border-bottom: 1px solid #eaedf3;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        
+        // Next/Previous Buttons
+        .ld-content-actions {
+            .ld-content-action {
+          
+                .ld-button-transparent {
+                    font-family: var(--e-global-typography-primary-font-family);
+                    font-weight: 600;
+                    color: var(--e-global-color-primary);
+                    padding: 8px 20px;
+                    border-radius: 20px;
+                    background: #f4f6f9;
+                    border: 1px solid transparent;
+                    transition: all 0.3s ease;
+                    
+                    &:hover {
+                        background: var(--e-global-color-secondary);
+                        color: #ffffff;
+                        transform: translateY(-1px);
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                    }
+                    &:focus{
+                        outline: none;
+                    }
+                }
+                .sfwd-mark-complete{
+                    .learndash_mark_complete_button{
+                        outline: none;
+                        color: var(--e-global-color-secondary);
+                        padding: 12px 20px;
+                        transition: background-color 0.5s ease, color 0.5s ease;;
+                        &:focus {
+                            padding: 12px 20px;
+                            border-radius: 32px;
+                            outline: none;
+                            box-shadow: none;
+                        }
+                        
+                        &:hover {
+                            padding: 12px 20px;
+                            outline: none;
+                            font-family: var(--e-global-typography-primary-font-family);
+                            font-size: 1.125rem;
+                            font-weight: 600;
+                            border-radius: 32px;
+                            transition: background-color  0.5s ease, color 0.5s ease;
+                            background-color: var(--e-global-color-primary)!important;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // User Profile Dropdown
+        .ld-user-menu {
+            font-family: var(--e-global-typography-secondary-font-family);
+            .ld-user-welcome-text {
+                font-family: var(--e-global-typography-primary-font-family);
+                font-weight: 600;
+                color: var(--e-global-color-text);
+            }
+            .ld-profile-avatar {
+                border: 2px solid var(--e-global-color-secondary);
+                transition: transform 0.3s ease;
+                
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+            .ld-user-menu-items{
+                a{
+                    background-color: var(--e-global-color-primary);
+                }
+            }
+        }
+    }
+}
+
+// LearnDash Student Profile Styling
+body .learndash-wrapper.ld-profile {
+    margin-top: 40px;
+    
+    // Top Profile Summary Area
+    .ld-profile-summary {
+        margin-bottom: 50px;
+        
+        .ld-profile-card {
+            // .ld-profile-avatar {
+            //     img {
+            //         border: 4px solid #ffffff;
+            //         box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            //         transition: transform 0.3s ease;
+                    
+            //         &:hover {
+            //             transform: translateY(-5px);
+            //         }
+            //     }
+            // }
+            
+            .ld-profile-heading {
+                font-family: var(--e-global-typography-primary-font-family);
+                color: var(--e-global-color-primary);
+                font-weight: 700;
+                margin-top: 15px;
+            }
+            
+            .ld-profile-edit-link {
+                color: var(--e-global-color-secondary);
+                font-weight: 500;
+                
+                &:hover {
+                    color: var(--e-global-color-primary);
+                    text-decoration: underline;
+                }
+            }
+        }
+        
+        .ld-profile-stats {
+            .ld-profile-stat {
+                strong {
+                    font-family: var(--e-global-typography-primary-font-family);
+                    color: var(--e-global-color-primary);
+                    font-size: 2.2rem;
+                }
+                span {
+                    font-family: var(--e-global-typography-secondary-font-family);
+                    color: #666;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    // Course List Area
+    .ld-item-list.ld-course-list {
+        
+        .ld-section-heading {
+            h3 {
+                font-family: var(--e-global-typography-primary-font-family);
+                color: var(--e-global-color-primary);
+                font-weight: 700;
+            }
+            
+            .ld-item-list-actions {
+                // Search Icon
+                .ld-search-prompt {
+                    color: var(--e-global-color-primary);
+                    &:hover {
+                        color: var(--e-global-color-secondary);
+                    }
+                }
+                
+                // Expand All Button
+                .ld-expand-button {
+                    background-color: var(--e-global-color-secondary);
+                    border-radius: 30px;
+                    padding: 8px 20px;
+                    transition: all 0.3s ease;
+                    
+                    .ld-icon-arrow-down {
+                        background: transparent; // remove default background
+                    }
+                    
+                    &:hover {
+                        background-color: var(--e-global-color-primary);
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 10px rgba(var(--e-global-color-secondary), 0.3);
+                    }
+                }
+            }
+        }
+        
+        // Course Items
+        .ld-item-list-items {
+            .ld-item-list-item-course {
+                border-radius: 12px;
+                border: 1px solid #eaedf3;
+                margin-bottom: 15px;
+                overflow: hidden;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+                transition: all 0.3s ease;
+                
+                &:hover {
+                    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+                    border-color: #dbe2ec;
+                }
+                
+                .ld-item-list-item-preview {
+                    padding: 20px 25px;
+                    
+                    .ld-item-name {
+                        .ld-course-title {
+                            font-family: var(--e-global-typography-primary-font-family);
+                            font-weight: 600;
+                            color: var(--e-global-color-primary);
+                            font-size: 1.1rem;
+                            transition: color 0.3s;
+                        }
+                        
+                        &:hover .ld-course-title {
+                            color: var(--e-global-color-secondary);
+                        }
+                        
+                        // Status Circle Icon
+                        .ld-status-icon {
+                            &.ld-status-in-progress {
+                                border-color: var(--e-global-color-secondary);
+                                border-width: 3px;
+                            }
+                            &.ld-status-complete {
+                                background-color: var(--e-global-color-secondary);
+                            }
+                        
+                        }
+                    }
+                    
+                    .ld-item-details {
+                        // Badge Status
+                        .ld-status.ld-status-progress {
+                            background-color: #f0f4f8;
+                            color: var(--e-global-color-secondary);
+                            font-weight: 700;
+                            border-radius: 20px;
+                            padding: 5px 12px;
+                            font-size: 0.8rem;
+                        }
+                        
+                        // Arrow down expand button
+                        .ld-expand-button {
+                            background-color: transparent;
+                            
+                            .ld-icon-arrow-down {
+                                background-color: var(--e-global-color-secondary);
+                                transition: background-color 0.3s;
+                            }
+                            
+                            &:hover .ld-icon-arrow-down {
+                                background-color: var(--e-global-color-primary);
+                            }
+                        }
+                    }
+                }
+                
+                // Expanded Content (Progress Bar & Quiz Table)
+                .ld-item-list-item-expanded {
+                    background-color: #fbfdff;
+                    border-top: 1px solid #f0f4f8;
+                    padding: 25px;
+                    
+                    // Progress Bar overrides
+                    .ld-progress {
+                        .ld-progress-heading {
+                            .ld-progress-stats {
+                                .ld-progress-percentage {
+                                    color: var(--e-global-color-secondary);
+                                    font-weight: 700;
+                                }
+                            }
+                        }
+                        
+                        .ld-progress-bar {
+                            background-color: #e2e8f0;
+                            border-radius: 10px;
+                            
+                            .ld-progress-bar-percentage {
+                                background-color: var(--e-global-color-secondary);
+                                background-image: linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.15) 75%, transparent 75%, transparent);
+                                background-size: 1rem 1rem;
+                                border-radius: 10px;
+                            }
+                        }
+                    }
+                    
+                    // Quiz List Table
+                    .ld-quiz-list {
+                        margin-top: 25px;
+                        
+                        .ld-table-list-header {
+                            background-color: var(--e-global-color-primary);
+                            border-radius: 8px 8px 0 0;
+                            
+                            .ld-table-list-title,
+                            .ld-table-list-column {
+                                color: #ffffff;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                                font-size: 0.85rem;
+                            }
+                        }
+                        
+                        .ld-table-list-items {
+                            border: 1px solid #eaedf3;
+                            border-top: none;
+                            border-radius: 0 0 8px 8px;
+                            
+                            .ld-table-list-item {
+                                border-bottom: 1px solid #eaedf3;
+                                
+                                &:last-child {
+                                    border-bottom: none;
+                                }
+                                
+                                &:hover {
+                                    background-color: #f8fafc;
+                                }
+                                
+                                .ld-table-list-title a {
+                                    color: var(--e-global-color-primary);
+                                    font-weight: 500;
+                                    
+                                    &:hover {
+                                        color: var(--e-global-color-secondary);
+                                    }
+                                    
+                                    .ld-status-icon.ld-quiz-incomplete {
+                                        color: var(--e-global-color-accent); // Red/Orange for failed/incomplete
+                                    }
+                                }
+                                
+                                .ld-table-list-column-stats a {
+                                    color: var(--e-global-color-secondary);
+                                    
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
