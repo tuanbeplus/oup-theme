@@ -152,3 +152,29 @@ function oup_custom_edit_profile_url( $url, $user_id, $scheme ) {
     }
     return $url;
 }
+
+// Product Metadata
+add_action( 'woocommerce_single_product_summary', 'oup_product_metadata', 11 );
+function oup_product_metadata() {
+    $pages = get_field('pages') ?? '';
+    $audience = get_field('audience') ?? '';
+    if ( is_array( $audience ) && !empty( $audience )) {
+        $count = count( $audience );
+		if ( $count > 1 ) {
+			$last = array_pop( $audience );
+			$audience = implode( ', ', $audience ) . ' and ' . $last;
+		} else {
+			$audience = reset( $audience );
+		}
+    }
+    ?>
+    <div class="product-metadata">
+        <?php if (!empty($pages)): ?>
+            <p><strong>Pages:&nbsp;</strong><?php echo esc_html($pages); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($audience)): ?>
+            <p><strong>Audience:&nbsp;</strong><?php echo esc_html($audience); ?></p>
+        <?php endif; ?>
+    </div>
+    <?php
+}
