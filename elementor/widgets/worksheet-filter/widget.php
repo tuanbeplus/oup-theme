@@ -341,10 +341,12 @@ class Widget_WorksheetFilter extends Widget_Base
         }
 
         $categories = wp_get_post_terms($post_id, 'worksheet-category');
+        $cat_id = $categories[0]->term_id;
+        $bg_color = get_term_meta($cat_id, 'worksheet_cat_color', true);
 ?>
         <article class="worksheet-card-item">
             <a href="<?php echo esc_url($permalink); ?>" class="worksheet-card-link">
-                <div class="worksheet-card-image">
+                <div class="worksheet-card-image" style="background-color: <?php echo esc_attr($bg_color); ?>;">
                     <?php if ($thumbnail) : ?>
                         <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy">
                     <?php endif; ?>
@@ -353,7 +355,7 @@ class Widget_WorksheetFilter extends Widget_Base
                     <h3 class="worksheet-card-title"><?php echo esc_html($title); ?></h3>
                     <div class="worksheet-card-footer">
                         <?php if (! empty($categories) && ! is_wp_error($categories)) : ?>
-                            <span class="worksheet-card-badge"><?php echo esc_html($categories[0]->name); ?></span>
+                            <span class="worksheet-card-badge" style="background-color: <?php echo esc_attr($bg_color); ?>;"><?php echo esc_html($categories[0]->name); ?></span>
                         <?php endif; ?>
                     </div>
                 </div>
