@@ -391,6 +391,16 @@ class Widget_SugarCalendarEvent extends Widget_Base
 
     private function resolve_button_url(array $event, array $settings): array
     {
+        $event_sign_up_link = get_field('event_sign_up_link', $event['id']);
+
+        if (! empty($event_sign_up_link)) {
+            return [
+                'url'         => $event_sign_up_link,
+                'is_external' => true,
+                'nofollow'    => true,
+            ];
+        }
+
         if (($settings['button_use_event_link'] ?? 'yes') === 'yes') {
             return [
                 'url'         => $event['permalink'] ?: $this->get_sc_event_permalink($event['id'], $event['start_ts'], $event['is_recurring']),
