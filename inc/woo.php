@@ -178,3 +178,8 @@ function oup_product_metadata() {
     </div>
     <?php
 }
+
+//change thankyou page message
+add_filter( 'woocommerce_thankyou_order_received_text', function( $text, $order ) {
+    return "YASSSSS!<br> We've received your order and have all the happy wiggles!<br> Here's confirmation of the good things to come, with a follow up in your email inbox too.";
+}, 10, 2 );

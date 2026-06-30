@@ -1,5 +1,24 @@
 .woocommerce-order {
     font-family: var(--e-global-typography-text-font-family);
+	
+	p.woocommerce-notice.woocommerce-thankyou-order-received {
+		margin-bottom: 34px;
+		@media (max-width: 767px) {
+			font-size: 1rem;
+		}
+	}
+	
+	ul.woocommerce-order-overview {
+		&:before, &:after {
+			display: none;
+		}
+		@media (max-width: 767px) {
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+	}
 
     a {
         color: var(--e-global-color-primary);
