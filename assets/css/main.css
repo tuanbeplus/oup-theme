@@ -2451,13 +2451,15 @@ body.page-registration-success main.site-main .page-content {
     font-size: 1rem;
   }
 }
+.woocommerce-order ul.woocommerce-order-overview {
+  display: flex;
+}
 .woocommerce-order ul.woocommerce-order-overview:before, .woocommerce-order ul.woocommerce-order-overview:after {
   display: none;
 }
 @media (max-width: 767px) {
   .woocommerce-order ul.woocommerce-order-overview {
     padding: 0;
-    display: flex;
     flex-direction: column;
     gap: 20px;
   }
