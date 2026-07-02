@@ -1009,8 +1009,8 @@ body.single-product main.site-main .summary.entry-summary form.cart .single_add_
 body.single-product main.site-main .summary.entry-summary form.cart .added_to_cart:active {
   transform: scale(0.98);
 }
-body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button:before,
-body.single-product main.site-main .summary.entry-summary form.cart .added_to_cart:before {
+body.single-product main.site-main .summary.entry-summary form.cart .single_add_to_cart_button.button:before,
+body.single-product main.site-main .summary.entry-summary form.cart .added_to_cart.button:before {
   content: "";
   width: 20px;
   height: 20px;
@@ -2502,6 +2502,16 @@ body.page-registration-success main.site-main .page-content {
   border-top: 2px solid #eee;
   font-weight: 600;
 }
+.woocommerce-order table.shop_table .woocommerce-button {
+  background: var(--e-global-color-primary);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
 .woocommerce-order address {
   background: #f9f9f9;
   padding: 25px;
@@ -2515,6 +2525,14 @@ body.page-registration-success main.site-main .page-content {
 
 body.woocommerce-account .woocommerce {
   font-family: var(--e-global-typography-text-font-family);
+}
+body.woocommerce-account .woocommerce .woocommerce-table--order-downloads .button.woocommerce-MyAccount-downloads-file {
+  color: #fff;
+  background-color: var(--e-global-color-secondary);
+  line-height: 1.2;
+}
+body.woocommerce-account .woocommerce .woocommerce-table--order-downloads .button.woocommerce-MyAccount-downloads-file:hover {
+  color: #fff;
 }
 
 body.woocommerce-account:not(.logged-in) .woocommerce {
@@ -2696,10 +2714,11 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content t
 }
 body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content table.shop_table .woocommerce-button {
   background: var(--e-global-color-primary);
-  color: var(--e-global-color-ed9b819);
-  padding: 8px 15px;
+  color: #fff;
+  padding: 10px 20px;
   border-radius: 20px;
-  font-size: 0.875rem;
+  font-size: 1rem;
+  line-height: 1.2;
   text-decoration: none;
   transition: all 0.3s ease;
 }
