@@ -1,6 +1,16 @@
 body.woocommerce-account {
     .woocommerce {
         font-family: var(--e-global-typography-text-font-family);
+		.woocommerce-table--order-downloads {
+			.button.woocommerce-MyAccount-downloads-file {
+				color: #fff;
+				background-color: var(--e-global-color-secondary);
+				line-height: 1.2;
+				&:hover {
+					color: #fff;
+				}
+			}
+		}
     }
 }
 
@@ -194,12 +204,13 @@ body.woocommerce-account.logged-in .woocommerce {
 
             .woocommerce-button {
                 background: var(--e-global-color-primary);
-                color: var(--e-global-color-ed9b819);
-                padding: 8px 15px;
-                border-radius: 20px;
-                font-size: 0.875rem;
-                text-decoration: none;
-                transition: all 0.3s ease;
+				color: #fff;
+				padding: 10px 20px;
+				border-radius: 20px;
+				font-size: 1rem;
+				line-height: 1.2;
+				text-decoration: none;
+				transition: all 0.3s ease;
 
                 &:hover {
                     background: var(--e-global-color-secondary);

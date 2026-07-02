@@ -66,6 +66,16 @@
                 font-weight: 600;
             }
         }
+		.woocommerce-button {
+			background: var(--e-global-color-primary);
+			color: #fff;
+			padding: 10px 20px;
+			border-radius: 20px;
+			font-size: 1rem;
+			line-height: 1.2;
+			text-decoration: none;
+			transition: all 0.3s ease;
+		}
     }
 
     address {
