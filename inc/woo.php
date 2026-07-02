@@ -183,3 +183,11 @@ function oup_product_metadata() {
 add_filter( 'woocommerce_thankyou_order_received_text', function( $text, $order ) {
     return "YASSSSS!<br> We've received your order and have all the happy wiggles!<br> Here's confirmation of the good things to come, with a follow up in your email inbox too.";
 }, 10, 2 );
+
+// change pdf invoice title
+add_filter( 'wpo_wcpdf_document_title', function( $title, $document ) {
+    if ( $document->get_type() === 'invoice' ) {
+        return 'Tax Invoice';
+    }
+    return $title;
+}, 10, 2 );
