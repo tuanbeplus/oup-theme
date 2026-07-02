@@ -20,6 +20,19 @@
 		}
 	}
 
+    .woocommerce-order-downloads {
+		.woocommerce-table--order-downloads {
+			.button {
+				color: #fff;
+				background-color: var(--e-global-color-secondary);
+				line-height: 1.2;
+				&:hover {
+					color: #fff;
+				}
+			}
+		}
+    }
+
     a {
         color: var(--e-global-color-primary);
         text-decoration: none;

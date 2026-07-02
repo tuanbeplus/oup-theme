@@ -2464,6 +2464,14 @@ body.page-registration-success main.site-main .page-content {
     gap: 20px;
   }
 }
+.woocommerce-order .woocommerce-order-downloads .woocommerce-table--order-downloads .button {
+  color: #fff;
+  background-color: var(--e-global-color-secondary);
+  line-height: 1.2;
+}
+.woocommerce-order .woocommerce-order-downloads .woocommerce-table--order-downloads .button:hover {
+  color: #fff;
+}
 .woocommerce-order a {
   color: var(--e-global-color-primary);
   text-decoration: none;
@@ -2525,14 +2533,6 @@ body.page-registration-success main.site-main .page-content {
 
 body.woocommerce-account .woocommerce {
   font-family: var(--e-global-typography-text-font-family);
-}
-body.woocommerce-account .woocommerce .woocommerce-table--order-downloads .button.woocommerce-MyAccount-downloads-file {
-  color: #fff;
-  background-color: var(--e-global-color-secondary);
-  line-height: 1.2;
-}
-body.woocommerce-account .woocommerce .woocommerce-table--order-downloads .button.woocommerce-MyAccount-downloads-file:hover {
-  color: #fff;
 }
 
 body.woocommerce-account:not(.logged-in) .woocommerce {

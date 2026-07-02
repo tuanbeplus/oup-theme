@@ -1,16 +1,6 @@
 body.woocommerce-account {
     .woocommerce {
         font-family: var(--e-global-typography-text-font-family);
-		.woocommerce-table--order-downloads {
-			.button.woocommerce-MyAccount-downloads-file {
-				color: #fff;
-				background-color: var(--e-global-color-secondary);
-				line-height: 1.2;
-				&:hover {
-					color: #fff;
-				}
-			}
-		}
     }
 }
 
