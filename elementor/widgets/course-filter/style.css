@@ -236,6 +236,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
   margin-bottom: 15px;
 }
 .course-filter-wrapper .course-card-item .course-card-content .course-card-meta .meta-item {
@@ -249,9 +250,17 @@
   text-transform: capitalize;
 }
 .course-filter-wrapper .course-card-item .course-card-content .course-card-meta .meta-item svg {
-  width: 16px;
+  width: 100%;
+  max-width: 16px;
   height: 16px;
   color: #231F20;
+}
+.course-filter-wrapper .course-card-item .course-card-content .course-card-meta .meta-item span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .course-filter-wrapper {
   /* Skeleton Loading */

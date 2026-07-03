@@ -243,6 +243,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                gap: 10px;
                 margin-bottom: 15px;
 
                 .meta-item {
@@ -256,9 +257,17 @@
                     text-transform: capitalize;
 
                     svg {
-                        width: 16px;
+                        width: 100%;
+                        max-width: 16px;
                         height: 16px;
                         color: #231F20;
+                    }
+                    span {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                 }
             }
