@@ -117,6 +117,13 @@ body.single-product {
 			@media (max-width: 767px) {
 				gap: 30px;
 			}
+			
+			&.product-type-simple {
+				.summary.entry-summary form.cart {
+					display: flex;
+					flex-direction: row;
+				}
+			}
 		}
 
 		// ── Product Gallery ──────────────────────────────────

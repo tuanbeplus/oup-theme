@@ -787,6 +787,10 @@ body.single-product main.site-main > .product {
     gap: 30px;
   }
 }
+body.single-product main.site-main > .product.product-type-simple .summary.entry-summary form.cart {
+  display: flex;
+  flex-direction: row;
+}
 body.single-product main.site-main .woocommerce-product-gallery {
   width: 100%;
   margin-bottom: 0;

@@ -380,6 +380,16 @@
                 } else {
                     $('.woocommerce-error').remove();
 
+                    if ($button.parent().find('.added_to_cart').length === 0) {
+                        let cartUrl = '/cart/';
+                        let cartText = 'View cart';
+                        if (typeof wc_add_to_cart_params !== 'undefined') {
+                            cartUrl = wc_add_to_cart_params.cart_url;
+                            cartText = wc_add_to_cart_params.i18n_view_cart;
+                        }
+                        $button.after(' <a href="' + cartUrl + '" class="added_to_cart wc-forward" title="' + cartText + '">' + cartText + '</a>');
+                    }
+
                     // Trigger WooCommerce fragment refresh to update the cart
                     $(document.body).trigger('wc_fragment_refresh');
                     $(document.body).trigger('added_to_cart', [
