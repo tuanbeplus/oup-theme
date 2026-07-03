@@ -341,56 +341,61 @@
         }
     });
 
+    // Handle add to cart on single product page
     $('.single-product form.cart').on('submit', function (e) {
         e.preventDefault();
         const $form = $(this);
         const $button = $form.find('.single_add_to_cart_button');
 
-        if ($button.hasClass('loading')) {
+        if ($button.hasClass('loading') || $button.hasClass('disabled')) {
             return;
         }
 
         $button.addClass('loading');
 
         let formData = $form.serializeArray();
-        let hasProductId = false;
+        let hasAddToCart = false;
 
         $.each(formData, function (i, field) {
-            if (field.name === 'product_id' || field.name === 'add-to-cart') {
-                hasProductId = true;
+            if (field.name === 'add-to-cart') {
+                hasAddToCart = true;
             }
         });
 
-        if (!hasProductId && $button.val()) {
-            formData.push({ name: 'product_id', value: $button.val() });
+        if (!hasAddToCart && $button.val()) {
+            formData.push({ name: 'add-to-cart', value: $button.val() });
         }
 
         $.ajax({
             type: 'POST',
-            url: wc_add_to_cart_params.wc_ajax_url.replace('%%endpoint%%', 'add_to_cart'),
+            url: window.location.toString(),
             data: $.param(formData),
             success: function (response) {
+                const $html = $(response);
+                const $error = $html.find('.woocommerce-error');
 
-                if (response.error && response.product_url) {
-                    window.location = response.product_url;
-                    return;
+                if ($error.length > 0) {
+                    $('.woocommerce-error').remove();
+                    $form.before($error);
+                } else {
+                    $('.woocommerce-error').remove();
+
+                    // Trigger WooCommerce fragment refresh to update the cart
+                    $(document.body).trigger('wc_fragment_refresh');
+                    $(document.body).trigger('added_to_cart', [
+                        null,
+                        null,
+                        $button
+                    ]);
                 }
-
-                $(document.body).trigger('added_to_cart', [
-                    response.fragments,
-                    response.cart_hash,
-                    $button
-                ]);
-
-                $(document.body).trigger('wc_fragment_refresh');
             },
             complete: function () {
                 $button.removeClass('loading');
             }
         });
-
     });
 
+    // Handle add to cart added success on single product page
     $(document.body).on('added_to_cart', function () {
         const $cart = $('header .elementor-menu-cart__toggle_button');
         $cart.addClass('cart-added');
