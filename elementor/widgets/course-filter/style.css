@@ -240,6 +240,7 @@
   margin-bottom: 15px;
 }
 .course-filter-wrapper .course-card-item .course-card-content .course-card-meta .meta-item {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 5px;
