@@ -1703,140 +1703,45 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   font-weight: 600;
 }
 
-.course-accordion-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.course-accordion-wrapper .course-accordion-item {
-  border: none;
-  border-top: 2px dashed #577282;
-}
-.course-accordion-wrapper .course-accordion-item:last-child {
-  border-bottom: 2px dashed #577282;
-}
-.course-accordion-wrapper .course-accordion-item .course-accordion-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 30px 0;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  outline: none;
-  text-align: left;
-  border-radius: 0;
-}
-@media (max-width: 1024px) {
-  .course-accordion-wrapper .course-accordion-item .course-accordion-header {
-    padding: 20px 0;
-  }
-}
-.course-accordion-wrapper .course-accordion-item .course-accordion-header .course-accordion-title {
-  margin: 0;
-  flex: 1;
-  padding-right: 20px;
-  font-family: var(--e-global-typography-secondary-font-family);
-  font-size: 1.875rem;
-  font-weight: 600;
-  color: var(--e-global-color-text);
-  line-height: 1.1;
-  white-space: normal;
-  word-break: break-word;
-}
-@media (max-width: 1024px) {
-  .course-accordion-wrapper .course-accordion-item .course-accordion-header .course-accordion-title {
-    font-size: 1.25rem;
-  }
-}
-.course-accordion-wrapper .course-accordion-item .course-accordion-header .course-accordion-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #1E1E1E;
-  flex-shrink: 0;
-}
-.course-accordion-wrapper .course-accordion-item .course-accordion-header .course-accordion-icon svg {
-  width: 19px;
-  height: auto;
-  transition: transform 0.3s ease;
+.learndash-wrapper.learndash-wrapper--course {
+  grid-gap: 0;
   display: block;
 }
-.course-accordion-wrapper .course-accordion-item .course-accordion-header.active .course-accordion-icon svg {
-  transform: rotate(180deg);
-}
-.course-accordion-wrapper .course-accordion-item .course-accordion-icon .elementor-accordion-icon-opened {
+.learndash-wrapper.learndash-wrapper--course .ld-layout__header {
   display: none;
 }
-.course-accordion-wrapper .course-accordion-item .course-accordion-header.active .course-accordion-icon .elementor-accordion-icon-closed:has(+ .elementor-accordion-icon-opened) {
+.learndash-wrapper.learndash-wrapper--course .ld-layout__content img.ld-featured-image {
   display: none;
 }
-.course-accordion-wrapper .course-accordion-item .course-accordion-header.active .course-accordion-icon .elementor-accordion-icon-opened {
-  display: block;
+.learndash-wrapper.learndash-wrapper--course .ld-layout__content .ld-accordion.ld-accordion--course {
+  margin-top: 20px;
 }
-.course-accordion-wrapper .course-accordion-item .course-accordion-content {
-  display: none;
-  padding-bottom: 30px;
+.learndash-wrapper.learndash-wrapper--course .ld-layout__content .ld-accordion.ld-accordion--course .ld-accordion__content .ld-accordion__section {
+  padding: 20px 30px;
+  border-radius: 20px;
 }
-.course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-content-inner {
-  color: var(--e-global-color-text);
-  font-size: 1.125rem;
-  line-height: 1.6;
-  font-family: var(--e-global-typography-primary-font-family);
+.learndash-wrapper.learndash-wrapper--course .ld-layout__content .ld-accordion.ld-accordion--course .ld-accordion__content .ld-accordion__section .ld-accordion__items {
+  gap: 0;
 }
-@media (max-width: 1024px) {
-  .course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-content-inner {
-    font-size: 1rem;
-  }
+.learndash-wrapper.learndash-wrapper--course .ld-layout__content .ld-accordion.ld-accordion--course .ld-accordion__content .ld-accordion__item {
+  margin-left: 20px;
 }
-.course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.learndash-wrapper.learndash-wrapper--course .ld-layout__content .ld-accordion.ld-accordion--course .ld-accordion__content .ld-accordion__item .ld-accordion__item-header {
+  padding: 8px 16px;
 }
-.course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.125rem;
-  color: var(--e-global-color-primary);
-  transition: color 0.2s ease;
+.learndash-wrapper.learndash-wrapper--course .ld-layout__content .ld-accordion.ld-accordion--course .ld-accordion__content .ld-accordion__item a.ld-accordion__item-title {
+  font-size: 1rem;
 }
-@media (max-width: 767px) {
-  .course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item {
-    font-size: 1rem;
-  }
-}
-.course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item .step-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--e-global-color-accent);
-  flex-shrink: 0;
-}
-.course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item .step-icon svg {
-  width: 16px;
-  height: 16px;
-  display: block;
-}
-.course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item .step-title {
-  line-height: 1.4;
-}
-.course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item a {
-  color: inherit;
+.learndash-wrapper.learndash-wrapper--course .ld-layout__content .ld-accordion.ld-accordion--course .ld-accordion__content .ld-accordion__item a.ld-accordion__item-title:hover {
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
+  color: inherit;
 }
-.course-accordion-wrapper .course-accordion-item .course-accordion-content .course-accordion-steps .course-accordion-step-item a:hover {
-  color: var(--e-global-color-secondary);
+.learndash-wrapper.learndash-wrapper--course .ld-layout__sidebar {
+  display: none;
+}
+
+.user_has_no_access .learndash-wrapper .ld-layout__content .ld-accordion .ld-accordion__content .ld-accordion__item a.ld-accordion__item-title {
+  pointer-events: none;
 }
 
 .learndash-wrapper .ld-registration__wrapper {

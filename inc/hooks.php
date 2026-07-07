@@ -71,3 +71,15 @@ function oup_add_profile_to_focus_menu( $menu_items, $course_id, $user_id ) {
 
     return $menu_items;
 }
+
+// Change the LearnDash Course content heading
+add_filter( 'gettext_with_context', function ( $translation, $text, $context, $domain ) {
+    if (
+        'learndash' === $domain &&
+        '%s Content' === $text &&
+        'placeholder: Course' === $context
+    ) {
+        return '%s Overview';
+    }
+    return $translation;
+}, 10, 4 );
