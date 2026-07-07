@@ -53,6 +53,7 @@ if (!function_exists('oup_course_accordion_shortcode_callback')) {
         }
 
         echo do_shortcode("[ld_course_list course_id='$course_id']");
+        return;
 
         if (!$course_id || get_post_type($course_id) !== 'sfwd-courses' || !function_exists('learndash_get_course_lessons_list')) {
             return '';
