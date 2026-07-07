@@ -166,6 +166,11 @@
             padding: 25px;
         }
     }
+	
+	.ld-registration__form {
+		margin: 0;
+		padding: 0;
+	}
 
     // Headings
     .ld-registration__heading {
@@ -217,6 +222,7 @@
         input[type="text"],
         input[type="email"],
         input[type="password"] {
+			margin: 0;
             width: 100%;
             height: 50px; 
             border: 1px solid #ddd;
@@ -252,9 +258,8 @@
                 cursor: pointer;
                 
                 input[type="checkbox"] {
-                    margin: 0;
-                    width: 16px;
-                    height: 16px;
+                    width: 13px;
+                    height: 13px;
                     cursor: pointer;
                 }
             }
@@ -307,6 +312,7 @@
             border: none;
             border-radius: 32px; // Match standard buttons
             font-size: 1.1rem;
+			line-height: 1.4;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;

@@ -1851,6 +1851,10 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
     padding: 25px;
   }
 }
+.learndash-wrapper .ld-registration__form {
+  margin: 0;
+  padding: 0;
+}
 .learndash-wrapper .ld-registration__heading {
   color: var(--e-global-color-primary);
   font-family: var(--e-global-typography-primary-font-family);
@@ -1889,6 +1893,7 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
 .learndash-wrapper .ld-form input[type=text],
 .learndash-wrapper .ld-form input[type=email],
 .learndash-wrapper .ld-form input[type=password] {
+  margin: 0;
   width: 100%;
   height: 50px;
   border: 1px solid #ddd;
@@ -1923,9 +1928,8 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   cursor: pointer;
 }
 .learndash-wrapper .ld-form .login-remember label input[type=checkbox] {
-  margin: 0;
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
   cursor: pointer;
 }
 .learndash-wrapper .ld-form .ld-form__field-password-wrapper {
@@ -1967,6 +1971,7 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   border: none;
   border-radius: 32px;
   font-size: 1.1rem;
+  line-height: 1.4;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -2402,6 +2407,11 @@ body .learndash-wrapper.ld-profile .ld-item-list.ld-course-list .ld-item-list-it
   text-decoration: underline;
 }
 
+body.woocommerce-page .woocommerce .woocommerce-notices-wrapper .woocommerce-info,
+body:has(.learndash-wrapper) .woocommerce .woocommerce-notices-wrapper .woocommerce-info,
+body.page-registration-success .woocommerce .woocommerce-notices-wrapper .woocommerce-info {
+  font-size: 1rem;
+}
 body.woocommerce-page main.site-main,
 body:has(.learndash-wrapper) main.site-main,
 body.page-registration-success main.site-main {
@@ -2572,7 +2582,7 @@ body.woocommerce-account:not(.logged-in) .woocommerce {
 }
 body.woocommerce-account:not(.logged-in) .woocommerce h2 {
   color: var(--e-global-color-primary);
-  font-size: 1.75rem;
+  font-size: 2.25rem;
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 25px;
@@ -2619,12 +2629,25 @@ body.woocommerce-account:not(.logged-in) .woocommerce form.register .form-row in
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
 }
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-form-login__rememberme,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-form-login__rememberme {
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-form-login__rememberme input#rememberme,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-form-login__rememberme input#rememberme {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+}
 body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-button,
 body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-button {
   background-color: var(--e-global-color-secondary);
   color: var(--e-global-color-ed9b819);
   border: none;
   padding: 12px 30px;
+  line-height: 1.5;
   border-radius: 30px;
   font-weight: 600;
   cursor: pointer;
@@ -2639,15 +2662,27 @@ body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-Lo
 body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-LostPassword {
   margin-top: 15px;
   text-align: center;
+  font-size: 1rem;
 }
 body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-LostPassword a,
 body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-LostPassword a {
+  font-weight: 500;
   color: var(--e-global-color-primary);
-  text-decoration: none;
 }
 body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-LostPassword a:hover,
 body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-LostPassword a:hover {
   color: var(--e-global-color-accent);
+}
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-register-link,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-register-link {
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+body.woocommerce-account:not(.logged-in) .woocommerce form.login .woocommerce-register-link a,
+body.woocommerce-account:not(.logged-in) .woocommerce form.register .woocommerce-register-link a {
+  font-weight: 500;
+  color: var(--e-global-color-primary);
 }
 
 body.woocommerce-account.logged-in .woocommerce {
@@ -2713,7 +2748,6 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content p
 }
 body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content a {
   color: var(--e-global-color-primary);
-  text-decoration: none;
   font-weight: 500;
 }
 body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content a:hover {
@@ -2749,7 +2783,7 @@ body.woocommerce-account.logged-in .woocommerce .woocommerce-MyAccount-content t
   padding: 10px 20px;
   border-radius: 20px;
   font-size: 1rem;
-  line-height: 1.2;
+  line-height: 1.5;
   text-decoration: none;
   transition: all 0.3s ease;
 }

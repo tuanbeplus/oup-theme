@@ -1,6 +1,13 @@
 body.woocommerce-page,
 body:has(.learndash-wrapper),
 body.page-registration-success {
+    .woocommerce {
+        .woocommerce-notices-wrapper {
+            .woocommerce-info {
+                font-size: 1rem;
+            }
+        }
+    }
     main.site-main {
         max-width: 100%;
 

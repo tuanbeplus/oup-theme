@@ -191,3 +191,20 @@ add_filter( 'wpo_wcpdf_document_title', function( $title, $document ) {
     }
     return $title;
 }, 10, 2 );
+
+// add reset password link in my account
+add_filter( 'lostpassword_url', function () {
+    return home_url( '/reset-password/' );
+} );
+
+// add register link in login page
+add_action( 'woocommerce_login_form_end', function () {
+    ?>
+    <p class="woocommerce-register-link">
+        Don't have an account?
+        <a href="<?php echo esc_url( home_url( '/register/' ) ); ?>">
+            Register
+        </a>
+    </p>
+    <?php
+} );
