@@ -30,12 +30,12 @@ if (!function_exists('enqueue_oup_styles_and_scripts')) {
 /**
  * Turn off the default LearnDash interface on the course detail page.
  */
-add_filter('learndash_template_preprocess_filter', function($run, $post_id) {
-    if ( is_singular('sfwd-courses') ) {
-        return false;
-    }
-    return $run;
-}, 10, 2);
+// add_filter('learndash_template_preprocess_filter', function($run, $post_id) {
+//     if ( is_singular('sfwd-courses') ) {
+//         return false;
+//     }
+//     return $run;
+// }, 10, 2);
 
 // Shortcode for Course Accordion to show all lessons, topics, and quizzes
 if (!function_exists('oup_course_accordion_shortcode_callback')) {
@@ -51,6 +51,8 @@ if (!function_exists('oup_course_accordion_shortcode_callback')) {
         if (!$course_id) {
             $course_id = get_the_ID();
         }
+
+        echo do_shortcode("[ld_course_list course_id='$course_id']");
 
         if (!$course_id || get_post_type($course_id) !== 'sfwd-courses' || !function_exists('learndash_get_course_lessons_list')) {
             return '';
