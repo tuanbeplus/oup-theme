@@ -79,7 +79,51 @@ add_filter( 'gettext_with_context', function ( $translation, $text, $context, $d
         '%s Content' === $text &&
         'placeholder: Course' === $context
     ) {
-        return '%s Overview';
+        return 'Overview';
     }
     return $translation;
 }, 10, 4 );
+
+// Redirect Worksheet Category Archive
+add_action( 'template_redirect', 'redirect_worksheet_category_archive' );
+function redirect_worksheet_category_archive() {
+    if ( is_tax( 'worksheet-category' ) ) {
+        wp_redirect( get_post_type_archive_link( 'worksheet' ), 301 );
+        exit;
+    }
+}
+
+// Custom Post Category Term Link
+add_filter('term_link', 'custom_post_category_term_link', 10, 3);
+function custom_post_category_term_link($url, $term, $taxonomy)
+{
+    if ('category' === $taxonomy || 'post_tag' === $taxonomy) {
+        $archive_url = home_url('/blogs/');
+        $url = $archive_url;
+    }
+    return $url;
+}
+
+// Redirect Post Category Archive
+add_action('template_redirect', 'redirect_post_category_archive');
+function redirect_post_category_archive()
+{
+    if (is_category() || is_tag()) {
+        wp_redirect(home_url('/blogs/'), 301);
+        exit;
+    }
+}
+
+// Custom Worksheet Category Term Link
+add_filter( 'term_link', 'custom_worksheet_category_term_link', 10, 3 );
+function custom_worksheet_category_term_link( $url, $term, $taxonomy ) {
+    if ( 'worksheet-category' === $taxonomy || 'worksheets-audience' === $taxonomy) {
+        $archive_url = get_post_type_archive_link( 'worksheet' );
+        
+        if ( ! $archive_url ) {
+            $archive_url = home_url( '/worksheet/' ); 
+        }
+        $url = $archive_url;
+    }
+    return $url;
+}

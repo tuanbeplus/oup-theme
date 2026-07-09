@@ -208,3 +208,27 @@ add_action( 'woocommerce_login_form_end', function () {
     </p>
     <?php
 } );
+
+// Add my-courses endpoint to WordPress
+add_action( 'init', function () {
+	add_rewrite_endpoint( 'my-courses', EP_ROOT | EP_PAGES );
+} );
+
+// Add my-courses to menu
+add_filter( 'woocommerce_account_menu_items', function ( $items ) {
+	$new_items = [];
+	foreach ( $items as $key => $label ) {
+		$new_items[ $key ] = $label;
+
+		if ( 'dashboard' === $key ) {
+			$new_items['my-courses'] = __( 'My Courses', 'oup-theme' );
+		}
+	}
+	return $new_items;
+
+} );
+
+// Add Content of my-courses
+add_action( 'woocommerce_account_my-courses_endpoint', function () {
+	echo do_shortcode( '[ld_profile]' );
+} );
