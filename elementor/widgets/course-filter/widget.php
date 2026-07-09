@@ -688,6 +688,16 @@ class Widget_CourseFilter extends Widget_Base
                         ?>
                         <a href="#" class="course-btn" style="opacity: 0.6; pointer-events: none;">Closed</a>
                         <?php
+                    } elseif ( ! is_user_logged_in() ) {
+                        $registration_page_id = class_exists('LearnDash_Settings_Section')  
+                            ? (int) \LearnDash_Settings_Section::get_section_setting('LearnDash_Settings_Section_Registration_Pages', 'registration')
+                            : 0;
+                        
+                        $register_url = $registration_page_id ? get_permalink($registration_page_id) : site_url('/register/');
+                        $final_register_url = add_query_arg('redirect_to', urlencode($permalink), $register_url);
+                        ?>
+                        <a href="<?php echo esc_url($final_register_url); ?>" class="course-btn">Enrol Now<?php echo $price_text; ?></a>
+                        <?php
                     } else {
                         $payment_buttons = '';
 
@@ -733,6 +743,12 @@ class Widget_CourseFilter extends Widget_Base
                                 }
 
                                 $payment_buttons = preg_replace('/<script\b[^>]*>([\s\S]*?)<\/script>/i', '', $payment_buttons);
+                                
+                               // inject script if loading via AJAX
+                                if ( wp_doing_ajax() && ! isset( $GLOBALS['oup_stripe_ajax_injected'] ) ) {
+                                    $payment_buttons .= $GLOBALS['oup_stripe_script_extracted'];
+                                    $GLOBALS['oup_stripe_ajax_injected'] = true;
+                                }
                             }
                         }
 

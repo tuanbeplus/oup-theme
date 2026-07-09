@@ -106,11 +106,13 @@ function oup_custom_user_avatar( $avatar, $id_or_email, $size, $default, $alt ) 
     $user = false;
 
     if ( is_numeric( $id_or_email ) ) {
-        $id = (int) $id_or_email;
-        $user = get_user_by( 'id' , $id );
-    } elseif ( is_object( $id_or_email ) && ! empty( $id_or_email->user_id ) ) {
-        $id = (int) $id_or_email->user_id;
-        $user = get_user_by( 'id' , $id );
+        $user = get_user_by( 'id' , (int) $id_or_email );
+    } elseif ( is_object( $id_or_email ) ) {
+        if ( ! empty( $id_or_email->ID ) ) {
+            $user = get_user_by( 'id' , (int) $id_or_email->ID );
+        } elseif ( ! empty( $id_or_email->user_id ) ) {
+            $user = get_user_by( 'id' , (int) $id_or_email->user_id );
+        }
     } elseif ( is_string( $id_or_email ) ) {
         $user = get_user_by( 'email', $id_or_email );
     }
@@ -120,7 +122,7 @@ function oup_custom_user_avatar( $avatar, $id_or_email, $size, $default, $alt ) 
         if ( $avatar_id ) {
             $image_url = wp_get_attachment_image_url( $avatar_id, [$size, $size] );
             if ( $image_url ) {
-                $avatar = "<img alt='{$alt}' src='{$image_url}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
+                $avatar = "<img alt='{$alt}' src='{$image_url}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' style='border-radius:50%; object-fit:cover;' />";
             }
         }
     }
@@ -130,9 +132,18 @@ function oup_custom_user_avatar( $avatar, $id_or_email, $size, $default, $alt ) 
 add_filter( 'get_avatar_url', 'oup_custom_user_avatar_url', 10, 3 );
 function oup_custom_user_avatar_url( $url, $id_or_email, $args ) {
     $user = false;
-    if ( is_numeric( $id_or_email ) ) { $user = get_user_by( 'id' , (int) $id_or_email ); }
-    elseif ( is_object( $id_or_email ) && ! empty( $id_or_email->user_id ) ) { $user = get_user_by( 'id' , (int) $id_or_email->user_id ); }
-    elseif ( is_string( $id_or_email ) ) { $user = get_user_by( 'email', $id_or_email ); }
+    
+    if ( is_numeric( $id_or_email ) ) {
+        $user = get_user_by( 'id' , (int) $id_or_email );
+    } elseif ( is_object( $id_or_email ) ) {
+        if ( ! empty( $id_or_email->ID ) ) {
+            $user = get_user_by( 'id' , (int) $id_or_email->ID );
+        } elseif ( ! empty( $id_or_email->user_id ) ) {
+            $user = get_user_by( 'id' , (int) $id_or_email->user_id );
+        }
+    } elseif ( is_string( $id_or_email ) ) {
+        $user = get_user_by( 'email', $id_or_email );
+    }
 
     if ( $user && is_object( $user ) ) {
         $avatar_id = get_user_meta( $user->ID, 'oup_custom_avatar', true );
@@ -151,6 +162,16 @@ function oup_custom_edit_profile_url( $url, $user_id, $scheme ) {
         return wc_get_endpoint_url( 'edit-account', '', wc_get_page_permalink( 'myaccount' ) );
     }
     return $url;
+}
+
+// Ignore required fields for admin
+add_filter( 'woocommerce_save_account_details_required_fields', 'oup_remove_required_fields_for_admin' );
+function oup_remove_required_fields_for_admin( $required_fields ) {
+    if ( current_user_can( 'administrator' ) ) {
+        unset( $required_fields['account_first_name'] );
+        unset( $required_fields['account_last_name'] );
+    }
+    return $required_fields;
 }
 
 // Product Metadata
