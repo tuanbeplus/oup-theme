@@ -164,16 +164,6 @@ function oup_custom_edit_profile_url( $url, $user_id, $scheme ) {
     return $url;
 }
 
-// Ignore required fields for admin
-add_filter( 'woocommerce_save_account_details_required_fields', 'oup_remove_required_fields_for_admin' );
-function oup_remove_required_fields_for_admin( $required_fields ) {
-    if ( current_user_can( 'administrator' ) ) {
-        unset( $required_fields['account_first_name'] );
-        unset( $required_fields['account_last_name'] );
-    }
-    return $required_fields;
-}
-
 // Product Metadata
 add_action( 'woocommerce_single_product_summary', 'oup_product_metadata', 11 );
 function oup_product_metadata() {
