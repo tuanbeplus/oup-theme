@@ -127,3 +127,78 @@ function custom_worksheet_category_term_link( $url, $term, $taxonomy ) {
     }
     return $url;
 }
+
+// ── Pre-login URL: save current page to sessionStorage (exclude register page)
+add_action( 'wp_head', 'oup_save_referrer_to_localstorage' );
+function oup_save_referrer_to_localstorage() {
+    // Bail on the register / sign-up page so we don't overwrite the referrer.
+    // Adjust slugs if your register page uses a different URL.
+    if ( is_page( array( 'register', 'sign-up', 'registration' ) ) ) {
+        return;
+    }
+    ?>
+    <script>
+    (function () {
+        try {
+            var url = window.location.href;
+            // Only store real content pages - skip wp-admin and wp-login
+            if ( url.indexOf( '/wp-admin' ) === -1 && url.indexOf( '/wp-login' ) === -1 ) {
+                sessionStorage.setItem( 'oup_login_redirect', url );
+            }
+        } catch (e) {}
+    })();
+    </script>
+    <?php
+}
+
+// ── Inject redirect script after the WooCommerce login form on the register page
+add_action( 'woocommerce_login_form_end', 'oup_inject_login_redirect_script' );
+function oup_inject_login_redirect_script() {
+    ?>
+    <script>
+    (function () {
+        try {
+            var redirect = sessionStorage.getItem( 'oup_login_redirect' );
+            if ( ! redirect ) { return; }
+
+            // Attach to every login form on the page
+            document.querySelectorAll(
+                'form.woocommerce-form-login, form#loginform, form.login'
+            ).forEach( function ( form ) {
+                form.addEventListener( 'submit', function () {
+                    // Persist in localStorage so it survives the page reload after login
+                    localStorage.setItem( 'oup_post_login_redirect', redirect );
+                } );
+            } );
+        } catch (e) {}
+    })();
+    </script>
+    <?php
+}
+
+// ── After login: read the queued redirect and send the user back
+add_action( 'wp_head', 'oup_execute_post_login_redirect' );
+function oup_execute_post_login_redirect() {
+    if ( ! is_user_logged_in() ) {
+        return;
+    }
+    ?>
+    <script>
+    (function () {
+        try {
+            var redirect = localStorage.getItem( 'oup_post_login_redirect' );
+            if ( ! redirect ) { return; }
+            localStorage.removeItem( 'oup_post_login_redirect' );
+            sessionStorage.removeItem( 'oup_login_redirect' );
+
+            // Safety check: only redirect to the same origin
+            var a = document.createElement( 'a' );
+            a.href = redirect;
+            if ( a.hostname === window.location.hostname ) {
+                window.location.replace( redirect );
+            }
+        } catch (e) {}
+    })();
+    </script>
+    <?php
+}

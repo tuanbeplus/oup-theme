@@ -243,14 +243,3 @@ add_filter( 'woocommerce_account_menu_items', function ( $items ) {
 add_action( 'woocommerce_account_my-courses_endpoint', function () {
 	echo do_shortcode( '[ld_profile]' );
 } );
-
-// redirect login and register pages to my account if user is logged in
-add_action( 'template_redirect', function () {
-    if ( ! is_user_logged_in() ) {
-        return;
-    }
-    if ( is_page( array( 'register' ) ) ) {
-        wp_safe_redirect( home_url( '/my-account/' ) );
-        exit;
-    }
-} );
