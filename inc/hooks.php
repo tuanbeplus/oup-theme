@@ -191,3 +191,24 @@ function oup_cookie_redirect_after_login() {
     </script>
     <?php
 }
+
+/**
+ * Add Enrolled Users column to LearnDash Courses admin list.
+ */
+add_filter( 'manage_sfwd-courses_posts_columns', function ( $columns ) {
+	$new = array();
+	foreach ( $columns as $key => $label ) {
+		$new[ $key ] = $label;
+		if ( 'title' === $key ) {
+			$new['ld_enrolled_users'] = 'Enrolled Users';
+		}
+	}
+	return $new;
+} );
+add_action( 'manage_sfwd-courses_posts_custom_column', function ( $column, $post_id ) {
+	if ( 'ld_enrolled_users' !== $column ) {
+		return;
+	}
+	$user_ids = learndash_get_course_users_access_from_meta( $post_id );
+	echo is_array( $user_ids ) ? count( $user_ids ) : 0;
+}, 10, 2 );
