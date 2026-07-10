@@ -128,11 +128,16 @@ function custom_worksheet_category_term_link( $url, $term, $taxonomy ) {
     return $url;
 }
 
-// ── Pre-login URL: write current page into a cookie on every page except register
+// ── Pre-login URL: write current page into a cookie (logged-out users only, not register page)
 add_action( 'wp_head', 'oup_save_referrer_cookie' );
 function oup_save_referrer_cookie() {
-    // Don't overwrite the referrer when the user is already on the register page.
-    // Adjust slugs if your register page uses a different URL.
+    // Only save for guests — once the user is logged in we stop overwriting so
+    // the redirect cookie survives until it is consumed.
+    if ( is_user_logged_in() ) {
+        return;
+    }
+    // Don't overwrite the referrer when already on the register/login page.
+    // Adjust slugs if your pages use different URLs.
     if ( is_page( array( 'register', 'sign-up', 'registration' ) ) ) {
         return;
     }
@@ -142,7 +147,7 @@ function oup_save_referrer_cookie() {
         try {
             var url = window.location.href;
             if ( url.indexOf( '/wp-admin' ) === -1 && url.indexOf( '/wp-login' ) === -1 ) {
-                // Expires in 1 hour; readable by PHP on the same request after login
+                // 1-hour expiry; survives the post-login redirect
                 document.cookie = 'oup_login_redirect=' + encodeURIComponent( url )
                     + '; path=/; SameSite=Lax; max-age=3600';
             }
@@ -152,22 +157,37 @@ function oup_save_referrer_cookie() {
     <?php
 }
 
-// ── After WooCommerce login: redirect back to the stored URL (server-side, reliable)
-add_filter( 'woocommerce_login_redirect', 'oup_woo_login_redirect', 20, 2 );
-function oup_woo_login_redirect( $redirect, $user ) {
-    if ( empty( $_COOKIE['oup_login_redirect'] ) ) {
-        return $redirect;
+// ── After any login (LearnDash, WooCommerce, native WP): redirect to stored URL
+// Works client-side so it is compatible with AJAX-based login forms (LearnDash).
+add_action( 'wp_head', 'oup_cookie_redirect_after_login' );
+function oup_cookie_redirect_after_login() {
+    if ( ! is_user_logged_in() ) {
+        return;
     }
+    ?>
+    <script>
+    (function () {
+        try {
+            // Read the redirect cookie
+            function getCookie( name ) {
+                var match = document.cookie.match( '(?:^|;)\\s*' + name + '=([^;]*)' );
+                return match ? decodeURIComponent( match[1] ) : null;
+            }
 
-    $url = esc_url_raw( urldecode( $_COOKIE['oup_login_redirect'] ) );
+            var redirect = getCookie( 'oup_login_redirect' );
+            if ( ! redirect ) { return; }
 
-    // Safety: only redirect within the same site
-    if ( strpos( $url, home_url() ) !== 0 ) {
-        return $redirect;
-    }
+            // Immediately clear the cookie so it is not consumed again
+            document.cookie = 'oup_login_redirect=; path=/; max-age=0; SameSite=Lax';
 
-    // Clear the cookie
-    setcookie( 'oup_login_redirect', '', time() - 3600, '/', COOKIE_DOMAIN );
-
-    return $url;
+            // Safety: only redirect to the same origin
+            var a = document.createElement( 'a' );
+            a.href = redirect;
+            if ( a.hostname === window.location.hostname ) {
+                window.location.replace( redirect );
+            }
+        } catch (e) {}
+    })();
+    </script>
+    <?php
 }
