@@ -445,11 +445,11 @@ body .learndash-wrapper .ld-focus {
                 .ld-table-list-items {
                     padding: 0;
                 }
-                
+
                 .ld-table-list-item {
                     border-bottom: 1px solid #f4f6f9;
                     .ld-table-list-item-preview {
-                        padding: 12px 20px 12px 45px;
+                        padding: 12px 20px 12px 45px !important;
                         font-family: var(--e-global-typography-secondary-font-family);
                         font-size: 0.95rem;
                         color: #005375;

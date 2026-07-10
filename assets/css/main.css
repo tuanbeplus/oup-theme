@@ -2081,7 +2081,7 @@ body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-i
   border-bottom: 1px solid #f4f6f9;
 }
 body .learndash-wrapper .ld-focus .ld-focus-sidebar .ld-lesson-item .ld-lesson-item-expanded .ld-table-list-item .ld-table-list-item-preview {
-  padding: 12px 20px 12px 45px;
+  padding: 12px 20px 12px 45px !important;
   font-family: var(--e-global-typography-secondary-font-family);
   font-size: 0.95rem;
   color: #005375;
@@ -2259,12 +2259,15 @@ body .learndash-wrapper .wpProQuiz_content {
   max-width: 900px;
   margin: 0 auto;
 }
+body .learndash-wrapper .wpProQuiz_content .wpProQuiz_question {
+  padding: 0;
+}
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_question_text {
   font-size: clamp(1.2rem, 3vw, 1.5rem);
   font-family: var(--e-global-typography-primary-font-family);
   color: var(--e-global-color-primary);
   font-weight: 600;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   line-height: 1.5;
 }
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_question_text > div {
@@ -2272,24 +2275,26 @@ body .learndash-wrapper .wpProQuiz_content .wpProQuiz_question_text > div {
   flex-direction: column;
   gap: 5px;
 }
+body .learndash-wrapper .wpProQuiz_content .wpProQuiz_question_text p {
+  margin-bottom: 0;
+}
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_questionListItem {
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_questionListItem label {
   display: flex;
   align-items: center;
-  padding: 16px 24px;
+  padding: 12px 20px;
   background-color: #ffffff;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #4b5563;
   font-weight: 500;
   margin: 0;
@@ -2305,7 +2310,6 @@ body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_qu
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_questionListItem label:hover {
   border-color: var(--e-global-color-secondary);
   background-color: #fdfdff;
-  transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
 }
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_questionListItem:has(input:checked) label {
@@ -2315,8 +2319,25 @@ body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_qu
   color: var(--e-global-color-primary);
   font-weight: 600;
 }
+body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_questionListItem p.graded-disclaimer {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-style: italic;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_questionListItem p.graded-disclaimer::before {
+  content: "ⓘ";
+  font-style: normal;
+  color: var(--e-global-color-secondary);
+  font-weight: 700;
+  font-size: 1rem;
+}
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionEssay {
   width: 100%;
+  height: 150px;
   padding: 16px 20px;
   background-color: #ffffff;
   border: 2px solid #e5e7eb;
@@ -2340,22 +2361,6 @@ body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionEssay:focus {
   border-color: var(--e-global-color-secondary);
   background-color: #f7faff;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-}
-body .learndash-wrapper .wpProQuiz_content .graded-disclaimer {
-  font-size: 0.9rem;
-  color: #6b7280;
-  font-style: italic;
-  margin: 0 0 15px 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-body .learndash-wrapper .wpProQuiz_content .graded-disclaimer::before {
-  content: "ⓘ";
-  font-style: normal;
-  color: var(--e-global-color-secondary);
-  font-weight: 700;
-  font-size: 1rem;
 }
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_button {
   background-color: var(--e-global-color-secondary);
