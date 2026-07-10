@@ -340,7 +340,8 @@
 }
 
 // LearnDash Focus Mode Custom Styling (Navigation & Header)
-body.single-sfwd-lessons {
+body.single-sfwd-lessons,
+body.single-sfwd-quiz {
 	margin-top: 0 !important;
 }
 body .learndash-wrapper .ld-focus {
@@ -552,10 +553,24 @@ body .learndash-wrapper .ld-focus {
                 font-family: var(--e-global-typography-primary-font-family);
                 font-weight: 600;
                 color: var(--e-global-color-text);
+                max-width: 150px; 
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: inline-block;
+                vertical-align: middle;
             }
             .ld-profile-avatar {
                 border: 2px solid var(--e-global-color-secondary);
+                border-radius: 100%;
+                overflow: hidden;
+                flex-shrink: 0;
+                display: inline-block;
                 transition: transform 0.3s ease;
+                
+                img {
+                    border-radius: 100%;
+                }
                 
                 &:hover {
                     transform: scale(1.05);
@@ -639,13 +654,23 @@ body .learndash-wrapper .ld-focus {
 
     .ld-accordion__item--lesson {
         .ld-accordion__item-title {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+
+            &::before {
+                flex-shrink: 0;
+                margin-right: 0 !important;
+                margin-top: 3px;
+            }
+
             &:hover {
                 color: var(--e-global-color-secondary) !important;
             }
         }
-        // .ld-accordion__item-attribute {
-        //     color: #005375;
-        // }
+        .ld-accordion__item-attributes {
+            display: none;
+        }
 
         .ld-accordion__expand-button--lesson {
             display: none;
@@ -657,12 +682,39 @@ body .learndash-wrapper .ld-focus {
             overflow: visible;
             padding-left: 0;
             margin-left: 0;
+            .ld-accordion__item-steps-container{
+                padding: 0;
+            }
 
 
             .ld-accordion__item-icon {
                 visibility: hidden;
                 pointer-events: none;
             }
+        }
+    }
+    
+    .ld-item-list-item-preview .ld-item-name {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        
+        .ld-status-icon {
+            margin: 0 !important; 
+            flex-shrink: 0;
+        }
+        
+        .ld-course-title,
+        .ld-lesson-title,
+        .ld-topic-title {
+            font-size: 1rem;
+            margin: 0 !important; 
+        }
+    }
+
+    .ld-item-list-item-preview .ld-item-details {
+        .ld-status {
+            margin-bottom: 0 !important;
         }
     }
 }

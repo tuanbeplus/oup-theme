@@ -1999,7 +1999,8 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   transition: width 1.5s ease-in-out;
 }
 
-body.single-sfwd-lessons {
+body.single-sfwd-lessons,
+body.single-sfwd-quiz {
   margin-top: 0 !important;
 }
 
@@ -2159,10 +2160,23 @@ body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-welcom
   font-family: var(--e-global-typography-primary-font-family);
   font-weight: 600;
   color: var(--e-global-color-text);
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
 }
 body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-profile-avatar {
   border: 2px solid var(--e-global-color-secondary);
+  border-radius: 100%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: inline-block;
   transition: transform 0.3s ease;
+}
+body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-profile-avatar img {
+  border-radius: 100%;
 }
 body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-profile-avatar:hover {
   transform: scale(1.05);
@@ -2233,8 +2247,21 @@ body .learndash-wrapper .ld-focus .ld-focus-content iframe.pdfembed-iframe {
 .learndash-wrapper .ld-accordion__header .ld-accordion__expand-button--all {
   display: none;
 }
+.learndash-wrapper .ld-accordion__item--lesson .ld-accordion__item-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.learndash-wrapper .ld-accordion__item--lesson .ld-accordion__item-title::before {
+  flex-shrink: 0;
+  margin-right: 0 !important;
+  margin-top: 3px;
+}
 .learndash-wrapper .ld-accordion__item--lesson .ld-accordion__item-title:hover {
   color: var(--e-global-color-secondary) !important;
+}
+.learndash-wrapper .ld-accordion__item--lesson .ld-accordion__item-attributes {
+  display: none;
 }
 .learndash-wrapper .ld-accordion__item--lesson .ld-accordion__expand-button--lesson {
   display: none;
@@ -2247,9 +2274,30 @@ body .learndash-wrapper .ld-focus .ld-focus-content iframe.pdfembed-iframe {
   padding-left: 0;
   margin-left: 0;
 }
+.learndash-wrapper .ld-accordion__item--lesson .ld-accordion__item-steps .ld-accordion__item-steps-container {
+  padding: 0;
+}
 .learndash-wrapper .ld-accordion__item--lesson .ld-accordion__item-steps .ld-accordion__item-icon {
   visibility: hidden;
   pointer-events: none;
+}
+.learndash-wrapper .ld-item-list-item-preview .ld-item-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.learndash-wrapper .ld-item-list-item-preview .ld-item-name .ld-status-icon {
+  margin: 0 !important;
+  flex-shrink: 0;
+}
+.learndash-wrapper .ld-item-list-item-preview .ld-item-name .ld-course-title,
+.learndash-wrapper .ld-item-list-item-preview .ld-item-name .ld-lesson-title,
+.learndash-wrapper .ld-item-list-item-preview .ld-item-name .ld-topic-title {
+  font-size: 1rem;
+  margin: 0 !important;
+}
+.learndash-wrapper .ld-item-list-item-preview .ld-item-details .ld-status {
+  margin-bottom: 0 !important;
 }
 
 body .learndash-wrapper .ld-quiz-status {
@@ -2260,10 +2308,18 @@ body .learndash-wrapper .wpProQuiz_content {
   margin: 0 auto;
 }
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_question {
+  margin-top: 32px !important;
   padding: 0;
 }
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_question_text {
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-size: 1.25rem;
+}
+@media (max-width: 767px) {
+  body .learndash-wrapper .wpProQuiz_content .wpProQuiz_question_text {
+    font-size: 1.125rem;
+  }
+}
+body .learndash-wrapper .wpProQuiz_content .wpProQuiz_question_text {
   font-family: var(--e-global-typography-primary-font-family);
   color: var(--e-global-color-primary);
   font-weight: 600;
@@ -2295,15 +2351,17 @@ body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_qu
   border-radius: 12px;
   cursor: pointer;
   font-size: 1rem;
+  line-height: 1.4;
   color: #4b5563;
   font-weight: 500;
   margin: 0;
   width: 100%;
 }
 body .learndash-wrapper .wpProQuiz_content .wpProQuiz_questionList .wpProQuiz_questionListItem label .wpProQuiz_questionInput {
-  margin: 0 16px 0 0;
-  width: 22px;
-  height: 22px;
+  margin: 0 10px 0 0;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
   cursor: pointer;
   accent-color: var(--e-global-color-secondary);
 }

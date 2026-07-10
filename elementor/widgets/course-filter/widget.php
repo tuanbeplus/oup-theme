@@ -694,9 +694,8 @@ class Widget_CourseFilter extends Widget_Base
                             : 0;
                         
                         $register_url = $registration_page_id ? get_permalink($registration_page_id) : site_url('/register/');
-                        $final_register_url = add_query_arg('redirect_to', urlencode($permalink), $register_url);
                         ?>
-                        <a href="<?php echo esc_url($final_register_url); ?>" class="course-btn">Enrol Now<?php echo $price_text; ?></a>
+                        <a href="<?php echo esc_url($register_url); ?>" class="course-btn">Enrol Now<?php echo $price_text; ?></a>
                         <?php
                     } else {
                         $payment_buttons = '';

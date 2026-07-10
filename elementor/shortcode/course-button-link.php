@@ -11,8 +11,6 @@ if ( ! function_exists( 'get_custom_ld_register_link' ) ) {
         if (!$course_id) {
             return '#';
         }
-
-
         if ( is_user_logged_in() && function_exists('sfwd_lms_has_access') ) {
             if ( sfwd_lms_has_access( $course_id, get_current_user_id() ) ) {
                 $user_id = get_current_user_id();
@@ -63,6 +61,12 @@ if ( ! function_exists( 'get_custom_ld_register_link' ) ) {
         $course_price_type = function_exists('learndash_get_setting') ? learndash_get_setting($course_id, 'course_price_type') : '';
         if ( $course_price_type === 'closed' ) {
             return '#ld-closed';
+        }
+        if ( ! is_user_logged_in() ) {
+            $registration_page_id = class_exists('LearnDash_Settings_Section')  
+                ? (int) \LearnDash_Settings_Section::get_section_setting('LearnDash_Settings_Section_Registration_Pages', 'registration')
+                : 0;
+            return $registration_page_id ? get_permalink($registration_page_id) : site_url('/register/');
         }
 
         // 2. Check custom button URL

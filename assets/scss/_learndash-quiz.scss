@@ -9,12 +9,16 @@ body .learndash-wrapper {
         
        
         .wpProQuiz_question {
+            margin-top: 32px !important;
             padding: 0;
         }
         
         // Question Text 
         .wpProQuiz_question_text {
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-size: 1.25rem;
+            @media (max-width: 767px) {
+                font-size: 1.125rem;
+            }
             font-family: var(--e-global-typography-primary-font-family);
             color: var(--e-global-color-primary);
             font-weight: 600;
@@ -51,6 +55,7 @@ body .learndash-wrapper {
                     border-radius: 12px;
                     cursor: pointer;
                     font-size: 1rem;
+                    line-height: 1.4;
                     color: #4b5563;
                     font-weight: 500;
                     margin: 0;
@@ -58,9 +63,10 @@ body .learndash-wrapper {
                     
                     // Native Radio Button Style
                     .wpProQuiz_questionInput {
-                        margin: 0 16px 0 0;
-                        width: 22px;
-                        height: 22px;
+                        margin: 0 10px 0 0;
+                        width: 18px;
+                        height: 18px;
+                        flex-shrink: 0;
                         cursor: pointer;
                         accent-color: var(--e-global-color-secondary); 
                     }
