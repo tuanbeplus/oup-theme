@@ -1779,6 +1779,10 @@ body.woocommerce-checkout main.site-main .page-content .wc-block-components-side
   background-size: cover;
   margin-right: 8px;
 }
+.learndash-wrapper.learndash-wrapper--course .ld-layout__content .ld-accordion.ld-accordion--course .ld-accordion__content .ld-accordion__item.ld-accordion__item--lesson-quiz a.ld-accordion__item-title:before, .learndash-wrapper.learndash-wrapper--course .ld-layout__content .ld-accordion.ld-accordion--course .ld-accordion__content .ld-accordion__item.ld-accordion__item--quiz a.ld-accordion__item-title:before {
+  margin-top: 0;
+  background-image: url("/wp-content/uploads/2026/07/quiz-icon.svg");
+}
 .learndash-wrapper.learndash-wrapper--course .ld-layout__sidebar {
   display: none;
 }
@@ -2157,6 +2161,7 @@ body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu {
   font-family: var(--e-global-typography-secondary-font-family);
 }
 body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-welcome-text {
+  padding-left: 5px;
   font-family: var(--e-global-typography-primary-font-family);
   font-weight: 600;
   color: var(--e-global-color-text);
