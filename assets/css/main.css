@@ -3875,10 +3875,11 @@ body.bbpress nav.pagination {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 40px;
+  margin: 40px auto 10px;
   padding-top: 20px;
   border-top: 1px solid #eee;
   width: 100%;
+  max-width: 1024px;
 }
 body.bbpress nav.pagination .nav-previous a, body.bbpress nav.pagination .nav-next a {
   display: inline-flex;
