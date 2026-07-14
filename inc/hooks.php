@@ -239,3 +239,22 @@ function oup_redirect_forum_archive_to_404( $template ) {
     }
     return $template;
 }
+
+
+add_filter( 'get_the_excerpt', 'oup_force_bbpress_content_in_excerpt', 1, 2 );
+function oup_force_bbpress_content_in_excerpt( $excerpt, $post ) {
+    if ( function_exists( 'is_bbpress' ) && is_bbpress() ) {
+        return apply_filters( 'the_content', $post->post_content );
+    }
+    return $excerpt;
+}
+
+
+add_filter('get_the_archive_title', function($title) {
+    if (is_tax('topic-tag')) {
+        $title = single_term_title('', false);
+    } elseif (function_exists('bbp_is_search') && bbp_is_search()) {
+        $title = 'Search Forums';
+    }
+    return $title;
+});
