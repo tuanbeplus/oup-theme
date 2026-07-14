@@ -218,3 +218,24 @@ add_action( 'manage_sfwd-courses_posts_custom_column', function ( $column, $post
 		echo is_array( $user_ids ) ? count( $user_ids ) : 0;
 	}
 }, 10, 2 );
+
+// Remove Private: Forum
+add_filter('private_title_format', function($format, $post) {
+    if (in_array($post->post_type, ['forum'])) {
+        return '%s';
+    }
+    return $format;
+}, 10, 2);
+
+// Redirect bbPress Forum Archive to 404 
+add_filter( 'template_include', 'oup_redirect_forum_archive_to_404', 999 );
+function oup_redirect_forum_archive_to_404( $template ) {
+    if ( is_post_type_archive( 'forum' ) || ( function_exists( 'bbp_is_forum_archive' ) && bbp_is_forum_archive() ) ) {
+        global $wp_query;
+        $wp_query->set_404();
+        status_header( 404 );
+        nocache_headers();
+        return get_query_template( '404' ) ?: get_index_template();
+    }
+    return $template;
+}
