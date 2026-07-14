@@ -200,15 +200,21 @@ add_filter( 'manage_sfwd-courses_posts_columns', function ( $columns ) {
 	foreach ( $columns as $key => $label ) {
 		$new[ $key ] = $label;
 		if ( 'title' === $key ) {
+			$new['ld_course_image'] = 'Image';
 			$new['ld_enrolled_users'] = 'Enrolled Users';
 		}
 	}
 	return $new;
 } );
 add_action( 'manage_sfwd-courses_posts_custom_column', function ( $column, $post_id ) {
-	if ( 'ld_enrolled_users' !== $column ) {
-		return;
+	if ( 'ld_course_image' === $column ) {
+		if ( has_post_thumbnail( $post_id ) ) {
+			echo get_the_post_thumbnail( $post_id, 'medium', array( 'style' => 'width: 100px; height: auto; border-radius: 8px; border: 1px solid #eee;' ) );
+		} else {
+			echo '-';
+		}
+	} elseif ( 'ld_enrolled_users' === $column ) {
+		$user_ids = learndash_get_course_users_access_from_meta( $post_id );
+		echo is_array( $user_ids ) ? count( $user_ids ) : 0;
 	}
-	$user_ids = learndash_get_course_users_access_from_meta( $post_id );
-	echo is_array( $user_ids ) ? count( $user_ids ) : 0;
 }, 10, 2 );
