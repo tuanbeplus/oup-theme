@@ -259,111 +259,12 @@ add_filter('get_the_archive_title', function($title) {
     return $title;
 });
 
-
-// Course to Forum Mapping
-function oup_get_course_forum_mapping() {
-    return [
-        // Forum NeuroNurturers
-        4457 => 5261, 
-        2873 => 5261,
-        
-        // Forum NeuroNexus Network
-        2847 => 5710,
-        2848 => 5710,
-        2849 => 5710,
-    ];
-}
-
-/**
- * Grant forum access keys to a specific user
- */
-function oup_grant_user_forum_access( $user_id, $forum_id ) {
-    // Grant access key in user meta
-    $allowed_forums = get_user_meta( $user_id, 'oup_allowed_forums', true );
-    if ( ! is_array( $allowed_forums ) ) {
-        $allowed_forums = [];
-    }
-    if ( ! in_array( $forum_id, $allowed_forums ) ) {
-        $allowed_forums[] = $forum_id;
-        update_user_meta( $user_id, 'oup_allowed_forums', $allowed_forums );
-    }
-
-    // Auto-subscribe the user to the forum for group email notifications
-    if ( function_exists('bbp_add_user_subscription') && function_exists('bbp_is_user_subscribed') ) {
-        // Duplicate check: Only add if not already subscribed
-        if ( ! bbp_is_user_subscribed( $user_id, $forum_id ) ) {
-            bbp_add_user_subscription( $user_id, $forum_id );
-        }
-    }
-}
-
-/**
- * Sync existing course users
- */
-function oup_sync_existing_course_users_to_forums() {
-    if ( get_option('oup_forums_synced') ) return; 
-
-    $mapping = oup_get_course_forum_mapping();
-
-    foreach ( $mapping as $course_id => $forum_id ) {
-        // Get all users who have access to this course
-        $course_users = get_users([
-            'meta_query' => [
-                [
-                    'key'     => 'course_' . $course_id . '_access_from',
-                    'compare' => 'EXISTS'
-                ]
-            ],
-            'fields' => 'ID'
-        ]);
-        
-        if ( !empty($course_users) ) {
-            foreach ( $course_users as $user_id ) {
-                oup_grant_user_forum_access( $user_id, $forum_id );
-            }
-        }
-    }
-    update_option('oup_forums_synced', true); 
-}
-add_action('init', 'oup_sync_existing_course_users_to_forums');
-
-/**
- *  forum access when a new user purchases a course
- */
-add_action( 'learndash_update_course_access', 'oup_auto_grant_forum_access_on_purchase', 10, 4 );
-function oup_auto_grant_forum_access_on_purchase( $user_id, $course_id, $course_access_list, $remove ) {
-    if ( $remove ) return; 
-
-    $mapping = oup_get_course_forum_mapping();
-    if ( isset( $mapping[ $course_id ] ) ) {
-        $forum_id = $mapping[ $course_id ];
-        oup_grant_user_forum_access( $user_id, $forum_id );
-    }
-}
-
-/**
- * Bypass Private Forum restriction for authorized users
- */
-add_filter( 'map_meta_cap', 'oup_allow_read_private_forum', 10, 4 );
-function oup_allow_read_private_forum( $caps, $cap, $user_id, $args ) {
-    if ( $cap === 'read_forum' && !empty($args[0]) ) {
-        $forum_id = $args[0];
-        
-        $allowed_forums = get_user_meta( $user_id, 'oup_allowed_forums', true );
-        
-        if ( is_array($allowed_forums) && in_array( $forum_id, $allowed_forums ) ) {
-            $caps = array( 'read' ); 
-        }
-    }
-    return $caps;
-}
-
 // Add meta box to show number of group members
 add_action( 'add_meta_boxes', 'oup_forum_stats_metabox' );
 function oup_forum_stats_metabox() {
     add_meta_box(
         'oup_forum_stats',
-        '👥 Group Members Count',
+        '👥 Group Members',
         'oup_forum_stats_metabox_content',
         'forum',
         'side',
@@ -380,4 +281,60 @@ function oup_forum_stats_metabox_content( $post ) {
         echo '<span style="color: #2271b1; font-size: 24px; font-weight: bold; line-height: 1.5;">' . $count . '</span>';
         echo '</div>';
     }
+}
+
+
+function oup_manual_sync_users_to_forums() {
+    if ( ! function_exists('learndash_get_course_users_access_from_meta') ) return;
+
+    $course_4457 = learndash_get_course_users_access_from_meta(4457);
+    if (!is_array($course_4457)) $course_4457 = [];
+    $course_2873 = learndash_get_course_users_access_from_meta(2873);
+    if (!is_array($course_2873)) $course_2873 = [];
+    $group_1 = array_unique(array_merge($course_4457, $course_2873));
+
+    foreach ($group_1 as $user_id) {
+        oup_grant_user_forum_access( $user_id, 5261 );
+    }
+    
+    $course_2847 = learndash_get_course_users_access_from_meta(2847);
+    if (!is_array($course_2847)) $course_2847 = [];
+    $course_2848 = learndash_get_course_users_access_from_meta(2848);
+    if (!is_array($course_2848)) $course_2848 = [];
+    $course_2849 = learndash_get_course_users_access_from_meta(2849);
+    if (!is_array($course_2849)) $course_2849 = [];
+    $group_2 = array_unique(array_merge($course_2847, $course_2848, $course_2849));
+
+    foreach ($group_2 as $user_id) {
+        oup_grant_user_forum_access( $user_id, 5710 );
+    }
+}
+
+function oup_grant_user_forum_access( $user_id, $forum_id ) {
+    $allowed_forums = get_user_meta( $user_id, 'oup_allowed_forums', true );
+    if ( ! is_array( $allowed_forums ) ) $allowed_forums = [];
+    
+    if ( ! in_array( $forum_id, $allowed_forums ) ) {
+        $allowed_forums[] = $forum_id;
+        update_user_meta( $user_id, 'oup_allowed_forums', $allowed_forums );
+    }
+
+    if ( function_exists('bbp_add_user_subscription') && function_exists('bbp_is_user_subscribed') ) {
+        if ( ! bbp_is_user_subscribed( $user_id, $forum_id ) ) {
+            bbp_add_user_subscription( $user_id, $forum_id );
+        }
+    }
+}
+
+add_filter( 'map_meta_cap', 'oup_allow_read_private_forum', 10, 4 );
+function oup_allow_read_private_forum( $caps, $cap, $user_id, $args ) {
+    if ( $cap === 'read_forum' && !empty($args[0]) ) {
+        $forum_id = $args[0];
+        $allowed_forums = get_user_meta( $user_id, 'oup_allowed_forums', true );
+        
+        if ( is_array($allowed_forums) && in_array( $forum_id, $allowed_forums ) ) {
+            $caps = array( 'read' ); 
+        }
+    }
+    return $caps;
 }
