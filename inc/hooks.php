@@ -339,4 +339,123 @@ function oup_allow_read_private_forum( $caps, $cap, $user_id, $args ) {
     return $caps;
 }
 
+/**
+ * LearnDash: Show per-section step counts for non-enrolled users.
+ *
+ * On the single course page, if the visitor does NOT have access, keep
+ * each section subheading (Welcome!, Understanding ADHD, …) but replace
+ * the individual lesson items underneath with a step count, e.g.:
+ *
+ *   Welcome!          → 1 Step
+ *   Understanding ADHD → 10 Steps
+ *   Pillars of ADHD   → 6 Steps
+ *
+ * How it works:
+ *  1. `preg_split` the content by `ld-accordion__subheading` spans.
+ *  2. Count `ld-accordion__item--lesson` occurrences in each section.
+ *  3. Inject a step-count element right after each subheading.
+ *  4. Hide the individual lesson items with CSS (`.oup-course-no-access`).
+ */
+add_filter( 'learndash_content', 'oup_course_steps_for_visitors', 20, 2 );
+function oup_course_steps_for_visitors( $content, $post ) {
+    // Only target course single pages.
+    if ( ! $post || 'sfwd-courses' !== get_post_type( $post ) ) {
+        return $content;
+    }
 
+    if ( ! is_singular( 'sfwd-courses' ) ) {
+        return $content;
+    }
+
+    $course_id = $post->ID;
+    $user_id   = get_current_user_id();
+
+    // Enrolled users see the full content.
+    if ( $user_id && function_exists( 'sfwd_lms_has_access' ) && sfwd_lms_has_access( $course_id, $user_id ) ) {
+        return $content;
+    }
+
+    // ── Split content by subheading spans ────────────────────────────────
+    // Each subheading is a <span … class="…ld-accordion__subheading…">…</span>.
+    $split_pattern = '/(<span[^>]*class="[^"]*\bld-accordion__subheading\b[^"]*"[^>]*>.*?<\/span>)/s';
+    $parts         = preg_split( $split_pattern, $content, -1, PREG_SPLIT_DELIM_CAPTURE );
+
+    // If no subheadings were found, nothing to transform.
+    if ( count( $parts ) <= 1 ) {
+        return $content;
+    }
+
+    // ── Rebuild the content ─────────────────────────────────────────────
+    // $parts layout:
+    //   [0] everything before the first subheading
+    //   [1] first subheading span
+    //   [2] section content (lesson items + whitespace) until next subheading
+    //   [3] second subheading span
+    //   [4] section content …
+    //   …   last section content also includes all remaining closing tags,
+    //        scripts, sidebar, etc.
+
+    $new_content = $parts[0]; // keep everything before first subheading
+
+    for ( $i = 1; $i < count( $parts ); $i += 2 ) {
+        $subheading_html = $parts[ $i ];
+        $section_html    = isset( $parts[ $i + 1 ] ) ? $parts[ $i + 1 ] : '';
+
+        // Count lesson items in this section.
+        $item_count = preg_match_all(
+            '/class="[^"]*\bld-accordion__item\s+ld-accordion__item--lesson\b/',
+            $section_html
+        );
+
+        // Build the step-count element.
+        $step_label = sprintf(
+            _n( '%d Step', '%d Steps', $item_count, 'oup-theme' ),
+            $item_count
+        );
+
+        $step_html = '<div class="oup-course-section-steps">'
+            . '<svg class="oup-course-section-steps__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">'
+            . '<path fill-rule="evenodd" clip-rule="evenodd" d="M3.81815 4C3.3663 4 3 4.35258 3 4.7875V16.6C3 17.0349 3.3663 17.3875 3.81815 17.3875H9.54516C9.97914 17.3875 10.3953 17.5534 10.7022 17.8488C11.0091 18.1442 11.1815 18.5448 11.1815 18.9625C11.1815 19.3974 11.5478 19.75 11.9996 19.75C12.4514 19.75 12.8185 19.3974 12.8185 18.9625C12.8185 18.5448 12.9909 18.1442 13.2978 17.8488C13.6047 17.5534 14.0209 17.3875 14.4548 17.3875H20.1819C20.6337 17.3875 21 17.0349 21 16.6V4.7875C21 4.35258 20.6337 4 20.1819 4H15.273C14.1881 4 13.1476 4.41484 12.3804 5.15327C12.2426 5.28594 12.1156 5.4271 12 5.57549C11.8844 5.4271 11.7574 5.28594 11.6196 5.15327C10.8524 4.41484 9.81195 4 8.72702 4H3.81815ZM11.1815 7.9375V16.2345C10.6882 15.9604 10.1246 15.8125 9.54516 15.8125H4.63629V5.575H8.72702C9.37798 5.575 10.0023 5.82391 10.4626 6.26696C10.9229 6.71001 11.1815 7.31093 11.1815 7.9375ZM14.4548 15.8125C13.8754 15.8125 13.3118 15.9604 12.8185 16.2345V7.9375C12.8185 7.31093 13.0771 6.71001 13.5374 6.26696C13.9977 5.82391 14.622 5.575 15.273 5.575H19.3637V15.8125H14.4548Z"/>'
+            . '</svg>'
+            . '<span class="oup-course-section-steps__text">'
+            . esc_html( $step_label )
+            . '</span>'
+            . '</div>';
+
+        // Subheading → step count → original section HTML (items hidden via CSS).
+        $new_content .= $subheading_html . "\n" . $step_html . $section_html;
+    }
+
+    // ── Add marker class so CSS/JS can target the lesson items ──────────
+    $new_content = str_replace(
+        'ld-accordion ld-accordion--course',
+        'ld-accordion ld-accordion--course oup-course-no-access',
+        $new_content
+    );
+
+    // ── Remove lesson items securely from HTML (for QA) ─────────────────
+    // We use DOMDocument to safely strip the lesson items from the HTML source
+    // so they are not sent to the browser at all.
+    if ( class_exists( 'DOMDocument' ) ) {
+        $dom = new DOMDocument();
+        libxml_use_internal_errors( true );
+        
+        // Force UTF-8 encoding without adding <html><body> wrappers
+        $dom->loadHTML( '<?xml encoding="utf-8" ?>' . $new_content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+        
+        $xpath = new DOMXPath( $dom );
+        $lessons = $xpath->query( '//div[contains(@class, "ld-accordion__item--lesson")]' );
+        
+        if ( $lessons && $lessons->length > 0 ) {
+            foreach ( $lessons as $lesson ) {
+                $lesson->parentNode->removeChild( $lesson );
+            }
+            $new_content = $dom->saveHTML();
+            $new_content = str_replace( '<?xml encoding="utf-8" ?>', '', $new_content );
+        }
+        
+        libxml_clear_errors();
+    }
+
+    return $new_content;
+}
