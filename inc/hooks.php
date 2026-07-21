@@ -338,3 +338,5 @@ function oup_allow_read_private_forum( $caps, $cap, $user_id, $args ) {
     }
     return $caps;
 }
+
+

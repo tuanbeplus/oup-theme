@@ -2305,6 +2305,30 @@ body .learndash-wrapper .ld-focus .ld-focus-content iframe.pdfembed-iframe {
   margin-bottom: 0 !important;
 }
 
+.oup-course-no-access .ld-accordion__item--lesson {
+  display: none !important;
+}
+
+.oup-course-section-steps {
+  margin-left: 16px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.oup-course-section-steps__icon {
+  width: 18px;
+  height: 18px;
+  color: var(--e-global-color-secondary, #005B8C);
+  flex-shrink: 0;
+  margin-top: 2px !important;
+}
+.oup-course-section-steps__text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--e-global-color-secondary, #005B8C);
+}
+
 body .learndash-wrapper .ld-quiz-status {
   display: none;
 }

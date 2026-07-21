@@ -729,3 +729,34 @@ body .learndash-wrapper .ld-focus {
         }
     }
 }
+
+// ── Non-enrolled course view: hide lessons, show per-section step count ──
+.oup-course-no-access {
+    .ld-accordion__item--lesson {
+        display: none !important;
+    }
+}
+
+.oup-course-section-steps {
+    margin-left: 16px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &__icon {
+        width: 18px;
+        height: 18px;
+        color: var(--e-global-color-secondary, #005B8C);
+        flex-shrink: 0;
+        margin-top: 2px !important;
+    }
+
+    &__text {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--e-global-color-secondary, #005B8C);
+    }
+}
+
+
