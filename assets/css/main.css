@@ -2007,6 +2007,10 @@ body.single-sfwd-lessons,
 body.single-sfwd-quiz {
   margin-top: 0 !important;
 }
+body.single-sfwd-lessons.ld-in-focus-mode.admin-bar,
+body.single-sfwd-quiz.ld-in-focus-mode.admin-bar {
+  padding-top: 0 !important;
+}
 
 body .learndash-wrapper .ld-focus {
   font-family: var(--e-global-typography-primary-font-family);
@@ -2161,7 +2165,7 @@ body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu {
   font-family: var(--e-global-typography-secondary-font-family);
 }
 body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-welcome-text {
-  padding-left: 5px;
+  padding-left: 15px;
   font-family: var(--e-global-typography-primary-font-family);
   font-weight: 600;
   color: var(--e-global-color-text);
@@ -2188,6 +2192,19 @@ body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-profile-ava
 }
 body .learndash-wrapper .ld-focus .ld-focus-header .ld-user-menu .ld-user-menu-items a {
   background-color: var(--e-global-color-primary);
+}
+body .learndash-wrapper .ld-focus .ld-focus-content {
+  margin-top: 40px !important;
+}
+@media (max-width: 1024px) {
+  body .learndash-wrapper .ld-focus .ld-focus-content {
+    margin-top: 0 !important;
+  }
+}
+@media (max-width: 480px) {
+  body .learndash-wrapper .ld-focus .ld-focus-content {
+    margin-top: 20px !important;
+  }
 }
 body .learndash-wrapper .ld-focus .ld-focus-content {
   font-size: clamp(1rem, 4vw, 1.1rem);

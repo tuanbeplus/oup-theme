@@ -353,6 +353,9 @@
 body.single-sfwd-lessons,
 body.single-sfwd-quiz {
 	margin-top: 0 !important;
+    &.ld-in-focus-mode.admin-bar {
+        padding-top: 0 !important;
+    }
 }
 body .learndash-wrapper .ld-focus {
 	font-family: var(--e-global-typography-primary-font-family);
@@ -560,7 +563,7 @@ body .learndash-wrapper .ld-focus {
         .ld-user-menu {
             font-family: var(--e-global-typography-secondary-font-family);
             .ld-user-welcome-text {
-                padding-left: 5px;
+                padding-left: 15px;
                 font-family: var(--e-global-typography-primary-font-family);
                 font-weight: 600;
                 color: var(--e-global-color-text);
@@ -596,6 +599,13 @@ body .learndash-wrapper .ld-focus {
     }
 	
 	.ld-focus-content {
+        margin-top: 40px !important;
+        @media (max-width: 1024px) {
+            margin-top: 0 !important;
+        }
+        @media (max-width: 480px) {
+            margin-top: 20px !important;
+        }
 		font-size: clamp(1rem, 4vw, 1.1rem);
 		h1 {
 			font-size: clamp(2.25rem, 4vw, 3rem);
