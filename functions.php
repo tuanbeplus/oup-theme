@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-define('OUP_THEME_VER', '1.0.0' . time());
+define('OUP_THEME_VER', '1.1.0');
 
 /**
  * Enqueue styles and scripts
