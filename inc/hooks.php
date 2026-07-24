@@ -466,7 +466,7 @@ function oup_course_steps_for_visitors( $content, $post ) {
 add_filter( 'gform_notification', 'oup_attach_worksheet_files_to_email', 10, 3 );
 function oup_attach_worksheet_files_to_email( $notification, $form, $entry ) {
 
-    $target_form_id = (int) get_field( 'gform_id', 'option' );
+    $target_form_id = (int) get_field( 'download_worksheets_gform_id', 'option' );
     
     if ( ! $target_form_id || $form['id'] != $target_form_id ) {
         return $notification;
