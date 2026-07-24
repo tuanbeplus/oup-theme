@@ -459,3 +459,53 @@ function oup_course_steps_for_visitors( $content, $post ) {
 
     return $new_content;
 }
+
+/**
+ * Attach Worksheet PDF files to Gravity Forms
+ */
+add_filter( 'gform_notification', 'oup_attach_worksheet_files_to_email', 10, 3 );
+function oup_attach_worksheet_files_to_email( $notification, $form, $entry ) {
+
+    $target_form_id = (int) get_field( 'gform_id', 'option' );
+    
+    if ( ! $target_form_id || $form['id'] != $target_form_id ) {
+        return $notification;
+    }
+    $attachments = isset( $notification['attachments'] ) ? $notification['attachments'] : array();
+    $hidden_field_id = '';
+    foreach ( $form['fields'] as $field ) {
+        if ( $field->type == 'hidden' && ( $field->defaultValue == '{embed_post:ID}' || $field->inputName == 'worksheet_post_id' ) ) {
+            $hidden_field_id = $field->id;
+            break;
+        }
+    }
+    if ( empty( $hidden_field_id ) ) {
+        return $notification;
+    }
+
+    $post_id = rgar( $entry, (string) $hidden_field_id );
+    
+    if ( empty( $post_id ) || 'worksheet' !== get_post_type( $post_id ) ) {
+        return $notification;
+    }
+    $worksheet_files = get_field( 'worksheet_files', $post_id );
+    if ( ! empty( $worksheet_files ) && is_array( $worksheet_files ) ) {
+        foreach ( $worksheet_files as $row ) {
+            $file = $row['attachment_file'];
+            if ( empty( $file ) ) continue;
+
+            $file_id = is_array( $file ) ? ( $file['ID'] ?? 0 ) : ( is_numeric( $file ) ? $file : 0 );
+            
+            if ( $file_id && ( $path = get_attached_file( $file_id ) ) && file_exists( $path ) ) {
+                $attachments[] = $path;
+            } elseif ( is_string( $file ) ) {
+                $upload = wp_upload_dir();
+                $path   = str_replace( $upload['baseurl'], $upload['basedir'], $file );
+                if ( file_exists( $path ) ) $attachments[] = $path;
+            }
+        }
+    }
+    $notification['attachments'] = $attachments;
+
+    return $notification;
+}
